@@ -1,0 +1,18 @@
+format: jb-book
+root: content/intro
+parts:
+
+  - caption: Discrete Information Sources
+    numbered: 3
+    chapters:
+    - file: content/IT/InformationSources
+
+#  - caption: Source Coding
+#    numbered: 3
+#    chapters:
+#    - file: content/IT/SourceCoding
+
+#  - caption: Error Control Coding
+#    numbered: 3
+#    chapters:
+#    - file: content/IT/ErrorControlCoding
