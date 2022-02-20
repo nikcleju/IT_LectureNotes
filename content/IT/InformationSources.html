@@ -393,8 +393,8 @@
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-applications">
-     1.1.10. Example applications
+    <a class="reference internal nav-link" href="#sample-applications">
+     1.1.10. Sample applications
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
@@ -629,8 +629,8 @@
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#example-applications">
-     1.1.10. Example applications
+    <a class="reference internal nav-link" href="#sample-applications">
+     1.1.10. Sample applications
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
@@ -711,8 +711,8 @@ we need a solid and clear definition of information.</p>
 <li><p>if the result was to be expected, there is little information (e.g. suppose Poli Iași plays agains FC Barcelona)</p></li>
 <li><p>if the result is highly unusual, there is more information in this message</p></li>
 </ul>
-<div class="sidebar">
-<p class="sidebar-title">Example</p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
 <p>To understand why the amount of information
 depends on whether the result is to be expected or is highly unusual,
 consider a case when information is valuable, for example:</p>
@@ -757,8 +757,11 @@ and since it’s the information which is valuable, it shows that unexpected out
 <div class="section" id="definition-of-information">
 <h4>Definition of information<a class="headerlink" href="#definition-of-information" title="Permalink to this headline">¶</a></h4>
 <p>Throughout this class, we refer to a probabilistic event as a <strong>“message”</strong></p>
-<p>The information attached to a message <span class="math notranslate nohighlight">\(s_i\)</span> is rigorously defined as:
-$<span class="math notranslate nohighlight">\(i(s_i) = -\log_2(p(s_i))\)</span>$</p>
+<p>The information attached to a message <span class="math notranslate nohighlight">\(s_i\)</span> is rigorously defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+i(s_i) = -\log_2(p(s_i))
+\]</div>
 <p>Consequences of this definition:</p>
 <ul class="simple">
 <li><p>Information of an event is always non-negative:</p></li>
@@ -783,9 +786,9 @@ i(s_i) \geq 0
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align}
-i(s_i \cap s_j) &amp;= -log_2(p(s_i \cap s_j) \\
-&amp;= -log_2(p(s_i) \cdot p(s_j) \\
-&amp;= -log_2(p(s_i) - log_2(p(s_j)) \\
+i(s_i \cap s_j) &amp;= -\log_2(p(s_i \cap s_j) \\
+&amp;= -\log_2(p(s_i) \cdot p(s_j) \\
+&amp;= -\log_2(p(s_i) - log_2(p(s_j)) \\
 &amp;= i(s_i) + i(s_j)
 \end{align}
 \end{split}\]</div>
@@ -795,7 +798,7 @@ i(s_i \cap s_j) &amp;= -log_2(p(s_i \cap s_j) \\
 <p>Using the logarithm function in the definition is crucial,
 since it is responsible for most of these properties.
 In particular, the fact that logarithm transforms a product into a sum
-allws to sum the informations of independent events.</p>
+allws to sum the information of independent events.</p>
 <p>Any base of logarithm can be used in the definition, not just base 2,
 and all the consequences still hold.</p>
 <ul class="simple">
@@ -815,7 +818,7 @@ since logarithm bases can always be converted to/from one another:</p>
 \[
 i_b(s_i) =\frac{i_a(s_i)}{\log_a(b)}
 \]</div>
-<p>Following the convention of the scientific literature, we shall use the base 2 logarithm <span class="math notranslate nohighlight">\(log_2()\)</span> from now on.</p>
+<p>Following the convention of the scientific literature, we shall use the base 2 logarithm <span class="math notranslate nohighlight">\(\log_2()\)</span> from now on.</p>
 </div>
 </div>
 <div class="section" id="information-source">
@@ -871,10 +874,13 @@ by giving it a name (“S”), listing the messages (<span class="math notransla
 <p>A DMS is a discrete, complete and memoryless:</p>
 <ul class="simple">
 <li><p><strong>Discrete</strong>: the set of messages is a discrete set</p></li>
-<li><p><strong>Complete</strong>: the sum of all probabilities is 1, which means that one and only one event must take place at a given time:
-$<span class="math notranslate nohighlight">\(
-\sum p(s_i) = 1
-\)</span>$</p></li>
+<li><p><strong>Complete</strong>: the sum of all probabilities is 1, which means that one and only one event must take place at a given time:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+  \sum p(s_i) = 1
+  \]</div>
+<ul class="simple">
 <li><p><strong>Memoryless</strong>: each message is independent of the previous messages</p></li>
 </ul>
 <p>A good example of a DMS is a coin, or a dice.</p>
@@ -921,7 +927,7 @@ s_3 s_2 s_4 s_1 s_2 s_1 s_3 \dots
 4, 2, 3, 2, 1, 6, 1, 5, 4, 5 \dots
 \]</div>
 <p>In a sequence which is very long, with length <span class="math notranslate nohighlight">\(N \to \infty\)</span>,
-each message <span class="math notranslate nohighlight">\(s_i\)</span> appears in the sequence approximately <span class="math notranslate nohighlight">\(p(s_i) * N\)</span> times.
+each message <span class="math notranslate nohighlight">\(s_i\)</span> appears in the sequence approximately <span class="math notranslate nohighlight">\(p(s_i) \cdot N\)</span> times.
 This gets more precise as <span class="math notranslate nohighlight">\(N\)</span> gets larger.</p>
 </div>
 </div>
@@ -946,10 +952,11 @@ H(S) = \sum_{k} p(s_k) i(s_k) = -\sum_{k} p(s_k) \log_2(p_k)
 <p>where <span class="math notranslate nohighlight">\(p(s_k)\)</span>  is the probability of message <span class="math notranslate nohighlight">\(k\)</span></p>
 <p>Since information of a message is measured in bits,
 entropy is measured in <strong>bits</strong> (or <strong>bits / message</strong>, to indicate it is an average value).</p>
-<p>Entropies using information defined with different logarithms base are differ only by a scaling factor:
-$<span class="math notranslate nohighlight">\(
+<p>Entropies using information defined with different logarithms base are differ only by a scaling factor:</p>
+<div class="math notranslate nohighlight">
+\[
 H_b(S) =\frac{H_a(S)}{\log_a(b)}
-\)</span>$</p>
+\]</div>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
 <p>Let’s compute the entropies of some of the DMS defined above.</p>
@@ -1043,7 +1050,8 @@ H_{max}(S) = 1
 <p>Let’s analyze the following guessing games with the tools introduced until now.</p>
 <div class="admonition-exercise admonition">
 <p class="admonition-title">Exercise</p>
-<p>I think of a number between 1 and 8. You have to guess it by asking
+<ol>
+<li><p>I think of a number between 1 and 8. You have to guess it by asking
 yes/no questions.</p>
 <ul class="simple">
 <li><p>How much uncertainty does the problem have?</p></li>
@@ -1051,20 +1059,24 @@ yes/no questions.</p>
 <li><p>What if the questions are not asked in the best way?</p></li>
 <li><p>On average, what is the number of questions required to find the number?</p></li>
 </ul>
-<p>Now suppose I randomly choose a number according to the following distribution:</p>
+</li>
+<li><p>Now suppose I randomly choose a number according to the following distribution:</p>
 <div class="math notranslate nohighlight">
 \[
-  \sIV{S}{\fIoII}{\fIoIV}{\fIoVIII}{\fIoVIII}
-  \]</div>
+   \sIV{S}{\fIoII}{\fIoIV}{\fIoVIII}{\fIoVIII}
+   \]</div>
 <ul class="simple">
 <li><p>On average, what is the number of questions required to find the number?</p></li>
 <li><p>What questions would you ask?</p></li>
 </ul>
-<p>But what if the distribution is the following?</p>
+</li>
+<li><p>But what if the distribution is the following?</p>
 <div class="math notranslate nohighlight">
 \[
-  \sIV{S}{0.14}{0.29}{0.4}{0.17}
-  \]</div>
+   \sIV{S}{0.14}{0.29}{0.4}{0.17}
+   \]</div>
+</li>
+</ol>
 <p>Let’s draw some general conclusions:</p>
 <ul class="simple">
 <li><p>What distribution makes guessing the number the most difficult?</p></li>
@@ -1112,35 +1124,15 @@ H_\tau(S) = \frac{H(S)}{\overline{t}},
 </div>
 <div class="section" id="the-kullback-leibler-distance">
 <h4>The Kullback-Leibler distance<a class="headerlink" href="#the-kullback-leibler-distance" title="Permalink to this headline">¶</a></h4>
-<div class="sidebar">
-<p class="sidebar-title">Example</p>
-<p>The KL distance is used to evaluate the performance of classification algorithms.
-Suppose we have a neural network algorithm trained to recognize if an image
-is showing a car, a human, or a dog.</p>
-<p>To test the algorithm, we give it an image of a dog. The algorithm outputs
-a probability score indicating what it believes the image contains:</p>
-<div class="math notranslate nohighlight">
-\[
-\snIII{Result}{car}{0.23}{human}{0.08}{dog}{0.69}
-\]</div>
-<p>Here, the algorithm thinks it sees a dog, but is not very sure (only <span class="math notranslate nohighlight">\(69 \%\)</span> score).</p>
-<p>The ideal output for this image is <span class="math notranslate nohighlight">\(100 \%\)</span> score for the dog:</p>
-<div class="math notranslate nohighlight">
-\[
-\snIII{Target}{car}{0}{human}{0}{dog}{1}
-\]</div>
-<p>The KL distance <span class="math notranslate nohighlight">\(D_{KL}(Target, Result)\)</span> expresses as a single number
-the difference between the desired target and the algorithm’s result.
-Thus is serves as a way to define the classification error.
-It can be used, for example, to compare different algorithms or to improve an existing algorithms.</p>
-<p>In machine learning terminology, the KL distance is better known as the “<em>categorical cross-entropy</em>”.</p>
-</div>
 <p>Suppose we have the following two DMS:</p>
-<p>\begin{gather*}
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{gather*}
 \sIV{P}{0.14}{0.29}{0.4}{0.17}
-\
+\\
 \sIV{Q}{0.13}{0.33}{0.43}{0.11}
-\end{gather*}</p>
+\end{gather*}
+\end{split}\]</div>
 <p>The probability values of <span class="math notranslate nohighlight">\(P\)</span> and <span class="math notranslate nohighlight">\(Q\)</span> are close, so the two DMS
 are similar. But exactly how much similar?</p>
 <p>In many application we need a way to quantify how similar or how different
@@ -1167,6 +1159,29 @@ The KL distance is <strong>not commutative</strong>: :</p>
 D_{KL}(P, Q) \neq D_{KL}(Q, P)
 \]</div>
 <p>Despite this, it is widely used in applications.</p>
+<div class="admonition-example admonition">
+<p class="admonition-title">Example</p>
+<p>The KL distance is used to evaluate the performance of classification algorithms.
+Suppose we have a neural network algorithm trained to recognize if an image
+is showing a car, a human, or a dog.</p>
+<p>To test the algorithm, we give it an image of a dog. The algorithm outputs
+a probability score indicating what it believes the image contains:</p>
+<div class="math notranslate nohighlight">
+\[
+\snIII{Result}{car}{0.23}{human}{0.08}{dog}{0.69}
+\]</div>
+<p>Here, the algorithm thinks it sees a dog, but is not very sure (only <span class="math notranslate nohighlight">\(69 \%\)</span> score).</p>
+<p>The ideal output for this image is <span class="math notranslate nohighlight">\(100 \%\)</span> score for the dog:</p>
+<div class="math notranslate nohighlight">
+\[
+\snIII{Target}{car}{0}{human}{0}{dog}{1}
+\]</div>
+<p>The KL distance <span class="math notranslate nohighlight">\(D_{KL}(Target, Result)\)</span> expresses as a single number
+the difference between the desired target and the algorithm’s result.
+Thus is serves as a way to define the classification error.
+It can be used, for example, to compare different algorithms or to improve an existing algorithms.</p>
+<p>In machine learning terminology, the KL distance is better known as the “<em>categorical cross-entropy</em>”.</p>
+</div>
 </div>
 </div>
 <div class="section" id="extended-dms">
@@ -1562,16 +1577,16 @@ problematic on a digital device due to numerical errors.</p>
 which allows for much more manageable values. Instead of multiplying probabilities,
 we sum the log-probabilities.</p>
 <div class="math notranslate nohighlight">
-\[
-\being(gather*)
-P = p(w) \cdot p(i) \cdot p(r) \cdot \dots \cdot p(r)
+\[\begin{split}
+\begin{gather*}
+P = p(w) \cdot p(i) \cdot p(r) \cdot \dots \cdot p(r) \\
 \log(P) = \log(p(w)) + \log(p(i)) + \log(p(r)) + \dots + \log(p(r))
-\end(gather*)
-\]</div>
+\end{gather*}
+\end{split}\]</div>
 </div>
 </div>
-<div class="section" id="example-applications">
-<h3><span class="section-number">1.1.10. </span>Example applications<a class="headerlink" href="#example-applications" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="sample-applications">
+<h3><span class="section-number">1.1.10. </span>Sample applications<a class="headerlink" href="#sample-applications" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="predict-text">
 <h4>Predict text<a class="headerlink" href="#predict-text" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
@@ -1588,7 +1603,7 @@ P = p(w) \cdot p(i) \cdot p(r) \cdot \dots \cdot p(r)
 <div class="section" id="guess-language-of-a-sentence">
 <h4>Guess language of a sentence<a class="headerlink" href="#guess-language-of-a-sentence" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li><p>We have piece of text. Find what language is it written in?</p></li>
+<li><p>We have piece of text. What language is it written in?</p></li>
 <li><p>We model each language with a source with memory, each trained on a sufficiently large
 piece of text representative of the language</p></li>
 <li><p>We compute the log-probability of the text with every language source model.
@@ -1601,17 +1616,19 @@ Pick the one with the highest value.</p></li>
 <ol>
 <li><p>Consider a discrete source with memory, with the graphical representation given below.
 The states are defined as follows: <span class="math notranslate nohighlight">\(S_1: s_1s_1\)</span>, <span class="math notranslate nohighlight">\(S_2: s_1s_2\)</span>, <span class="math notranslate nohighlight">\(S_3: s_2s_1\)</span>, <span class="math notranslate nohighlight">\(S_4: s_2s_2\)</span>.</p>
-<p><img alt="Graphical representation of the source" src="../../_images/MemorySource3.png" />{.id width=35%}</p>
+<p><img alt="Graphical representation of the source" src="../../_images/MemorySource3.png" /></p>
 </li>
 </ol>
 <p>Questions:</p>
-<p>a. What are the values of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>?
-b. Write the transition matrix <span class="math notranslate nohighlight">\([T]\)</span>;
-c. Compute the entropy in state <span class="math notranslate nohighlight">\(S_4\)</span>;
-d. Compute the global entropy of the source;
-e. What are the memory order, <span class="math notranslate nohighlight">\(m\)</span>, and the number of messages of the source, <span class="math notranslate nohighlight">\(n\)</span>?
-f. If the source is initially in state <span class="math notranslate nohighlight">\(S_2\)</span>, in what states and with what probabilities
-will the source be after 2 messages?</p>
+<ol class="simple">
+<li><p>What are the values of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>?</p></li>
+<li><p>Write the transition matrix <span class="math notranslate nohighlight">\([T]\)</span>;</p></li>
+<li><p>Compute the entropy in state <span class="math notranslate nohighlight">\(S_4\)</span>;</p></li>
+<li><p>Compute the global entropy of the source;</p></li>
+<li><p>What are the memory order, <span class="math notranslate nohighlight">\(m\)</span>, and the number of messages of the source, <span class="math notranslate nohighlight">\(n\)</span>?</p></li>
+<li><p>If the source is initially in state <span class="math notranslate nohighlight">\(S_2\)</span>, in what states and with what probabilities
+will the source be after 2 messages?</p></li>
+</ol>
 </div>
 <div class="section" id="chapter-summary">
 <h3><span class="section-number">1.1.12. </span>Chapter summary<a class="headerlink" href="#chapter-summary" title="Permalink to this headline">¶</a></h3>
