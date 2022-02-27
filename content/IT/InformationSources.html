@@ -59,6 +59,7 @@
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2. Source Coding" href="SourceCoding.html" />
     <link rel="prev" title="Lecture notes on Information Theory" href="../intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -103,15 +104,15 @@
   </a>
  </li>
 </ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  Discrete Information Sources
- </span>
-</p>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    1. Discrete Information Sources
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="SourceCoding.html">
+   2. Source Coding
   </a>
  </li>
 </ul>
@@ -155,9 +156,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/content/IT/InformationSources.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/content/IT/InformationSources.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
+                data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
                 onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -174,26 +175,6 @@
             class="fas fa-expand"></i></button></a>
 
             <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/nikcleju/JupyBook/main?urlpath=tree/content/IT/InformationSources.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <button type="button" class="btn btn-secondary topbarbtn"
-            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
-                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
-        
-    </div>
-</div>
 
         </div>
 
@@ -666,7 +647,8 @@
             
               <div>
                 
-  <div class="math notranslate nohighlight">
+  <!-- #region -->
+<div class="math notranslate nohighlight">
 \[ \begin{align}\begin{aligned}\begin{split}\newcommand{\snII}[5]{#1: \left( \begin{matrix} {#2} &amp; {#4} \\ #3 &amp; #5 \end{matrix} \right)}
 \newcommand{\snIII}[7]{#1: \left( \begin{matrix} {#2} &amp; {#4} &amp; {#6} \\ #3 &amp; #5 &amp; #7 \end{matrix} \right)}
 \newcommand{\snIV}[9]{#1:  \left( \begin{matrix} {#2} &amp; {#4} &amp; {#6} &amp; {#8} \\ #3 &amp; #5 &amp; #7 &amp; #9 \end{matrix} \right)}\end{split}\\\begin{split}\newcommand{\sII}[3] {#1: \left( \begin{matrix} s_1 &amp; s_2 \\ #2 &amp; #3 \end{matrix} \right)}
@@ -1648,6 +1630,7 @@ will the source be after 2 messages?</p></li>
 <li><p>Entropy of sources with memory:
 $<span class="math notranslate nohighlight">\(H(S) = \sum_k p_k H(S_k) = - \sum_k p_k \sum_i p(s_i | S_k) \cdot \log(p(s_i | S_k)\)</span>$</p></li>
 </ul>
+<!-- #endregion -->
 </div>
 </div>
 </div>
@@ -1693,6 +1676,13 @@ $<span class="math notranslate nohighlight">\(H(S) = \sum_k p_k H(S_k) = - \sum_
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Lecture notes on Information Theory</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="SourceCoding.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>Source Coding</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             
