@@ -9,6 +9,9 @@ title                       : my-book  # The title of the book. Will be placed i
 author                      : Nicolae Cleju  # The author of the book
 copyright                   : "2021"  # Copyright year to be placed in the footer
 logo                        : logo.png  # A path to the book logo
+exclude_patterns            : [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints", "content/IT/*.md"]
+# Auto-exclude files not in the toc
+only_build_toc_files        : false
 
 # Information about where the book exists on the web
 repository:
@@ -19,6 +22,8 @@ repository:
 launch_buttons:
   binderhub_url: "https://mybinder.org"  # The URL for your BinderHub (e.g., https://mybinder.org)
   thebe        : true
+
+#===================================
 
 # Nic:
 # parse:
