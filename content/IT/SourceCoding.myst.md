@@ -6,7 +6,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.10.3
+    jupytext_version: 1.11.5
 kernelspec:
   display_name: 'Python 3.8.5 64-bit (''base'': conda)'
   name: python3
@@ -359,7 +359,7 @@ to the messages of the source, with additional benefits.
 
 ### Optimal codes
 
-We consider now the core aspect of this chapter,
+We will discuss now one of the most important aspect of this chapter,
 
 Given a DMS $S$, suppose we want to find an instantenous code for it, 
 but in such a way as to **minimize the average length** of the code:
@@ -380,49 +380,106 @@ This means that we want to find the unknowns $l_i$
 in order to minimize a certain quantity ($\sum_i p(s_i) l_i$),
 but the unknowns must satisfy a certain constraint ($\sum_i D^{-l_i} \leq 1$).
 
-### The method of Lagrange multipliers
+#### The method of Lagrange multipliers
 
-* Method of Lagrange multipliers: standard mathematical tool
+To solve this problem, we use a standard mathematical tool known as the **method of Lagrange multipliers**.
 
-* To solve the following constrained optimization problem
+```{prf:definition} Lagrange multipliers for constrained optimization problems
+
+To solve the following constrained optimization problem:
+
 $$\begin{aligned} \textbf{minimize } & f(x) \\
 \textrm{subject to } & g(x) = 0
 \end{aligned}$$
-	one must build a new function $L(x, \lambda)$ (the **Lagrangean function**):
+
+one must build a new function $L(x, \lambda)$ (known as the **Lagrangean function**):
+
 $$L(x, \lambda) = f(x) - \lambda g(x)$$
-	and the solution $x$ is among the solutions of the system:
-$$\begin{aligned} & \frac{\partial L(x, \lambda)}{\partial x} = 0 \\
-& \frac{\partial L(x, \lambda)}{\partial \lambda} = 0
-\end{aligned}$$
 
-* If there are multiple variables $x_i$, derivation is done for each one
+The solution $x$ of the original problem is among the solutions of the system:
 
-### Solving for minimum average length of code
+$$
+\begin{cases} \frac{\partial L(x, \lambda)}{\partial x} &= 0 \\
+\frac{\partial L(x, \lambda)}{\partial \lambda} &= 0
+\end{cases}
+$$
 
-* In our case:
-    - The unknown $x$ are $l_i$
-    - The function is $f(x) = \overline{l} = \sum_i p(s_i) l_i$
-    - The constraint is $g(x) = \sum_i D^{-l_i} - 1$
+If there are multiple variables $x_i$ in the problem, we take the partial derivative
+$\frac{\partial L(x, \lambda)}{\partial x_i}$ for each one of them, resulting in a larger system.
+```
 
-* (Solve at blackboard)
+Let's use this mathematical formulation to our problem. 
+In our case, the functions and the variables involved are the following:
 
-* The optimal values are:
-$$\boxed{l_i = -\log(p(s_i))}$$
+- The unknowns $x_i$ are the lengths $l_i$
+- The function to minimize is $f(x) = f(l_i) = \overline{l} = \sum_i p(s_i) l_i$
+- The constraint is $g(x) = g(l_i) = \sum_i D^{-l_i} - 1$
 
-* Intuition: using $l_i = -\log(p(s_i))$ satisfies Kraft with equality,
-so the lengths cannot be any shorter, in general
+```{note} Note 1
+The method of Lagrange multipliers, as presented below, specifies an equality constraint:
 
-### Optimal lengths
+$$
+\textrm{subject to } g(x) = 0
+$$
 
-* The optimal codeword lengths are:
-$$\boxed{l_i = -\log(p(s_i))}$$
+But in our optimization problem, we have an inequality constraint ($\leq$ instead of $=$):
 
-* Higher probability => smaller codeword
-    * more efficient
-    * language examples: "da", "nu", "the", "le" ...
-* Smaller probability => longer codeword
-    * it appears rarely => no problem
-* Overall, we obtain the minimum average length
+$$
+\textrm{subject to } \sum_i D^{-l_i} \leq 1
+$$
+
+However, as we discussed earlier, having the Kraft inequality smaller than $1$ means that we have
+some coding inefficiency, since some branches of the graph code remaining unconnected.
+When we seek to minimize the average length, this cannot happen. For this reason,
+we can safely use equality here in the Kraft constraint:
+
+$$
+\textrm{subject to } \sum_i D^{-l_i} = 1
+$$
+```
+
+```{note} Note 2
+A keen reader might observe a requirement which our optimization problem does not 
+take into account: the variables $l_i$ cannot just take any value, they must be positive integers,
+since they are the length of some codewords. 
+
+We will discuss this problem in the next paragraphs.
+```
+
+**TBD: Solve at blackboard**
+
+The resulting optimal codeword lengths are:
+
+$$
+l_i = -\log(p(s_i))
+$$
+
+```{prf:theorem}
+The optimal codeword lenghts $l_i$ for the messages of a DMS in order to minimize the average codeword length $\overline{l}$ are:
+
+$$l_i = -\log(p(s_i))$$
+
+```
+
+Let us discuss some intuitions and consequences related to this result:
+
+- Using $l_i = -\log(p(s_i))$ satisfies Kraft with equality, so the lengths cannot be any shorter than that, in general:
+  
+  $$
+  \textrm{subject to } \sum_i D^{-(-\log(p(s_i))))} = 1
+  $$
+
+
+- A message with higher probability must have a shorter codeword, while a message with lower probability has a longer codeword.
+  This makes sense because messages we can afford to use a longer codeword for messages which appear rarely in a sequence.
+
+```{margin}
+Think of examples in languages.
+
+- words which are very common are usually short: "yes", "no", "and", "the" "with"
+- we often use abbreviations to replace longer words which we must use often
+```
+
 
 ### Entropy = minimal codeword average length
 
