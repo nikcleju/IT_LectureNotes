@@ -1,15 +1,16 @@
 ---
+file_format: mystnb
 jupytext:
-  formats: ipynb,md,.myst.md:myst
+  formats: ipynb,md:myst
   main_language: python
   text_representation:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.10.3
-kernelspec:
-  display_name: 'Python 3.8.5 64-bit (''base'': conda)'
-  name: python3
+    jupytext_version: 1.14.0
+#kernelspec:
+#  display_name: 'Python 3.8.5 64-bit (''base'': conda)'
+#  name: python3
 ---
 
 ```{math}
@@ -35,7 +36,7 @@ kernelspec:
 
 ## A mathematical definition of information
 
-In order to analyze information generation, encoding and transmission 
+In order to analyze information generation, encoding and transmission
 with mathematical tools,
 we need a solid and clear definition of information.
 
@@ -43,7 +44,7 @@ we need a solid and clear definition of information.
 
 ![Block diagram of a communication system](img/CommBlockDiagram.png){width=50%}
 
-- Source: creates information messages 
+- Source: creates information messages
 - Encoder: converts messages into symbols for transmission (i.e bits)
 - Channel: delivers the symbols, introduces errors
 - Decoder: detects/corrects the errors, rebuilds the information messages -->
@@ -52,9 +53,9 @@ we need a solid and clear definition of information.
 
 Let's start first with some simple examples of messages carrying information.
 
-Consider the sentence: 
+Consider the sentence:
 
-> "Poli Iași (the local football team) lost the last match" 
+> "Poli Iași (the local football team) lost the last match"
 
 Does this message carry information? How, why, how much?
 
@@ -67,12 +68,12 @@ When thinking about the information brought by such a phrase, let's consider the
 
 ```{admonition} Example
 
-To understand why the amount of information 
+To understand why the amount of information
 depends on whether the result is to be expected or is highly unusual,
 consider a case when information is valuable, for example:
 
 - in an exam or quiz with multiple-choice answers (e.g. Who Wants to be a Millionaire)
-- in sports betting (gambling), 
+- in sports betting (gambling),
 
 The amount you gain depends on the amount of information you have on the topic: those who know a lot compared to others win a lot,
 those who know little win just a little. But you're not winning a fortune
@@ -121,7 +122,7 @@ $$
 
 Consequences of this definition:
 
-- Information of an event is always non-negative: 
+- Information of an event is always non-negative:
 
 $$
 i(s_i) \geq 0
@@ -129,7 +130,7 @@ $$
 
 - Lower probability (rare events) means higher information
 - Higher probability (frequent events) means lower information
-- The certain event ($p = 1)$ brings no information: 
+- The certain event ($p = 1)$ brings no information:
 
 $$
 -\log(1) = 0
@@ -137,7 +138,7 @@ $$
 
 - An event with probability $0$ brings infinite information (but it never happens...)
 - When two independent $s_i$ and $s_j$ events take place, their information gets added:
-  
+
 $$
 \begin{align}
 i(s_i \cap s_j) &= -\log_2(p(s_i \cap s_j) \\
@@ -149,12 +150,12 @@ $$
 
 #### The choice of logarithm
 
-Using the logarithm function in the definition is crucial, 
+Using the logarithm function in the definition is crucial,
 since it is responsible for most of these properties.
 In particular, the fact that logarithm transforms a product into a sum
 allws to sum the information of independent events.
 
-Any base of logarithm can be used in the definition, not just base 2, 
+Any base of logarithm can be used in the definition, not just base 2,
 and all the consequences still hold.
 
   - By convention, we typically use the binary logarithm $\log_2()$.
@@ -184,15 +185,15 @@ Following the convention of the scientific literature, we shall use the base 2 l
 ```{margin}
 Example:
   - a football team can only win / lose / draw a match
-  
+
 There are 3 possible events, and no other options.
 ```
 
-A probabilistic event is always part of a set of multiple events, 
+A probabilistic event is always part of a set of multiple events,
 containing all the possible outcomes which can happen at a given time.
 
 Each event (known as "message") has its own probability, which are all known beforehand.
-At a given time, only one of the events can happen. 
+At a given time, only one of the events can happen.
 This carries the information that **it** happened (out of all possible events),
 and the quantity information quantity is dependent of the probability.
 
@@ -205,7 +206,7 @@ When an event takes place, we say that "the information source generates a messa
 
 #### Sequence of messages
 
-We are very rarely interested in a single message. 
+We are very rarely interested in a single message.
 Instead, we are interested analyzing large amounts of messages.
 
 An information source creates a **sequence of messages**, by generating
@@ -225,10 +226,10 @@ A **discrete memoryless source** (DMS) is an information source which produces a
 The choice of a message at one time does not depend on the previous messages.
 Each message has a fixed probability, and every new message is generated randomly based on the probabilities.
 
-The set of probabilities is the **distribution** of the source, 
+The set of probabilities is the **distribution** of the source,
 also known as a **probabilty mass function**.
 
-We represent a DMS as below, 
+We represent a DMS as below,
 by giving it a name ("S"), listing the messages ($s_1, s_2, s_3$) and the probability distribution:
 
 $$
@@ -239,7 +240,7 @@ A DMS is a discrete, complete and memoryless:
 
   - **Discrete**: the set of messages is a discrete set
   - **Complete**: the sum of all probabilities is 1, which means that one and only one event must take place at a given time:
-   
+
   $$
   \sum p(s_i) = 1
   $$
@@ -292,13 +293,13 @@ $$
 s_3 s_2 s_4 s_1 s_2 s_1 s_3 \dots
 $$
 
-For example, throwing a dice several times in a row you can get a sequence 
+For example, throwing a dice several times in a row you can get a sequence
 
 $$
 4, 2, 3, 2, 1, 6, 1, 5, 4, 5 \dots
 $$
 
-In a sequence which is very long, with length $N \to \infty$, 
+In a sequence which is very long, with length $N \to \infty$,
 each message $s_i$ appears in the sequence approximately $p(s_i) \cdot N$ times.
 This gets more precise as $N$ gets larger.
 
@@ -325,9 +326,9 @@ $$
 where $p(s_k)$  is the probability of message $k$
 
 
-Since information of a message is measured in bits, 
+Since information of a message is measured in bits,
 entropy is measured in **bits** (or **bits / message**, to indicate it is an average value).
- 
+
 Entropies using information defined with different logarithms base are differ only by a scaling factor:
 
 $$
@@ -339,25 +340,28 @@ $$
 
 Let's compute the entropies of some of the DMS defined above.
 
-Coin: 
+Coin:
 
   $$
   H(S) = 1 \textrm{ bit/message}
   $$
 
-Dice: 
+Dice:
 
   $$
   H(S) = \log(6) \textrm{  bits/message}
   $$
 
-Lottery: 
+Lottery:
 
   $$
-  H(S) = -0.9999 \log(0.9999) - 0.0001 \log(0.0001) \textrm{ bits/message}
+  \begin{aligned}
+  H(S) &= -0.9999 \log(0.9999) - 0.0001 \log(0.0001) \\
+  &= 0.00147 \textrm{ bits/message}
+ \end{aligned}
   $$
 
-Receiving 1 bit with equal probabilities: 
+Receiving 1 bit with equal probabilities:
 
   $$
   H(S) = 1 \textrm{ bit/message}
@@ -367,7 +371,7 @@ Receiving 1 bit with equal probabilities:
 
 #### Interpretation of the entropy
 
-The entropy of an information source S is a fundamental quantity. 
+The entropy of an information source S is a fundamental quantity.
 It allows us to compare two different sources, which model
 different scenarios from real life.
 
@@ -379,7 +383,7 @@ All the following interpretations of entropy are true:
 
   - A very long sequence of $N$ messages generated by source S has total information $\approx N \cdot H(S)$
 
-We shall see in Chapter III that the entropy $H(S)$ says something very important 
+We shall see in Chapter III that the entropy $H(S)$ says something very important
 about the **number of bits** requires to represent data in binary form:
 
   - $H(S)$ is the minimum number of bits ($0$, $1$) required to uniquely represent a message from source S, on average
@@ -425,8 +429,8 @@ The entropy value as a function of $p$ is represented below:
 
 ![Entropy of a binary source](img/EntropyBinary.png)
 
-As an illustration of the property no.2 from above, 
-we can see that the maximum entropy value of a DMS with two messages is reached 
+As an illustration of the property no.2 from above,
+we can see that the maximum entropy value of a DMS with two messages is reached
 when the two messages have the same probability, $p = 0.5$:
 
 $$
@@ -452,19 +456,19 @@ Let's analyze the following guessing games with the tools introduced until now.
    - How is the best way to ask questions? Why?
    - What if the questions are not asked in the best way?
    - On average, what is the number of questions required to find the number?
-   
+
 
 2. Now suppose I randomly choose a number according to the following distribution:
-  
+
    $$
    \sIV{S}{\fIoII}{\fIoIV}{\fIoVIII}{\fIoVIII}
    $$
 
-   - On average, what is the number of questions required to find the number? 
+   - On average, what is the number of questions required to find the number?
    - What questions would you ask?
 
 3. But what if the distribution is the following?
-  
+
    $$
    \sIV{S}{0.14}{0.29}{0.4}{0.17}
    $$
@@ -482,7 +486,7 @@ of questions, reprsented as a binary tree graph. You will see examples when we s
 Using the $H(S)$, we define several other useful characteristics of a DMS.
 
 The **efficiency** of a DMS indicates how close is the entropy to its maximum possible value:
-  
+
 $$
 \eta = \frac{H(S)}{H_{max}} = \frac{H(S)}{\log(n)}
 $$
@@ -511,7 +515,7 @@ $$
 where $\overline{t}$ is the average duration of transmitting a message:
 
 $$
-\overline{t} = \sum_{i} p_i t_i 
+\overline{t} = \sum_{i} p_i t_i
 $$
 
 The information flow is measured in **bps** (bits per second), and is important for data communication.
@@ -532,10 +536,10 @@ The probability values of $P$ and $Q$ are close, so the two DMS
 are similar. But exactly how much similar?
 
 In many application we need a way to quantify how similar or how different
-are two probability distributions. The Kullback-Leibler distance 
+are two probability distributions. The Kullback-Leibler distance
 (also known as *"Kullback-Leibler divergence"*, or *"cross-entropy"*, or *"relative entropy"*)
 is a way to quantify numerically how much different is one distribution from another one,
-  
+
 The **Kullback–Leibler (KL) distance** of two distributions P and Q  is
 
 $$
@@ -550,7 +554,7 @@ In many ways it provides the same intuitions as a geometrical distance:
 1. $D_{KL}(P, Q)$ is always $\geq 0$, and is equal to $0$ only when P and Q are the same
 2. The higher $D_{KL}(P, Q)$ is, the more different the two distributions are
 
-However, one important property is not satisfied, and for this reason 
+However, one important property is not satisfied, and for this reason
 the KL distance is not proper distance function as defined e.g. in mathematical algebra.
 The KL distance is **not commutative**: :
 
@@ -562,7 +566,7 @@ Despite this, it is widely used in applications.
 
 ```{admonition} Example
 The KL distance is used to evaluate the performance of classification algorithms.
-Suppose we have a neural network algorithm trained to recognize if an image 
+Suppose we have a neural network algorithm trained to recognize if an image
 is showing a car, a human, or a dog.
 
 To test the algorithm, we give it an image of a dog. The algorithm outputs
@@ -580,27 +584,27 @@ $$
 \snIII{Target}{car}{0}{human}{0}{dog}{1}
 $$
 
-The KL distance $D_{KL}(Target, Result)$ expresses as a single number 
+The KL distance $D_{KL}(Target, Result)$ expresses as a single number
 the difference between the desired target and the algorithm's result.
 Thus is serves as a way to define the classification error.
 It can be used, for example, to compare different algorithms or to improve an existing algorithms.
 
 In machine learning terminology, the KL distance is better known as the "*categorical cross-entropy*".
-``` 
+```
 
 ### Extended DMS
 
 The **n-th order extension** of a DMS $S$, represented as $S^n$,
 is a DMS which has as messages $\sigma_i$
 all the combinations of $n$ messages of $S$:
-    
+
 $$
 \sigma_i = \underbrace{s_j s_k ... s_l}_{n}
 $$
 
-If $S$ has $k$ messages, $S^n$ has $k^n$ messages, 
+If $S$ has $k$ messages, $S^n$ has $k^n$ messages,
 
-Since $S$ is DMS, consecutive messages are independent of each other, 
+Since $S$ is DMS, consecutive messages are independent of each other,
 and therefore their probabilities are multiplied:
 
 $$
@@ -621,7 +625,7 @@ $$
 S^3: \left( \begin{matrix} s_1 s_1 s_1 & s_1 s_1 s_2 & s_1 s_2 s_1 & s_1 s_2 s_2 & s_2 s_1 s_1 & s_2 s_1 s_2 & s_2 s_2 s_1 & s_2 s_2 s_2 \\ ... & ... & ... & ... & ... & ... & ... & ... \end{matrix} \right)
 $$
 
-Extended DMS are useful because they provide a way to group messages 
+Extended DMS are useful because they provide a way to group messages
 inside a sequence of messages.
 
 Suppose we have a long sequence of binary messages:
@@ -637,7 +641,7 @@ What kind of source generated this sequence?
 3. We can group 8 bits into bytes, and view it is a sequence of 2 messages from a DMS $S_8$ which generates 256 bytes
 4. ... and so on
 
-There must be a connection between the DMS, no matter how we group the bits, since we're talking about the same binary sequence. 
+There must be a connection between the DMS, no matter how we group the bits, since we're talking about the same binary sequence.
 The connections is that they are all just n-th order extensions of the initial binary DMS.
 
 #### Entropy of a DMS
@@ -668,7 +672,7 @@ TBD. For now will be done in class.
 
 ### DMS as models for language generation
 
-We use information sources as mathematical models for real-life data generation and analysis. 
+We use information sources as mathematical models for real-life data generation and analysis.
 A straightforward example in in text analysis, since text is basically a sequence of graphical symbols
 (letters and punctuation signs), similar to a sequence of messages from an information source.
 
@@ -690,13 +694,13 @@ Generating a sequence of letters from this DMS produces the following:
 <!-- ![](img/EnglishFirstOrder.png){width=50%}\ -->
 ![](img/EnglishFirstOrder.png)
 
-This doesn't look like English. What's wrong? 
+This doesn't look like English. What's wrong?
 
 A DMS is **memoryless**, which means that every message is generated irrespective
-of the previous ones. This is not a good model for a text in a language. In a real language, 
+of the previous ones. This is not a good model for a text in a language. In a real language,
 the frequency of letter depends a lot on the previous letters:
 
-- `a` is a common letter in English (probability $8.2 \%$), but if the previous letter is also `a`, 
+- `a` is a common letter in English (probability $8.2 \%$), but if the previous letter is also `a`,
   the probability is close to zero because the group `aa` is extremely rare
 - similarly, `h` has a much higher probability if the previous letter is `t` then if the previous letter is `x`
 
@@ -715,9 +719,9 @@ We say that the source "is in the state $S_i$".
 
 A source with $n$ messages and memory $m$ has a number of states equal to $n^m$.
 
-The source generates messages randomly, but with different message probabilities 
+The source generates messages randomly, but with different message probabilities
 depending in which state the source is.
-We use the following notation: 
+We use the following notation:
 
 $p(s_i | S_k)$ = probability of message $s_i$ in state $S_k$
 
@@ -773,12 +777,12 @@ The transition probabilities are organized in a **transition matrix** $[T]$
 of size $N \times N$, where $N$ is the total number of states.
 
 $$
-[T] = 
+[T] =
 \begin{bmatrix}
-p_{11} & p_{12} & ... & p_{1N} \\ 
-p_{21} & p_{22} & ... & p_{2N} \\ 
-... & ... & ... & ... \\ 
-p_{N1} & p_{N2} & ... & p_{NN} \\ 
+p_{11} & p_{12} & ... & p_{1N} \\
+p_{21} & p_{22} & ... & p_{2N} \\
+... & ... & ... & ... \\
+p_{N1} & p_{N2} & ... & p_{NN} \\
 \end{bmatrix}
 $$
 
@@ -795,7 +799,7 @@ The transition matrix which defines a source with memory can be represented grap
 as a directed graph where the vertices are the states, and the edges are the transitions.
 Every edge (transition) has a certain probability,
 
-At whiteboard: draw states and transitions for previous example 
+At whiteboard: draw states and transitions for previous example
 (source with $n=4$ messages and memory $m=1$)
 
 ### Entropy of sources with memory
@@ -803,7 +807,7 @@ At whiteboard: draw states and transitions for previous example
 How to compute the entropy of a source with memory?
 
 Note that each state $S_k$ has a different distribution, so each state can be viewed
-as a kind of DMS. Therefore we can compute an entropy $H(S_k)$ for every state $S_k$, 
+as a kind of DMS. Therefore we can compute an entropy $H(S_k)$ for every state $S_k$,
 using the same formula as for DMS:
 
 $$
@@ -825,7 +829,7 @@ $$
 The probabilities $p_k$ are known as the **stationary probabilities**,
 and they represent the probability that the source is in state $S_k$ at a given moment.
 
-Considering that the source operates for a very long time and generates a very long sequence of messages, 
+Considering that the source operates for a very long time and generates a very long sequence of messages,
 you can think of $p_k$ as the fraction of time when the source was in state $S_k$.
 
 #### Ergodic sources
@@ -833,9 +837,9 @@ you can think of $p_k$ as the fraction of time when the source was in state $S_k
 How to find out the weights $p_k$?
 
 To find this, we first need to answer the following question:
-    
+
 > If we know the state $S_k$ at time $n$, what will be the state at time $n+1$?
-    
+
 Let $p_i^{(n)}$ denote the probability that the source is in state $S_i$ at time $n$.
 The source generates a message. In what state will the source end up at time $n+1$?
 
@@ -871,29 +875,29 @@ To work around the problem of the unknown initial state, we make use a property 
 A source is called **ergodic** if every state can be reached from every state, in a finite number of steps.
 
 If an ergodic source runs for a very long time $M \to \infty$, it will go through all transitions and all states many times,
-and, eventually, the fraction of time it finds itself in a certain state $S_k$ stabilizes. 
-This happens irrespective of what was the starting state. 
+and, eventually, the fraction of time it finds itself in a certain state $S_k$ stabilizes.
+This happens irrespective of what was the starting state.
 Intuitively, the initial state doesn't matter if the source will anyway travel
 through all states and transitions many times, as $M \to \infty$.
 
 ```{margin} Counter-example
-Can you show why ergodicity is important for this? 
+Can you show why ergodicity is important for this?
 
 Think of a non-ergodic source where the initial state always matters, even as the number of generated messages $M \to \infty$.
 ```
 
 We formalize this as the following property of an ergodic source with memory:
 
-  - For an ergodic source with memory, after many messages, the probabilities of the states *become stationary*, 
+  - For an ergodic source with memory, after many messages, the probabilities of the states *become stationary*,
     i.e. thet converge to some fixed values, no matter what state the source started from initially).
-  
+
     $$\lim_{n \to \infty} [p_1^{(n)}, p_2^{(n)}, ... p_N^{(n)}] = [p_1, p_2, ... p_N]$$
 
 
 #### Finding the stationary probabilities
 
 The ergodicity property helps us find the values of the stationary probabilities.
-When $n$ is very large, after $n$ messages and after $n+1$ messages the probabilities are the same, 
+When $n$ is very large, after $n$ messages and after $n+1$ messages the probabilities are the same,
 and therefore the following equation holds:
 
 $$
@@ -952,8 +956,8 @@ Let's look at a sample sequence of letters generated from these sources.
 <!-- ![](img/EnglishFourthOrder.png){width=40%}\ -->
 ![](img/EnglishFourthOrder.png)
 
-Sources with more memory are able to capture better 
-the statistical dependencies between the letters, and because 
+Sources with more memory are able to capture better
+the statistical dependencies between the letters, and because
 of this the generated text looks more and more like English.
 
 ### Working with information sources
@@ -964,20 +968,20 @@ you will encounter some typical use-cases.
 1. How to train an information source (e.g. find the probabilities)
 2. Generate sequences from a source
 3. Compute the probability of an existing sequence
-   
+
 #### Training an information source model
 
 By training a model we mean finding the correct value of the parameters.
 In our case, the parameters are the probabilities of messages.
 
-For simplicity, we consider the case of text analysis in a certain language (e.g. English). 
+For simplicity, we consider the case of text analysis in a certain language (e.g. English).
 
 First, we need a large sample of text, representative for the language.
 
 ##### How to find the probabilities of a DMS?
 
-Go through your sample text, count the occurrences of every distinct character, 
-  then divide the counters to the total number of characters. 
+Go through your sample text, count the occurrences of every distinct character,
+  then divide the counters to the total number of characters.
   You obtain the probabilities of each individual characters.
 
 ##### How to find the probabilities of a source with memory of order $m$?
@@ -985,7 +989,7 @@ Go through your sample text, count the occurrences of every distinct character,
 A direct approach to find the transition matrix $[T]$ is as follows:
 
 - First, define each possible state $S_k$. Let's assume there are $N$ states.
-- Go though the sample text, count every occurrence of a group of $(m+1)$ distinct characters. 
+- Go though the sample text, count every occurrence of a group of $(m+1)$ distinct characters.
   Place the counters in an $N \times N$ matrix $[T]$, where each row corresponds to the old state (first $m$ characters of the group), and columns are the new state (last $m$ characters of the group).
 - Normalize each row: divide each row to the sum of the row. This ensures that the resulting row sums up to 1, i.e. it forms a probability distribution.
 
@@ -1006,7 +1010,7 @@ For a source with memory $m$, described by a transition matrix $T$, we generate 
 according to the transition probabilities from the row of $T$ corresponding to the current state.
 Then we update the current state and repeat the process.
 
-For a source with memory, we must also specify how to generate the first $m$ messages, 
+For a source with memory, we must also specify how to generate the first $m$ messages,
 i.e. before we have the first $m$ previous messages which define a full state.
 
 #### Compute the probability of an existing sequence
@@ -1019,13 +1023,13 @@ If we have an information source, how do we compute the probability that the seq
 was generated from the source?
 
 - For a DMS, simply multiply the probabilities of every letter in the sequence
-- For a DMS with memory $m$, look at every group of $(m+1)$ letters 
+- For a DMS with memory $m$, look at every group of $(m+1)$ letters
   and multiply the corresponding probabilities from the transition matrix $T$
 
 Multiplying many probabilities quickly results in a very small number, which makes it
 problematic on a digital device due to numerical errors.
 
-To avoid this, instead of probabilities we can work with the log-probabilities, i.e. $\log(p)$, 
+To avoid this, instead of probabilities we can work with the log-probabilities, i.e. $\log(p)$,
 which allows for much more manageable values. Instead of multiplying probabilities,
 we sum the log-probabilities.
 
@@ -1053,7 +1057,7 @@ $$
 
 - We have piece of text. What language is it written in?
 
-- We model each language with a source with memory, each trained on a sufficiently large 
+- We model each language with a source with memory, each trained on a sufficiently large
   piece of text representative of the language
 
 - We compute the log-probability of the text with every language source model.
@@ -1073,7 +1077,7 @@ Questions:
   3. Compute the entropy in state $S_4$;
   4. Compute the global entropy of the source;
   5. What are the memory order, $m$, and the number of messages of the source, $n$?
-  6. If the source is initially in state $S_2$, in what states and with what probabilities 
+  6. If the source is initially in state $S_2$, in what states and with what probabilities
      will the source be after 2 messages?
 
 ### Chapter summary
@@ -1083,7 +1087,7 @@ Questions:
 - Entropy of a memoryless source: $H(S) = \sum_{k} p_k i(s_k) = -\sum_{k} p_k \log_2(p_k)$
 
 - Properties of entropy:
-    
+
     1. $H(S) \geq  0$
 
     2. Is maximum when all messages have equal probability ($H_{max}(S) = \log(n)$)

@@ -1,15 +1,16 @@
 ---
+file_format: mystnb
 jupytext:
-  formats: ipynb,md,.myst.md:myst
+  formats: ipynb,md:myst
   main_language: python
   text_representation:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.10.3
-kernelspec:
-  display_name: 'Python 3.8.5 64-bit (''base'': conda)'
-  name: python3
+    jupytext_version: 1.14.0
+#kernelspec:
+#  display_name: 'Python 3.8.5 64-bit (''base'': conda)'
+#  name: python3
 ---
 
 ```{math}
@@ -38,8 +39,8 @@ and algorithms for data compression.
 
 ## The role of coding
 
-In the general block diagram of a communication system, 
-the coding block is situated 
+In the general block diagram of a communication system,
+the coding block is situated
 between the information source and the communication channel.
 
 ![Communication system](img/CommBlockDiagram.png){width=35%}
@@ -48,15 +49,15 @@ It's role is to prepare the raw information in order to be transmitted
 over the channel. It has two main jobs:
 
 1. **Source coding**:
-   - Convert source messages to channel symbols, i.e. the actual 
+   - Convert source messages to channel symbols, i.e. the actual
      symbols which the channel knows to transmit.
 
      For example, express the messages in binary form (zeros and ones), for sending over a binary channel.
 
-   - Minimize the number of symbols needed to be transmitted (i.e., data compression). 
+   - Minimize the number of symbols needed to be transmitted (i.e., data compression).
      We don't want to transmit more symbols than necessary to recover the messages at the receiving end.
- 
-   - Adapt probabilities of symbols in order to maximize to maximize mutual information. 
+
+   - Adapt probabilities of symbols in order to maximize to maximize mutual information.
    We will discuss this more in Chapter IV.
 
 2. **Error control coding**
@@ -74,7 +75,7 @@ Its job is to "*undo*" all the coding operations:
 - detect and fix the errors in the received data, based on the algorithms introduced by the coding block
 - convert the channel symbols back into the message representations that the receiver expects
 
-Is it possible to do these two jobs separately, one after another, 
+Is it possible to do these two jobs separately, one after another,
 in two consecutive operations? Yes, as the **source-channel separation theorem** establishes.
 
 We give below only an informal statement of the theorem:
@@ -88,10 +89,10 @@ two tasks **separately**:
 ```
 
 In this chapter, we consider only the source coding algorithms, without any error control.
-Basically, we assume that data transmission is done over an ideal channel with no noise, 
+Basically, we assume that data transmission is done over an ideal channel with no noise,
 and therefore the transmitted symbols are perfectly recovered at the receiver.
 
-In this context, our main concern is how to minimize the number of symbols needed to represent the messages, while making sure that the receiver can decode the messages correctly. 
+In this context, our main concern is how to minimize the number of symbols needed to represent the messages, while making sure that the receiver can decode the messages correctly.
 The advantages of data compression are self-evident:
 
 - Efficiency
@@ -99,7 +100,7 @@ The advantages of data compression are self-evident:
 - Can decode easily
 
 
-## Definitions
+## What is a code
 
 Let's define what coding means from a mathematical perspective.
 
@@ -113,7 +114,7 @@ $$X = \left\lbrace x_1, x_2, ... x_M \right\rbrace$$
 
 The set $X$ is known as the **alphabet of the code**.
 
-For example, for a binary code we have $X = \lbrace 0, 1\rbrace$ 
+For example, for a binary code we have $X = \lbrace 0, 1\rbrace$
 and a possible sequence of symbols is $c = 00101101$
 
 ```{prf:definition} Code definition
@@ -122,24 +123,24 @@ to a set of $N$ sequences of symbols, known as **codewords**:
 
 $$C = \left\lbrace c_1, c_2, ... c_N \right\rbrace$$
 
-An example code mapping is given below: 
+An example code mapping is given below:
 
  Message   |               | Codeword
 ---------: | :----------:  | :----------
-$s_1$      | $\rightarrow$ | $c_1 = x_1x_2x_1...$ 
-$s_2$      | $\rightarrow$ | $c_2 = x_1x_2x_2...$ 
-$\dots$    | $\rightarrow$ | $\dots$ 
-$s_N$      | $\rightarrow$ | $c_N = x_2x_2x_2...$ 
+$s_1$      | $\rightarrow$ | $c_1 = x_1x_2x_1...$
+$s_2$      | $\rightarrow$ | $c_2 = x_1x_2x_2...$
+$\dots$    | $\rightarrow$ | $\dots$
+$s_N$      | $\rightarrow$ | $c_N = x_2x_2x_2...$
 
 ```
 
 The codewords are the sequences of symbols used by the code.
 
-The **codeword length**, which we denote as $l_i$, 
+The **codeword length**, which we denote as $l_i$,
 is the the number of symbols in a given codeword $c_i$.
 
 
-**Encoding** a given message or sequences of messages means 
+**Encoding** a given message or sequences of messages means
 replacing each message with its codeword.
 
 **Decoding** means deducing back the original sequence of messages,
@@ -156,7 +157,7 @@ Nowadays, ASCII is usually replaced by Unicode (UTF-8), which is a more general 
 ### The graph of a code
 
 The codewords of a code can represented as a binary tree.
-We call this representation **the graph of the code**. 
+We call this representation **the graph of the code**.
 
 Example at blackboard
 
@@ -165,7 +166,7 @@ Example at blackboard
 Consider a code for the messages of a discrete memoryless source.
 There are many ways to define the codewords and their mapping to messages.
 
-How to measure representation efficiency of a code? We need this, for example, 
+How to measure representation efficiency of a code? We need this, for example,
 in order to choose the most efficient code out of all possible codes we might define.
 
 The most basic quantity indicating efficiency of a code is the average code length.
@@ -180,7 +181,7 @@ Here, for every codeword $c_i$ we consider its probability
 to be the probability of the corresponding message $p(s_i)$, and its length $l_i$.
 
 A code with smaller average length is better, because it represents sequences of messages
-with less symbols, on average. However, we expect a certain 
+with less symbols, on average. However, we expect a certain
 lower limit to the average length (for example, it cannot be 0, for self-evident reasons).
 This raises the following interesting question:
 
@@ -235,7 +236,7 @@ An uniquely decodable code is non-singular
 The proof is by contradiction:
 
 - If the code is singular, some codewords are not unique (different messages have the same codeword)
-- This means that at decoding we can't decide which of those messages is there. 
+- This means that at decoding we can't decide which of those messages is there.
   This means that the code is not uniquely decodable
 - Therefore, if the code is uniquely-decodable, it must also be non-singular ($A \rightarrow B \Leftrightarrow \overline{B} \rightarrow \overline{A}$)
 ```
@@ -265,7 +266,7 @@ Using the graph of the code, we can use a very simple procedure for decoding any
 TBD: Illustrate at whiteboard
 
 This procedure shows the advantage of instantaneous codes over other codes which
-might be uniquely decodable, but are not instantaneous: 
+might be uniquely decodable, but are not instantaneous:
 instantaneous codes allow for **simple decoding**. There is never any doubt about
 the next message in the sequence.
 
@@ -276,13 +277,13 @@ As a counter example, consider the following uniquely decodable, but non-instant
 
 ### The Kraft inequality theorem
 
-When can an instantaneous code exist? Given a DMS $S$, are we sure we can find an 
+When can an instantaneous code exist? Given a DMS $S$, are we sure we can find an
 instantaneous code for it, and if yes, under which conditions?
 
 The answers to these questions is provided by the Kraft inequality.
 
 ```{prf:theorem} Kraft inequality theorem
-Given a code alphabet of $D$ symbols, there exists an instantaneous code with codeword lengths ${l_1, l_2, \ldots l_n}$ 
+Given a code alphabet of $D$ symbols, there exists an instantaneous code with codeword lengths ${l_1, l_2, \ldots l_n}$
 if and only if the lengths satisfy the following inequality:
 
 $$\sum_i D^{-l_i} \leq 1$$
@@ -302,17 +303,17 @@ Comments on the Kraft inequality:
   all $l_i$ values are too small the sum exceeds 1. Thus, implicitly, it sets a lower limit to the permissible lengths.
 
 - From the proof, it follows that we have equality in the relation
-  
+
   $$ \sum_i D^{-l_i} = 1$$
-  
+
   only if the lowest level of the tree is fully covered.
-  Thus, for an instantaneous code which satisfies Kraft with equality, 
+  Thus, for an instantaneous code which satisfies Kraft with equality,
   all the graph branches terminate with codewords and there are no unused branches.
-  
+
   This makes sense intuitively, since is most economical way: codewords are as short as they can be. Any unused branch means that we can actually make the code shorter by moving some message up the tree.
 
 We have seen that instantaneous codes must obey the Kraft inequality
-But how about uniquely decodable codes? 
+But how about uniquely decodable codes?
 The answer is given by the next theorem.
 
 ```{prf:theorem} McMillan theorem
@@ -336,7 +337,7 @@ instantaneous codes (because any instantaneous code is uniquely decodable, but n
 any uniquely decodable code is instantaneous), using uniquely-decodable codes
 brings **no additional benefit** in average codeword length
 
-- Instead of an uniquely decodable code, we can always use an instantaneous code, 
+- Instead of an uniquely decodable code, we can always use an instantaneous code,
 which has the same lengths, but is much easier to decode.
 
 ### Finding an instantaneous code for given lengths
@@ -361,7 +362,7 @@ to the messages of the source, with additional benefits.
 
 We will discuss now one of the most important aspect of this chapter,
 
-Given a DMS $S$, suppose we want to find an instantenous code for it, 
+Given a DMS $S$, suppose we want to find an instantenous code for it,
 but in such a way as to **minimize the average length** of the code:
 
 $$\overline{l} = \sum_i p(s_i) l_i$$
@@ -376,7 +377,7 @@ $$\begin{aligned} \textbf{minimize } &\sum_i p(s_i) l_i \\
 \textrm{subject to } &\sum_i D^{-l_i} \leq 1
 \end{aligned}$$
 
-This means that we want to find the unknowns $l_i$ 
+This means that we want to find the unknowns $l_i$
 in order to minimize a certain quantity ($\sum_i p(s_i) l_i$),
 but the unknowns must satisfy a certain constraint ($\sum_i D^{-l_i} \leq 1$).
 
@@ -408,7 +409,7 @@ If there are multiple variables $x_i$ in the problem, we take the partial deriva
 $\frac{\partial L(x, \lambda)}{\partial x_i}$ for each one of them, resulting in a larger system.
 ```
 
-Let's use this mathematical formulation to our problem. 
+Let's use this mathematical formulation to our problem.
 In our case, the functions and the variables involved are the following:
 
 - The unknowns $x_i$ are the lengths $l_i$
@@ -439,9 +440,9 @@ $$
 ```
 
 ```{note}
-A keen reader might observe a requirement which our optimization problem does not 
+A keen reader might observe a requirement which our optimization problem does not
 take into account: the variables $l_i$ cannot just take any value, they must be positive integers,
-since they are the length of some codewords. 
+since they are the length of some codewords.
 
 We will discuss this problem in the next paragraphs.
 ```
@@ -464,7 +465,7 @@ $$l_i = -\log(p(s_i))$$
 Let us discuss some intuitions and consequences related to this result:
 
 - Using $l_i = -\log(p(s_i))$ satisfies Kraft with equality, so the lengths cannot be any shorter than that, in general:
-  
+
   $$
   \textrm{subject to } \sum_i D^{-(-\log(p(s_i))))} = 1
   $$
@@ -516,12 +517,12 @@ $$H(S) \leq \overline{l}$$
 You can think of the relation between information (entropy) and code length
 using the analogy of water and a bottle.
 
-We use a code in order to represent and transfer information, 
-just like we use a bottle to carry and store some shapeless quantity of water. 
-Information is not the codewords. 
+We use a code in order to represent and transfer information,
+just like we use a bottle to carry and store some shapeless quantity of water.
+Information is not the codewords.
 Information is a mathematical quantity implied by the random occurrence of messages, and the codewords are just means of transportation of information.
 
-A quantity of 1 liter of water can be carried with any bottle of size $\geq$ 1 liter, but it does not fit in any bottle smaller than this. 
+A quantity of 1 liter of water can be carried with any bottle of size $\geq$ 1 liter, but it does not fit in any bottle smaller than this.
 Similarly, an amount of information (entropy) can be encoded with a code
 for which the average length is larger or equal, but does not "fit" in any code smaller than this.
 ```
@@ -587,7 +588,7 @@ This leads to the Shannon coding algorithm described below.
 3. For every message $s_i$ find the codeword as follows:
 
     1. sum all the probabilities up to this message (not including current)
-    2. multiply the sum value with $2^{l_i}$  
+    2. multiply the sum value with $2^{l_i}$
     3. floor the result, convert to binary, retain first $l_i$ bits
 
 ```
@@ -627,7 +628,7 @@ $$\overline{l} = \sum_i p(s_i) l_i = H(S) + \underbrace{\sum_i p(s_i) \epsilon_i
 * Average length of Shannon code is **at most 1 bit longer** than the minimum possible value
     * That's quite efficient
     * There exist even better codes, in general
-    
+
 * Q: Can we get even closer to the minimum length?
 * A: Yes, as close as we want!
     * In theory, at least ... :)
@@ -637,12 +638,12 @@ $$\overline{l} = \sum_i p(s_i) l_i = H(S) + \underbrace{\sum_i p(s_i) \epsilon_i
 
 Shannon's first theorem (coding theorem for noiseless channels):
 
-* It is possible to encode an infinitely long sequences of messages 
-from a source S with an average length 
-as close as desired to H(S), 
+* It is possible to encode an infinitely long sequences of messages
+from a source S with an average length
+as close as desired to H(S),
 but never below H(S)
 
-\ 
+\
 \
 
 Key points:
@@ -681,7 +682,7 @@ $$\overline{l_{S}} \to H(S)$$ \qed
 
 Comments:
 
- * Shannon's first theorem shows that we can approach H(S) 
+ * Shannon's first theorem shows that we can approach H(S)
  to any desired accuracy using extensions of large order of the source
      * This is not practical: the size of $S^n$ gets too large for large $n$
      * Other (better) algorithms than Shannon coding are used in practice to approach $H(S)$
@@ -693,13 +694,13 @@ Comments:
 * Consider a source with probabilities $p(s_i)$
 * We use a code designed for a different source: $l_i = -\log(q(s_i))$
 * The message probabilities are $p(s_i)$ but the code is designed for $q(s_i)$
-\ 
+\
 
 * Examples:
     * design a code based on a sample data file (like in lab)
     * but we use it to encode various other files => probabilities might differ slightly
     * e.g. design a code based a Romanian text, but encode a text in English
-\ 
+\
 
 * What happens?
 
@@ -711,7 +712,7 @@ Comments:
 * If code were optimal, best average length = entropy $H(S)$:
 $$\overline{l_{optimal}} = -\sum{p(s_i) \log{p(s_i)}}$$
 
-* But the actual average length we obtain is: 
+* But the actual average length we obtain is:
 $$\overline{l_{actual}} = \sum{p(s_i) l_i} = -\sum{p(s_i) \log{q(s_i)}}$$
 
 ### The Kullback–Leibler distance
@@ -723,8 +724,8 @@ $$\overline{l_{actual}} - \overline{l_{optimal}} = \sum_i{p(s_i) \log(\frac{p(s_
 * The difference  = **the Kullback-Leibler distance** between the two distributions
     * is always $\geq 0$ => improper code means increased $\overline{l}$ (bad)
     * distributions more different => larger average length (worse)
-    
-* The KL distance between the distributions = the number of extra bits used because 
+
+* The KL distance between the distributions = the number of extra bits used because
 of a code optimized for a different distribution $q(s_i)$ than the true distribution
 of our data $p(s_i)$
 
@@ -790,7 +791,7 @@ General Huffman coding procedure for codes with $M$ symbols:
 * **Important**: at the final step must have $M$ remaining values
     * May be necessary to add *virtual* messages with probability 0 at the end of the initial list,
     to end up with exactly $M$ messages in the last step
-    
+
 * Example : blackboard
 
 ### Example: compare Huffman and Shannon-Fano
@@ -816,17 +817,17 @@ $$p(x_i) = \frac{\overline{l_{x_i}}}{\overline{l}}$$
 * Consider that the messages are already written in a binary code
     * Example: characters in ASCII code
 
-* Source coding  = remapping the original codewords to other codewords 
+* Source coding  = remapping the original codewords to other codewords
     * The new codewords are shorter, on average
-    
+
 * This means data **compression**
     * Just like the example in lab session
-    
+
 * What does data compression remove?
     * Removes **redundancy**: unused bits, patterns, regularities etc.
     * If you can guess somehow the next bit in a sequence, it means the bit is not really necessary,
     so compression will remove it
-    * The compressed sequence looks like random data: impossible to guess, 
+    * The compressed sequence looks like random data: impossible to guess,
     no discernable patterns
 
 ### Discussion: data compression with coding

@@ -3,8 +3,8 @@ root: content/intro
 options:
   numbered: 3
 chapters:
-- file: content/IT/InformationSources
-- file: content/IT/SourceCoding
+- file: content/IT/InformationSources.myst.md
+- file: content/IT/SourceCoding.myst.md
 
 #  - caption: Error Control Coding
 #    numbered: 3
