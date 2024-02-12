@@ -1,0 +1,1420 @@
+
+
+<!DOCTYPE html>
+
+
+<html data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>2. Source Coding &#8212; my-book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.8.2/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/IT/SourceCoding.myst';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="1. Discrete Information Sources" href="InformationSources.myst.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="None"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="my-book - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="my-book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Lecture notes on Information Theory
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="InformationSources.myst.html">1. Discrete Information Sources</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. Source Coding</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/IT/SourceCoding.myst.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Source Coding</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-coding">2.1. The role of coding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-code">2.2. What is a code</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-graph-of-a-code">2.2.1. The graph of a code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#average-code-length">2.2.2. Average code length</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instantaneous-codes">2.2.3. Instantaneous codes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-based-decoding-of-instantaneous-codes">2.2.4. Graph-based decoding of instantaneous codes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-kraft-inequality-theorem">2.2.5. The Kraft inequality theorem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-an-instantaneous-code-for-given-lengths">2.2.6. Finding an instantaneous code for given lengths</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimal-codes">2.2.7. Optimal codes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-method-of-lagrange-multipliers">The method of Lagrange multipliers</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minimal-average-length">Minimal average length</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#efficiency-and-redundancy-of-a-code">Efficiency and redundancy of a code</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#optimal-and-non-optimal-codes">Optimal and non-optimal codes</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shannon-coding">2.2.8. Shannon coding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shannon-s-first-theorem">2.2.9. Shannon’s first theorem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.2.10. Shannon’s first theorem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.2.11. Shannon’s first theorem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2.12. Shannon’s first theorem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-with-the-wrong-code">2.2.13. Coding with the wrong code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.2.14. Coding with the wrong code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-kullbackleibler-distance">2.2.15. The Kullback–Leibler distance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.2.16. The Kullback–Leibler distance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shannon-fano-coding-binary">2.2.17. Shannon-Fano coding (binary)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#huffman-coding-binary">2.2.18. Huffman coding (binary)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-of-huffman-coding">2.2.19. Properties of Huffman coding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#huffman-coding-m-symbols">2.2.20. Huffman coding (M symbols)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-compare-huffman-and-shannon-fano">2.2.21. Example: compare Huffman and Shannon-Fano</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-of-symbols">2.2.22. Probability of symbols</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#source-coding-as-data-compression">2.2.23. Source coding as data compression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discussion-data-compression-with-coding">2.2.24. Discussion: data compression with coding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-codes-arithmetic-coding">2.2.25. Other codes: arithmetic coding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chapter-summary">2.2.26. Chapter summary</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{split}\newcommand{\snII}[5]{#1: \left( \begin{matrix} {#2} &amp; {#4} \\ #3 &amp; #5 \end{matrix} \right)}
+\newcommand{\snIII}[7]{#1: \left( \begin{matrix} {#2} &amp; {#4} &amp; {#6} \\ #3 &amp; #5 &amp; #7 \end{matrix} \right)}
+\newcommand{\snIV}[9]{#1:  \left( \begin{matrix} {#2} &amp; {#4} &amp; {#6} &amp; {#8} \\ #3 &amp; #5 &amp; #7 &amp; #9 \end{matrix} \right)}\end{split}\\\begin{split}\newcommand{\sII}[3] {#1: \left( \begin{matrix} s_1 &amp; s_2 \\ #2 &amp; #3 \end{matrix} \right)}
+\newcommand{\sIII}[4] {#1: \left( \begin{matrix} s_1 &amp; s_2 &amp; s_3 \\ #2 &amp; #3 &amp; #4 \end{matrix} \right)}
+\newcommand{\sIV}[5] {#1: \left( \begin{matrix} s_1 &amp; s_2 &amp; s_3 &amp; s_4 \\ #2 &amp; #3 &amp; #4  &amp; #5 \end{matrix} \right)}
+\newcommand{\sVI}[7] {#1: \left( \begin{matrix} s_1 &amp; s_2 &amp; s_3 &amp; s_4 &amp; s_5 &amp; s_6 \\ #2 &amp; #3 &amp; #4 &amp; #5 &amp; #6 &amp; #7\end{matrix} \right)}
+\newcommand{\sVIII}[9] {#1: \left( \begin{matrix} s_1 &amp; s_2 &amp; s_3 &amp; s_4 &amp; s_5 &amp; s_6 &amp; s_7 &amp; s_8\\ #2 &amp; #3 &amp; #4 &amp; #5 &amp; #6 &amp; #7 &amp; #8 &amp; #9 \end{matrix} \right)}
+\newcommand{\fIoII}{\frac{1}{2}}
+\newcommand{\fIoIII}{\frac{1}{3}}
+\newcommand{\fIoIV}{\frac{1}{4}}
+\newcommand{\fIoV}{\frac{1}{5}}
+\newcommand{\fIoVI}{\frac{1}{6}}
+\newcommand{\fIoVII}{\frac{1}{7}}
+\newcommand{\fIoVIII}{\frac{1}{8}}\end{split}\end{aligned}\end{align} \]</div>
+<section class="tex2jax_ignore mathjax_ignore" id="source-coding">
+<h1><span class="section-number">2. </span>Source Coding<a class="headerlink" href="#source-coding" title="Permalink to this headline">#</a></h1>
+<p>In this chapter we take a look at the basic principles
+and algorithms for data compression.</p>
+<section id="the-role-of-coding">
+<h2><span class="section-number">2.1. </span>The role of coding<a class="headerlink" href="#the-role-of-coding" title="Permalink to this headline">#</a></h2>
+<p>In the general block diagram of a communication system,
+the coding block is situated
+between the information source and the communication channel.</p>
+<p><img alt="Communication system" src="../../_images/CommBlockDiagram.png" />{width=35%}</p>
+<p>It’s role is to prepare the raw information in order to be transmitted
+over the channel. It has two main jobs:</p>
+<ol class="arabic">
+<li><p><strong>Source coding</strong>:</p>
+<ul>
+<li><p>Convert source messages to channel symbols, i.e. the actual
+symbols which the channel knows to transmit.</p>
+<p>For example, express the messages in binary form (zeros and ones), for sending over a binary channel.</p>
+</li>
+<li><p>Minimize the number of symbols needed to be transmitted (i.e., data compression).
+We don’t want to transmit more symbols than necessary to recover the messages at the receiving end.</p></li>
+<li><p>Adapt probabilities of symbols in order to maximize to maximize mutual information.
+We will discuss this more in Chapter IV.</p></li>
+</ul>
+</li>
+<li><p><strong>Error control coding</strong></p>
+<ul class="simple">
+<li><p>Protect the information against channel errors</p></li>
+<li><p>Also known as “<em>channel coding</em>”</p></li>
+</ul>
+</li>
+</ol>
+<p>Basically, source coding refers to all the procedures required to express
+the source messages as channel symbols in the most efficient way possible,
+while error control coding refers to all the algorithms used to
+protect the data against errors.</p>
+<p>The coding block has a corresponding decoding block on the receiving end.
+Its job is to “<em>undo</em>” all the coding operations:</p>
+<ul class="simple">
+<li><p>detect and fix the errors in the received data, based on the algorithms introduced by the coding block</p></li>
+<li><p>convert the channel symbols back into the message representations that the receiver expects</p></li>
+</ul>
+<p>Is it possible to do these two jobs separately, one after another,
+in two consecutive operations? Yes, as the <strong>source-channel separation theorem</strong> establishes.</p>
+<p>We give below only an informal statement of the theorem:</p>
+<div class="proof theorem admonition" id="theorem-0">
+<p class="admonition-title"><span class="caption-number">Theorem 2.1 </span> (Source-channel separation theorem)</p>
+<section class="theorem-content" id="proof-content">
+<p>It is possible to obtain the best reliable communication by performing the
+two tasks <strong>separately</strong>:</p>
+<ol class="arabic simple">
+<li><p>Source coding: to minimize number of symbols needed</p></li>
+<li><p>Error control coding (channel coding): to provide protection against errors happening on the channel</p></li>
+</ol>
+</section>
+</div><p>In this chapter, we consider only the source coding algorithms, without any error control.
+Basically, we assume that data transmission is done over an ideal channel with no noise,
+and therefore the transmitted symbols are perfectly recovered at the receiver.</p>
+<p>In this context, our main concern is how to minimize the number of symbols needed to represent the messages, while making sure that the receiver can decode the messages correctly.
+The advantages of data compression are self-evident:</p>
+<ul class="simple">
+<li><p>Efficiency</p></li>
+<li><p>Short communication times</p></li>
+<li><p>Can decode easily</p></li>
+</ul>
+</section>
+<section id="what-is-a-code">
+<h2><span class="section-number">2.2. </span>What is a code<a class="headerlink" href="#what-is-a-code" title="Permalink to this headline">#</a></h2>
+<p>Let’s define what coding means from a mathematical perspective.</p>
+<p>Consider an input information source with the set of messages:</p>
+<div class="math notranslate nohighlight">
+\[S = \left\lbrace s_1, s_2, ... s_N \right\rbrace\]</div>
+<p>and suppose we would like to express the messages as a sequence of the following <strong>code symbols</strong>:</p>
+<div class="math notranslate nohighlight">
+\[X = \left\lbrace x_1, x_2, ... x_M \right\rbrace\]</div>
+<p>The set <span class="math notranslate nohighlight">\(X\)</span> is known as the <strong>alphabet of the code</strong>.</p>
+<p>For example, for a binary code we have <span class="math notranslate nohighlight">\(X = \lbrace 0, 1\rbrace\)</span>
+and a possible sequence of symbols is <span class="math notranslate nohighlight">\(c = 00101101\)</span></p>
+<div class="proof definition admonition" id="definition-1">
+<p class="admonition-title"><span class="caption-number">Definition 2.1 </span> (Code definition)</p>
+<section class="definition-content" id="proof-content">
+<p>A <strong>code</strong> is a mapping from the set <span class="math notranslate nohighlight">\(S\)</span> of <span class="math notranslate nohighlight">\(N\)</span> messages
+to a set of <span class="math notranslate nohighlight">\(N\)</span> sequences of symbols, known as <strong>codewords</strong>:</p>
+<div class="math notranslate nohighlight">
+\[C = \left\lbrace c_1, c_2, ... c_N \right\rbrace\]</div>
+<p>An example code mapping is given below:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="text-right head"><p>Message</p></th>
+<th class="text-center head"><p></p></th>
+<th class="text-left head"><p>Codeword</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-right"><p><span class="math notranslate nohighlight">\(s_1\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\rightarrow\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(c_1 = x_1x_2x_1...\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p><span class="math notranslate nohighlight">\(s_2\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\rightarrow\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(c_2 = x_1x_2x_2...\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p><span class="math notranslate nohighlight">\(\dots\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\rightarrow\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\dots\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p><span class="math notranslate nohighlight">\(s_N\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\rightarrow\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(c_N = x_2x_2x_2...\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</div><p>The codewords are the sequences of symbols used by the code.</p>
+<p>The <strong>codeword length</strong>, which we denote as <span class="math notranslate nohighlight">\(l_i\)</span>,
+is the the number of symbols in a given codeword <span class="math notranslate nohighlight">\(c_i\)</span>.</p>
+<p><strong>Encoding</strong> a given message or sequences of messages means
+replacing each message with its codeword.</p>
+<p><strong>Decoding</strong> means deducing back the original sequence of messages,
+given a sequence of symbols.</p>
+<p>As an example, the ASCII code is a widely-used code for encoding characters,
+consisting of 256 codewords (stored on 1 byte):</p>
+<!-- ![ASCII code (partial)](img/ASCIIcode.png){width=50%} -->
+<p><img alt="ASCII code (partial)" src="../../_images/ASCIIcode.png" /></p>
+<p>Nowadays, ASCII is usually replaced by Unicode (UTF-8), which is a more general code using 65536 codewords (stored on 2 bytes), allowing for many more letters used in languages around the globe.</p>
+<section id="the-graph-of-a-code">
+<h3><span class="section-number">2.2.1. </span>The graph of a code<a class="headerlink" href="#the-graph-of-a-code" title="Permalink to this headline">#</a></h3>
+<p>The codewords of a code can represented as a binary tree.
+We call this representation <strong>the graph of the code</strong>.</p>
+<p>Example at blackboard</p>
+</section>
+<section id="average-code-length">
+<h3><span class="section-number">2.2.2. </span>Average code length<a class="headerlink" href="#average-code-length" title="Permalink to this headline">#</a></h3>
+<p>Consider a code for the messages of a discrete memoryless source.
+There are many ways to define the codewords and their mapping to messages.</p>
+<p>How to measure representation efficiency of a code? We need this, for example,
+in order to choose the most efficient code out of all possible codes we might define.</p>
+<p>The most basic quantity indicating efficiency of a code is the average code length.</p>
+<div class="proof definition admonition" id="definition-2">
+<p class="admonition-title"><span class="caption-number">Definition 2.2 </span> (Average code length)</p>
+<section class="definition-content" id="proof-content">
+<p>Given a code, the <strong>average code length</strong> is the average of the codeword lengths:</p>
+<div class="math notranslate nohighlight">
+\[\overline{l} = \sum_i p(s_i) l_i\]</div>
+</section>
+</div><p>Here, for every codeword <span class="math notranslate nohighlight">\(c_i\)</span> we consider its probability
+to be the probability of the corresponding message <span class="math notranslate nohighlight">\(p(s_i)\)</span>, and its length <span class="math notranslate nohighlight">\(l_i\)</span>.</p>
+<p>A code with smaller average length is better, because it represents sequences of messages
+with less symbols, on average. However, we expect a certain
+lower limit to the average length (for example, it cannot be 0, for self-evident reasons).
+This raises the following interesting question:</p>
+<blockquote>
+<div><p>Given a source <span class="math notranslate nohighlight">\(S\)</span>, how small can the average length be?</p>
+</div></blockquote>
+<p>This is a fundamental question, to which we will provide an answer later in this chapter.</p>
+</section>
+<section id="instantaneous-codes">
+<h3><span class="section-number">2.2.3. </span>Instantaneous codes<a class="headerlink" href="#instantaneous-codes" title="Permalink to this headline">#</a></h3>
+<p>We introduce another set of useful definitions regarding the codeword structure.</p>
+<p>A code is:</p>
+<ul class="simple">
+<li><p><strong>non-singular</strong>: all codewords are different</p></li>
+<li><p><strong>uniquely decodable</strong>: for any received sequence of symbols, there is only one corresponding sequence of messages</p>
+<ul>
+<li><p>i.e. no sequence of messages produces the same sequence of symbols</p></li>
+<li><p>i.e. there is never a confusion at decoding</p></li>
+</ul>
+</li>
+<li><p><strong>instantaneous</strong> (also known as <strong>prefix-free</strong>): no codeword is prefix to another code</p>
+<ul>
+<li><p>A <strong>prefix</strong> = a codeword which is the beginning of another codeword</p></li>
+</ul>
+</li>
+</ul>
+<p>Examples: at the blackboard</p>
+<p>The follwing relations exist between these types of codes.</p>
+<div class="proof theorem admonition" id="theorem-3">
+<p class="admonition-title"><span class="caption-number">Theorem 2.2 </span> (Instantaneous codes are uniquely decodable)</p>
+<section class="theorem-content" id="proof-content">
+<p>An instantaneous code is uniquely decodable</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. There is exactly one codeword matching the beginning of the sequence:</p>
+<ul class="simple">
+<li><p>Suppose the true initial codeword is <strong>c</strong></p></li>
+<li><p>There can’t be a shorter codeword <strong>c’</strong>, since it would be prefix to <strong>c</strong></p></li>
+<li><p>There can’t be a longer codeword <strong>c’’</strong>, since <strong>c</strong> would be prefix to it</p></li>
+</ul>
+<p>Once we find the first codeword, write down the corresponding message and remove the codeword from the sequence.</p>
+<p>The remaining part is another sequence and, by the same argument, there is exactly one codeword matching the new beginning, and so on.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The converse is not necessary true; there exist uniquely decodable codes which
+are not instantaneous.</p>
+</div>
+<div class="proof theorem admonition" id="theorem-4">
+<p class="admonition-title"><span class="caption-number">Theorem 2.3 </span> (Uniquely decodable codes are non-singular)</p>
+<section class="theorem-content" id="proof-content">
+<p>An uniquely decodable code is non-singular</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. The proof is by contradiction:</p>
+<ul class="simple">
+<li><p>If the code is singular, some codewords are not unique (different messages have the same codeword)</p></li>
+<li><p>This means that at decoding we can’t decide which of those messages is there.
+This means that the code is not uniquely decodable</p></li>
+<li><p>Therefore, if the code is uniquely-decodable, it must also be non-singular (<span class="math notranslate nohighlight">\(A \rightarrow B \Leftrightarrow \overline{B} \rightarrow \overline{A}\)</span>)</p></li>
+</ul>
+</div>
+<p>We can summarize the relation between these three code types as follows:</p>
+<p>Instantaneous <span class="math notranslate nohighlight">\(\subset\)</span> uniquely decodable <span class="math notranslate nohighlight">\(\subset\)</span> non-singular</p>
+</section>
+<section id="graph-based-decoding-of-instantaneous-codes">
+<h3><span class="section-number">2.2.4. </span>Graph-based decoding of instantaneous codes<a class="headerlink" href="#graph-based-decoding-of-instantaneous-codes" title="Permalink to this headline">#</a></h3>
+<p>Using the graph of the code, we can use a very simple procedure for decoding any instantaneous code:</p>
+<div class="proof algorithm admonition" id="graph-based-decoding">
+<p class="admonition-title"><span class="caption-number">Algorithm 2.1 </span> (Graph-based decoding of instantaneous codes)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> An input symbol sequence, the graph of an instantaneous code</p>
+<p><strong>Output</strong> The decoded message sequence</p>
+<ol class="arabic simple">
+<li><p>Start at the root of the tree graph</p></li>
+<li><p>Follow the edges in the tree according to the next symbols in the sequence</p></li>
+<li><p>When a message is reached in the tree, write it down and go back to the root</p></li>
+<li><p>Continue until the end of the symbol sequence</p></li>
+</ol>
+</section>
+</div><p>TBD: Illustrate at whiteboard</p>
+<p>This procedure shows the advantage of instantaneous codes over other codes which
+might be uniquely decodable, but are not instantaneous:
+instantaneous codes allow for <strong>simple decoding</strong>. There is never any doubt about
+the next message in the sequence.</p>
+<p>This decoding scheme is also showing why these codes are named “<em>instantaneous</em>”:
+a codeword can be decoded as soon as it is fully received, immediately, without any delay.</p>
+<p>As a counter example, consider the following uniquely decodable, but non-instantaneous code: <span class="math notranslate nohighlight">\(\left\lbrace 0, 01, 011, 1110 \right\rbrace\)</span>. When you read the first <span class="math notranslate nohighlight">\(0\)</span>, you cannot decode it yet, because you need to wait the next bits to understand how to segment the sequence. This implies that the decoding has some delay.</p>
+</section>
+<section id="the-kraft-inequality-theorem">
+<h3><span class="section-number">2.2.5. </span>The Kraft inequality theorem<a class="headerlink" href="#the-kraft-inequality-theorem" title="Permalink to this headline">#</a></h3>
+<p>When can an instantaneous code exist? Given a DMS <span class="math notranslate nohighlight">\(S\)</span>, are we sure we can find an
+instantaneous code for it, and if yes, under which conditions?</p>
+<p>The answers to these questions is provided by the Kraft inequality.</p>
+<div class="proof theorem admonition" id="theorem-6">
+<p class="admonition-title"><span class="caption-number">Theorem 2.4 </span> (Kraft inequality theorem)</p>
+<section class="theorem-content" id="proof-content">
+<p>Given a code alphabet of <span class="math notranslate nohighlight">\(D\)</span> symbols, there exists an instantaneous code with codeword lengths <span class="math notranslate nohighlight">\({l_1, l_2, \ldots l_n}\)</span>
+if and only if the lengths satisfy the following inequality:</p>
+<div class="math notranslate nohighlight">
+\[\sum_i D^{-l_i} \leq 1\]</div>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. At blackboard</p>
+</div>
+<p>Comments on the Kraft inequality:</p>
+<ul>
+<li><p>If lengths do not satisfy the relation, no instantaneous code exists with these lengths</p></li>
+<li><p>If the lengths of a code satisfy the relation, that code can be instantaneous or not (there   exists an instantaneous code, but not necessarily that one).
+Keep in mind that the Kraft inequality only looks at the lengths of the codewords, not
+at their actual symbols, so it can only say something about the lengths, not about the actual codewords</p></li>
+<li><p>The Kraft inequality implies that the codewords lengths cannot be all very small, because if
+all <span class="math notranslate nohighlight">\(l_i\)</span> values are too small the sum exceeds 1. Thus, implicitly, it sets a lower limit to the permissible lengths.</p></li>
+<li><p>From the proof, it follows that we have equality in the relation</p>
+<div class="math notranslate nohighlight">
+\[ \sum_i D^{-l_i} = 1\]</div>
+<p>only if the lowest level of the tree is fully covered.
+Thus, for an instantaneous code which satisfies Kraft with equality,
+all the graph branches terminate with codewords and there are no unused branches.</p>
+<p>This makes sense intuitively, since is most economical way: codewords are as short as they can be. Any unused branch means that we can actually make the code shorter by moving some message up the tree.</p>
+</li>
+</ul>
+<p>We have seen that instantaneous codes must obey the Kraft inequality
+But how about uniquely decodable codes?
+The answer is given by the next theorem.</p>
+<div class="proof theorem admonition" id="theorem-7">
+<p class="admonition-title"><span class="caption-number">Theorem 2.5 </span> (McMillan theorem)</p>
+<section class="theorem-content" id="proof-content">
+<p>Any uniquely decodable code <strong>also</strong> satisfies the Kraft inequality:</p>
+<div class="math notranslate nohighlight">
+\[ \sum_i D^{-l_i} \leq 1.\]</div>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. No proof given</p>
+</div>
+<p>Consequences of the McMillan theorem:</p>
+<ul class="simple">
+<li><p>For every uniquely decodable code, there exists in instantaneous code
+with the same lengths. This is because the lengths <span class="math notranslate nohighlight">\(l_i\)</span> must satisfy the same
+relation both for unique-decodable and for instantanous codes.</p></li>
+<li><p>Thus, even though the class of uniquely decodable codes is larger than that of
+instantaneous codes (because any instantaneous code is uniquely decodable, but not
+any uniquely decodable code is instantaneous), using uniquely-decodable codes
+brings <strong>no additional benefit</strong> in average codeword length</p></li>
+<li><p>Instead of an uniquely decodable code, we can always use an instantaneous code,
+which has the same lengths, but is much easier to decode.</p></li>
+</ul>
+</section>
+<section id="finding-an-instantaneous-code-for-given-lengths">
+<h3><span class="section-number">2.2.6. </span>Finding an instantaneous code for given lengths<a class="headerlink" href="#finding-an-instantaneous-code-for-given-lengths" title="Permalink to this headline">#</a></h3>
+<p>How to find codewords with code lengths <span class="math notranslate nohighlight">\(\{l_i\}\)</span>?</p>
+<p>In general, we may use the following procedure:</p>
+<div class="proof algorithm admonition" id="algorithm-8">
+<p class="admonition-title"><span class="caption-number">Algorithm 2.2 </span></p>
+<section class="algorithm-content" id="proof-content">
+<ol class="arabic simple">
+<li><p>Check that lengths satisfy Kraft relation</p></li>
+<li><p>Draw graph with the specified lengths</p></li>
+<li><p>Assign codewords to the graph terminations</p></li>
+</ol>
+</section>
+</div><p>Note that this procedure only gives us the codewords, not the mapping
+to a particular set of messages.</p>
+<p>In practice, there might be more elaborate ways to find the codewords and map them
+to the messages of the source, with additional benefits.</p>
+</section>
+<section id="optimal-codes">
+<h3><span class="section-number">2.2.7. </span>Optimal codes<a class="headerlink" href="#optimal-codes" title="Permalink to this headline">#</a></h3>
+<p>We will discuss now one of the most important aspect of this chapter,</p>
+<p>Given a DMS <span class="math notranslate nohighlight">\(S\)</span>, suppose we want to find an instantenous code for it,
+but in such a way as to <strong>minimize the average length</strong> of the code:</p>
+<div class="math notranslate nohighlight">
+\[\overline{l} = \sum_i p(s_i) l_i\]</div>
+<p>How can we find such an optimal code?</p>
+<p>Given that it should be instantaneous, the codeword lengths must obey the Kraft inequality.</p>
+<p>In mathenatical terms, we formulate the problem as a <strong>constrained optimization problem</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned} \textbf{minimize } &amp;\sum_i p(s_i) l_i \\
+\textrm{subject to } &amp;\sum_i D^{-l_i} \leq 1
+\end{aligned}\end{split}\]</div>
+<p>This means that we want to find the unknowns <span class="math notranslate nohighlight">\(l_i\)</span>
+in order to minimize a certain quantity (<span class="math notranslate nohighlight">\(\sum_i p(s_i) l_i\)</span>),
+but the unknowns must satisfy a certain constraint (<span class="math notranslate nohighlight">\(\sum_i D^{-l_i} \leq 1\)</span>).</p>
+<section id="the-method-of-lagrange-multipliers">
+<h4>The method of Lagrange multipliers<a class="headerlink" href="#the-method-of-lagrange-multipliers" title="Permalink to this headline">#</a></h4>
+<p>To solve this problem, we use a standard mathematical tool known as the <strong>method of Lagrange multipliers</strong>.</p>
+<div class="proof definition admonition" id="definition-9">
+<p class="admonition-title"><span class="caption-number">Definition 2.3 </span> (Lagrange multipliers for constrained optimization problems)</p>
+<section class="definition-content" id="proof-content">
+<p>To solve the following constrained optimization problem:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned} \textbf{minimize } &amp; f(x) \\
+\textrm{subject to } &amp; g(x) = 0
+\end{aligned}\end{split}\]</div>
+<p>one must build a new function <span class="math notranslate nohighlight">\(L(x, \lambda)\)</span> (known as the <strong>Lagrangean function</strong>):</p>
+<div class="math notranslate nohighlight">
+\[L(x, \lambda) = f(x) - \lambda g(x)\]</div>
+<p>The solution <span class="math notranslate nohighlight">\(x\)</span> of the original problem is among the solutions of the system:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{cases} \frac{\partial L(x, \lambda)}{\partial x} &amp;= 0 \\
+\frac{\partial L(x, \lambda)}{\partial \lambda} &amp;= 0
+\end{cases}
+\end{split}\]</div>
+<p>If there are multiple variables <span class="math notranslate nohighlight">\(x_i\)</span> in the problem, we take the partial derivative
+<span class="math notranslate nohighlight">\(\frac{\partial L(x, \lambda)}{\partial x_i}\)</span> for each one of them, resulting in a larger system.</p>
+</section>
+</div><p>Let’s use this mathematical formulation to our problem.
+In our case, the functions and the variables involved are the following:</p>
+<ul class="simple">
+<li><p>The unknowns <span class="math notranslate nohighlight">\(x_i\)</span> are the lengths <span class="math notranslate nohighlight">\(l_i\)</span></p></li>
+<li><p>The function to minimize is <span class="math notranslate nohighlight">\(f(x) = f(l_i) = \overline{l} = \sum_i p(s_i) l_i\)</span></p></li>
+<li><p>The constraint is <span class="math notranslate nohighlight">\(g(x) = g(l_i) = \sum_i D^{-l_i} - 1\)</span></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The method of Lagrange multipliers, as presented below, specifies an equality constraint:</p>
+<div class="math notranslate nohighlight">
+\[
+\textrm{subject to } g(x) = 0
+\]</div>
+<p>But in our optimization problem, we have an inequality constraint (<span class="math notranslate nohighlight">\(\leq\)</span> instead of <span class="math notranslate nohighlight">\(=\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[
+\textrm{subject to } \sum_i D^{-l_i} \leq 1
+\]</div>
+<p>However, as we discussed earlier, having the Kraft inequality smaller than <span class="math notranslate nohighlight">\(1\)</span> means that we have
+some coding inefficiency, since some branches of the graph code remaining unconnected.
+When we seek to minimize the average length, this cannot happen. For this reason,
+we can safely use equality here in the Kraft constraint:</p>
+<div class="math notranslate nohighlight">
+\[
+\textrm{subject to } \sum_i D^{-l_i} = 1
+\]</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A keen reader might observe a requirement which our optimization problem does not
+take into account: the variables <span class="math notranslate nohighlight">\(l_i\)</span> cannot just take any value, they must be positive integers,
+since they are the length of some codewords.</p>
+<p>We will discuss this problem in the next paragraphs.</p>
+</div>
+<p><strong>TBD: Solve at blackboard</strong></p>
+<p>The resulting optimal codeword lengths are:</p>
+<div class="math notranslate nohighlight">
+\[
+l_i = -\log(p(s_i))
+\]</div>
+<div class="proof theorem admonition" id="theorem-10">
+<p class="admonition-title"><span class="caption-number">Theorem 2.6 </span></p>
+<section class="theorem-content" id="proof-content">
+<p>The optimal codeword lenghts <span class="math notranslate nohighlight">\(l_i\)</span> for the messages of a DMS in order to minimize the average codeword length <span class="math notranslate nohighlight">\(\overline{l}\)</span> are:</p>
+<div class="math notranslate nohighlight">
+\[l_i = -\log(p(s_i))\]</div>
+</section>
+</div><p>Let us discuss some intuitions and consequences related to this result:</p>
+<ul>
+<li><p>Using <span class="math notranslate nohighlight">\(l_i = -\log(p(s_i))\)</span> satisfies Kraft with equality, so the lengths cannot be any shorter than that, in general:</p>
+<div class="math notranslate nohighlight">
+\[
+  \textrm{subject to } \sum_i D^{-(-\log(p(s_i))))} = 1
+  \]</div>
+</li>
+<li><p>A message with higher probability must have a shorter codeword, while a message with lower probability has a longer codeword.
+This makes sense because messages we can afford to use a longer codeword for messages which appear rarely in a sequence.</p></li>
+</ul>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>Think of examples in languages.</p>
+<ul class="simple">
+<li><p>words which are very common are usually short: “yes”, “no”, “and”, “the” “with”</p></li>
+<li><p>we often use abbreviations to replace longer words which we must use often</p></li>
+</ul>
+</aside>
+</section>
+<section id="minimal-average-length">
+<h4>Minimal average length<a class="headerlink" href="#minimal-average-length" title="Permalink to this headline">#</a></h4>
+<p>The most important consequence of this result gives us a functional
+definition of the entropy, i.e. it tells us what the entropy really
+says about an information source.</p>
+<p>If the optimal values are <span class="math notranslate nohighlight">\(l_i = -\log(p(s_i))\)</span>, then the minimal average length is:</p>
+<div class="math notranslate nohighlight">
+\[\min \overline{l} = \sum_i p(s_i) l_i = -\sum_i p(s_i) \log(p(s_i)) = H(S)\]</div>
+<div class="proof corollary admonition" id="corollary-11">
+<p class="admonition-title"><span class="caption-number">Corollary 2.1 </span></p>
+<section class="corollary-content" id="proof-content">
+<p>The entropy of a discrete memoryless information source is the <strong>minimum average length</strong> that can ever be achieved by a instantaneous or uniquely-decodable code used to encode the messages.</p>
+</section>
+</div><p>This result tells us what the entropy really means, besides the formulaic definition provided in chapter I. The entropy gives us the minimum number of bits required to represent the data generated by an information source in binary form. Although we rigorously proved this result only for a discrete memoryless source, it holds for sources with memory as well.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>Question:</p>
+<p>Can you sketch the proof for this for sources with memory?</p>
+</aside>
+<p>Immediate consequences:</p>
+<ul class="simple">
+<li><p>Messages from a source with small entropy can be written (encoded) with few bits</p></li>
+<li><p>A source with with large entropy requires more bits for encoding the messages</p></li>
+</ul>
+<p>Reformulating this in a different way, we can say that he average length of an uniquely decodable code must be at least as large as the source entropy. One can never represent messages, on average, with a code  having average length less than the entropy.</p>
+<div class="math notranslate nohighlight">
+\[H(S) \leq \overline{l}\]</div>
+<div class="proof example admonition" id="example-12">
+<p class="admonition-title"><span class="caption-number">Example 2.1 </span></p>
+<section class="example-content" id="proof-content">
+<p>You can think of the relation between information (entropy) and code length
+using the analogy of water and a bottle.</p>
+<p>We use a code in order to represent and transfer information,
+just like we use a bottle to carry and store some shapeless quantity of water.
+Information is not the codewords.
+Information is a mathematical quantity implied by the random occurrence of messages, and the codewords are just means of transportation of information.</p>
+<p>A quantity of 1 liter of water can be carried with any bottle of size <span class="math notranslate nohighlight">\(\geq\)</span> 1 liter, but it does not fit in any bottle smaller than this.
+Similarly, an amount of information (entropy) can be encoded with a code
+for which the average length is larger or equal, but does not “fit” in any code smaller than this.</p>
+</section>
+</div></section>
+<section id="efficiency-and-redundancy-of-a-code">
+<h4>Efficiency and redundancy of a code<a class="headerlink" href="#efficiency-and-redundancy-of-a-code" title="Permalink to this headline">#</a></h4>
+<p>Considering a code for an information source, comparing the average code length
+with the entropy indicates the efficiency of the encoding. These quantities indicate how close is the average length to the optimal value.</p>
+<div class="proof definition admonition" id="definition-13">
+<p class="admonition-title"><span class="caption-number">Definition 2.4 </span> (Efficiency and redundancy of a code)</p>
+<section class="definition-content" id="proof-content">
+<p><strong>Efficiency</strong> of a code is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\eta = \frac{H(S)}{\overline{l} \cdot \log(M)}\]</div>
+<p>where <span class="math notranslate nohighlight">\(M\)</span> is size of code alphabet (number of symbols in the code).</p>
+<p>The <strong>redundancy</strong> of a code is:</p>
+<div class="math notranslate nohighlight">
+\[\rho = 1- \eta\]</div>
+<p>For binary codes <span class="math notranslate nohighlight">\(M = 2\)</span> so <span class="math notranslate nohighlight">\(\eta\)</span> is simply the ratio <span class="math notranslate nohighlight">\(\eta = \frac{H(S)}{\overline{l}}\)</span>.</p>
+<p>For <span class="math notranslate nohighlight">\(M &gt; 2\)</span> a factor of <span class="math notranslate nohighlight">\(\log(M)\)</span> is needed because we need to express both quantities with the same unit. The entropy <span class="math notranslate nohighlight">\(H(S)\)</span> in bits (due to the binary logarithm), but <span class="math notranslate nohighlight">\(\overline{l}\)</span> is not in bits, since is the average number of symbols and there are more than 2 symbols, hence the <span class="math notranslate nohighlight">\(\log(M)\)</span>.</p>
+</section>
+</div></section>
+<section id="optimal-and-non-optimal-codes">
+<h4>Optimal and non-optimal codes<a class="headerlink" href="#optimal-and-non-optimal-codes" title="Permalink to this headline">#</a></h4>
+<p>A code for which <span class="math notranslate nohighlight">\(\eta = 1\)</span> is known as an <strong>optimal code</strong>.
+Such a code attains the minimum average length:</p>
+<div class="math notranslate nohighlight">
+\[\overline{l} = H(S)\]</div>
+<p>However, this is only possible if the probabilities are powers of 2,
+such that <span class="math notranslate nohighlight">\(l_i = -log2(p(s_i))\)</span> is an integer number, because the codeword
+lengths must always be natural numbers.</p>
+<ul class="simple">
+<li><p>e.g. probabilities like <span class="math notranslate nohighlight">\(1/2\)</span>, <span class="math notranslate nohighlight">\(1/4\)</span>, <span class="math notranslate nohighlight">\(1/2^n\)</span>, known as <em>dyadic distribution</em></p></li>
+<li><p>the lengths <span class="math notranslate nohighlight">\(l_i = -\log(p(s_i))\)</span> are all natural numbers</p></li>
+</ul>
+<p>An optimal code can always be found for a source where all <span class="math notranslate nohighlight">\(p(s_i)\)</span> are powers of 2, using for example the graph-based procedure explained earlier.</p>
+<p>However, in the general case  <span class="math notranslate nohighlight">\(l_i = -\log(p(s_i))\)</span> might not be an integer number. This happens when <span class="math notranslate nohighlight">\(p(s_i)\)</span> is not a power of 2. What to do in this case?</p>
+<p>A simple solution to this problem is to round every logarithm to next largest natural number:</p>
+<div class="math notranslate nohighlight">
+\[l_i = \lceil -\log(p(s_i)) \rceil\]</div>
+<p>for example:</p>
+<div class="math notranslate nohighlight">
+\[-\log(p(s_i)) = 2.15 =&gt; l_i = 3\]</div>
+<p>This leads to the Shannon coding algorithm described below.</p>
+</section>
+</section>
+<section id="shannon-coding">
+<h3><span class="section-number">2.2.8. </span>Shannon coding<a class="headerlink" href="#shannon-coding" title="Permalink to this headline">#</a></h3>
+<div class="proof algorithm admonition" id="algorithm-14">
+<p class="admonition-title"><span class="caption-number">Algorithm 2.3 </span> (Shannon coding algorithm)</p>
+<section class="algorithm-content" id="proof-content">
+<p><strong>Inputs</strong> A DMS source with probabilities <span class="math notranslate nohighlight">\(p(s_i)\)</span></p>
+<p><strong>Outputs</strong> Codewords <span class="math notranslate nohighlight">\(l_i\)</span></p>
+<ol class="arabic simple">
+<li><p>Arrange probabilities in descending order</p></li>
+<li><p>Compute the codeword lengths <span class="math notranslate nohighlight">\(l_i = \lceil -\log(p(s_i)) \rceil\)</span></p></li>
+<li><p>For every message <span class="math notranslate nohighlight">\(s_i\)</span> find the codeword as follows:</p>
+<ol class="arabic simple">
+<li><p>sum all the probabilities up to this message (not including current)</p></li>
+<li><p>multiply the sum value with <span class="math notranslate nohighlight">\(2^{l_i}\)</span></p></li>
+<li><p>floor the result, convert to binary, retain first <span class="math notranslate nohighlight">\(l_i\)</span> bits</p></li>
+</ol>
+</li>
+</ol>
+</section>
+</div><p>The code obtained with this procedure is known as a <strong>Shannon code</strong>.</p>
+<p>Shannon coding is one of the simplest algorithms, and some other better schemes are available. However, this simplicity allows to prove fundamental results
+in coding theory, as we shall see below.</p>
+<aside class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>As an example of Shannon coding deficiency, compute the Shannon algorithm for the following source:</p>
+<div class="math notranslate nohighlight">
+\[S: (0.9, 0.1)\]</div>
+</aside>
+<p>One such fundamental result shows that the average length of a Shannon code is actually close to the entropy of the source.</p>
+<div class="proof theorem admonition" id="theorem-15">
+<p class="admonition-title"><span class="caption-number">Theorem 2.7 </span></p>
+<section class="theorem-content" id="proof-content">
+<p>The average length <span class="math notranslate nohighlight">\(\overline{l}\)</span> of a Shannon code satisfies:</p>
+<div class="math notranslate nohighlight">
+\[H(S) \leq \overline{l} &lt; H(S) + 1\]</div>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. The proof is as follows:</p>
+<ol class="arabic">
+<li><p>The first inequality is because <span class="math notranslate nohighlight">\(H(S)\)</span> is minimum average length</p></li>
+<li><p>The second inequality:
+a. Use Shannon code:
+$<span class="math notranslate nohighlight">\(l_i = \lceil -\log(p(s_i)) \rceil = -\log(p(s_i)) + \epsilon_i\)</span><span class="math notranslate nohighlight">\( where \)</span>0 \leq \epsilon_i &lt; 1$</p>
+<p>a. Compute average length:
+$<span class="math notranslate nohighlight">\(\overline{l} = \sum_i p(s_i) l_i = H(S) + \underbrace{\sum_i p(s_i) \epsilon_i}_{&lt; 1}\)</span><span class="math notranslate nohighlight">\(
+ a. Since \)</span>\epsilon_i &lt; 1<span class="math notranslate nohighlight">\( =&gt; \)</span>\sum_i p(s_i) \epsilon_i &lt; \sum_i p(s_i)  = 1$ \qed</p>
+</li>
+</ol>
+</div>
+<ul class="simple">
+<li><p>Average length of Shannon code is <strong>at most 1 bit longer</strong> than the minimum possible value</p>
+<ul>
+<li><p>That’s quite efficient</p></li>
+<li><p>There exist even better codes, in general</p></li>
+</ul>
+</li>
+<li><p>Q: Can we get even closer to the minimum length?</p></li>
+<li><p>A: Yes, as close as we want!</p>
+<ul>
+<li><p>In theory, at least … :)</p></li>
+<li><p>See next slide.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="shannon-s-first-theorem">
+<h3><span class="section-number">2.2.9. </span>Shannon’s first theorem<a class="headerlink" href="#shannon-s-first-theorem" title="Permalink to this headline">#</a></h3>
+<p>Shannon’s first theorem (coding theorem for noiseless channels):</p>
+<ul class="simple">
+<li><p>It is possible to encode an infinitely long sequences of messages
+from a source S with an average length
+as close as desired to H(S),
+but never below H(S)</p></li>
+</ul>
+<p><br />
+\</p>
+<p>Key points:</p>
+<ul class="simple">
+<li><p>we can always obtain <span class="math notranslate nohighlight">\(\overline{l} \to H(S)\)</span></p></li>
+<li><p>for an infinitely long sequence</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3><span class="section-number">2.2.10. </span>Shannon’s first theorem<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<p>Proof:</p>
+<ul class="simple">
+<li><p>Average length can never go below H(S) because this is minimum</p></li>
+<li><p>How can it get very close to H(S) (from above)?</p>
+<ol class="arabic simple">
+<li><p>Use <strong><span class="math notranslate nohighlight">\(n\)</span>-th order extension</strong> <span class="math notranslate nohighlight">\(S^n\)</span> of S</p></li>
+<li><p>Use Shannon coding for <span class="math notranslate nohighlight">\(S^n\)</span>, so it satisfies
+$<span class="math notranslate nohighlight">\(H(S^n) \leq \overline{l_{S^n}} &lt; H(S^n) + 1\)</span>$</p></li>
+<li><p>But <span class="math notranslate nohighlight">\(H(S^n) = n H(S)\)</span>, and average length <strong>per message of <span class="math notranslate nohighlight">\(S\)</span></strong> is
+$<span class="math notranslate nohighlight">\(\overline{l_{S}} = \frac{\overline{l_{S^n}}}{n}\)</span><span class="math notranslate nohighlight">\(
+because messages of \)</span>S^n<span class="math notranslate nohighlight">\( are just \)</span>n<span class="math notranslate nohighlight">\( messages of \)</span>S$ glued together</p></li>
+<li><p>So, dividing by <span class="math notranslate nohighlight">\(n\)</span>:
+$<span class="math notranslate nohighlight">\(\boxed{H(S) \leq \overline{l_{S}} &lt; H(S) + \frac{1}{n}}\)</span>$</p></li>
+<li><p>If extension order <span class="math notranslate nohighlight">\(n \to \infty\)</span>, then
+$<span class="math notranslate nohighlight">\(\overline{l_{S}} \to H(S)\)</span>$ \qed</p></li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h3><span class="section-number">2.2.11. </span>Shannon’s first theorem<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Analogy: how to buy things online without paying for delivery :)</p>
+<ul>
+<li><p>FanCourier taxes 15 lei per delivery</p>
+<ul>
+<li><p>not efficient to buy something worth a few lei</p></li>
+</ul>
+</li>
+<li><p>How to improve efficiency? Buy <span class="math notranslate nohighlight">\(n\)</span> things bundled together!</p></li>
+<li><p>The delivery cost <strong>per unit</strong> is now <span class="math notranslate nohighlight">\(\frac{15}{n}\)</span></p></li>
+<li><p>As <span class="math notranslate nohighlight">\(n \to \infty\)</span>, the delivery cost per unit <span class="math notranslate nohighlight">\(\to 0\)</span></p>
+<ul>
+<li><p>What’s 15 lei when you pay <span class="math notranslate nohighlight">\(\infty\)</span> lei…</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h3><span class="section-number">2.2.12. </span>Shannon’s first theorem<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h3>
+<p>Comments:</p>
+<ul class="simple">
+<li><p>Shannon’s first theorem shows that we can approach H(S)
+to any desired accuracy using extensions of large order of the source</p>
+<ul>
+<li><p>This is not practical: the size of <span class="math notranslate nohighlight">\(S^n\)</span> gets too large for large <span class="math notranslate nohighlight">\(n\)</span></p></li>
+<li><p>Other (better) algorithms than Shannon coding are used in practice to approach <span class="math notranslate nohighlight">\(H(S)\)</span></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="coding-with-the-wrong-code">
+<h3><span class="section-number">2.2.13. </span>Coding with the wrong code<a class="headerlink" href="#coding-with-the-wrong-code" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Consider a source with probabilities <span class="math notranslate nohighlight">\(p(s_i)\)</span></p></li>
+<li><p>We use a code designed for a different source: <span class="math notranslate nohighlight">\(l_i = -\log(q(s_i))\)</span></p></li>
+<li><p>The message probabilities are <span class="math notranslate nohighlight">\(p(s_i)\)</span> but the code is designed for <span class="math notranslate nohighlight">\(q(s_i)\)</span>
+\</p></li>
+<li><p>Examples:</p>
+<ul>
+<li><p>design a code based on a sample data file (like in lab)</p></li>
+<li><p>but we use it to encode various other files =&gt; probabilities might differ slightly</p></li>
+<li><p>e.g. design a code based a Romanian text, but encode a text in English
+\</p></li>
+</ul>
+</li>
+<li><p>What happens?</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3><span class="section-number">2.2.14. </span>Coding with the wrong code<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>We lose some efficiency:</p>
+<ul>
+<li><p>Codeword lengths <span class="math notranslate nohighlight">\(\overline{l_i}\)</span> are not optimal for our source =&gt; increased <span class="math notranslate nohighlight">\(\overline{l}\)</span></p></li>
+</ul>
+</li>
+<li><p>If code were optimal, best average length = entropy <span class="math notranslate nohighlight">\(H(S)\)</span>:
+$<span class="math notranslate nohighlight">\(\overline{l_{optimal}} = -\sum{p(s_i) \log{p(s_i)}}\)</span>$</p></li>
+<li><p>But the actual average length we obtain is:
+$<span class="math notranslate nohighlight">\(\overline{l_{actual}} = \sum{p(s_i) l_i} = -\sum{p(s_i) \log{q(s_i)}}\)</span>$</p></li>
+</ul>
+</section>
+<section id="the-kullbackleibler-distance">
+<h3><span class="section-number">2.2.15. </span>The Kullback–Leibler distance<a class="headerlink" href="#the-kullbackleibler-distance" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Difference between average lengths is:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\overline{l_{actual}} - \overline{l_{optimal}} = \sum_i{p(s_i) \log(\frac{p(s_i)}{q(s_i)})} = D_{KL}(p || q)\]</div>
+<ul class="simple">
+<li><p>The difference  = <strong>the Kullback-Leibler distance</strong> between the two distributions</p>
+<ul>
+<li><p>is always <span class="math notranslate nohighlight">\(\geq 0\)</span> =&gt; improper code means increased <span class="math notranslate nohighlight">\(\overline{l}\)</span> (bad)</p></li>
+<li><p>distributions more different =&gt; larger average length (worse)</p></li>
+</ul>
+</li>
+<li><p>The KL distance between the distributions = the number of extra bits used because
+of a code optimized for a different distribution <span class="math notranslate nohighlight">\(q(s_i)\)</span> than the true distribution
+of our data <span class="math notranslate nohighlight">\(p(s_i)\)</span></p></li>
+</ul>
+</section>
+<section id="id5">
+<h3><span class="section-number">2.2.16. </span>The Kullback–Leibler distance<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h3>
+<p>Reminder: where is the Kullback–Leibler distance used</p>
+<ul class="simple">
+<li><p>Here: Using a code optimized for a different distribution:</p>
+<ul>
+<li><p>Average length is increased with <span class="math notranslate nohighlight">\(D_{KL}(p || q)\)</span></p></li>
+</ul>
+</li>
+<li><p>In chapter IV (Channels): Definition of mutual information:</p>
+<ul>
+<li><p>Distance between <span class="math notranslate nohighlight">\(p(x_i \cap y_j)\)</span> and the distribution of two independent variables <span class="math notranslate nohighlight">\(p(x_i) \cdot p(y_j)\)</span>
+$<span class="math notranslate nohighlight">\(I(X,Y) = \sum_{i,j} p(x_i \cap y_j) \log(\frac{p(x_i \cap y_j)}{p(x_i)p(y_j)})\)</span>$</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="shannon-fano-coding-binary">
+<h3><span class="section-number">2.2.17. </span>Shannon-Fano coding (binary)<a class="headerlink" href="#shannon-fano-coding-binary" title="Permalink to this headline">#</a></h3>
+<p>Shannon-Fano (binary) coding procedure:</p>
+<ol class="arabic simple">
+<li><p>Sort the message probabilities in descending order</p></li>
+<li><p>Split into two subgroups as nearly equal as possible</p></li>
+<li><p>Assign first bit <span class="math notranslate nohighlight">\(0\)</span> to first group, first bit <span class="math notranslate nohighlight">\(1\)</span> to second group</p></li>
+<li><p>Repeat on each subgroup</p></li>
+<li><p>When reaching one single message =&gt; that is the codeword</p></li>
+</ol>
+<p>Example: blackboard</p>
+<p>Comments:</p>
+<ul class="simple">
+<li><p>Shannon-Fano coding does not always produce the shortest code lengths</p></li>
+<li><p>Connection: yes-no answers (example from first chapter)</p></li>
+</ul>
+</section>
+<section id="huffman-coding-binary">
+<h3><span class="section-number">2.2.18. </span>Huffman coding (binary)<a class="headerlink" href="#huffman-coding-binary" title="Permalink to this headline">#</a></h3>
+<p>Huffman coding procedure (binary):</p>
+<ol class="arabic simple">
+<li><p>Sort the message probabilities in descending order</p></li>
+<li><p>Join the last two probabilities, insert result into existing list, preserve descending order</p></li>
+<li><p>Repeat until only two messages are remaining</p></li>
+<li><p>Assign first bit <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span> to the final two messages</p></li>
+<li><p>Go back step by step: every time we had a sum, append <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span> to the end of existing codeword</p></li>
+</ol>
+<p>Example: blackboard</p>
+</section>
+<section id="properties-of-huffman-coding">
+<h3><span class="section-number">2.2.19. </span>Properties of Huffman coding<a class="headerlink" href="#properties-of-huffman-coding" title="Permalink to this headline">#</a></h3>
+<p>Properties of Huffman coding:</p>
+<ul class="simple">
+<li><p>Produces a code with the <strong>smallest average length</strong> (better than Shannon-Fano)</p></li>
+<li><p>Assigning <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span> can be done in any order =&gt; different codes, same lengths</p></li>
+<li><p>When inserting a sum into an existing list, may be equal to another value =&gt; options</p>
+<ul>
+<li><p>we can insert above, below or in-between equal values</p></li>
+<li><p>leads to codes with different <em>individual</em> lengths, but same <em>average</em> length</p></li>
+</ul>
+</li>
+<li><p>Some better algorithms exist which do not assign a codeword to every single message
+(they code a while sequence at once, not every message)</p></li>
+</ul>
+</section>
+<section id="huffman-coding-m-symbols">
+<h3><span class="section-number">2.2.20. </span>Huffman coding (M symbols)<a class="headerlink" href="#huffman-coding-m-symbols" title="Permalink to this headline">#</a></h3>
+<p>General Huffman coding procedure for codes with <span class="math notranslate nohighlight">\(M\)</span> symbols:</p>
+<ul class="simple">
+<li><p>Have <span class="math notranslate nohighlight">\(M\)</span> symbols <span class="math notranslate nohighlight">\(\left\lbrace x_1, x_2, ... x_M \right\rbrace\)</span></p></li>
+<li><p>Add together the last <span class="math notranslate nohighlight">\(M\)</span> symbols</p></li>
+<li><p>When assigning symbols, assign all <span class="math notranslate nohighlight">\(M\)</span> symbols</p></li>
+<li><p><strong>Important</strong>: at the final step must have <span class="math notranslate nohighlight">\(M\)</span> remaining values</p>
+<ul>
+<li><p>May be necessary to add <em>virtual</em> messages with probability 0 at the end of the initial list,
+to end up with exactly <span class="math notranslate nohighlight">\(M\)</span> messages in the last step</p></li>
+</ul>
+</li>
+<li><p>Example : blackboard</p></li>
+</ul>
+</section>
+<section id="example-compare-huffman-and-shannon-fano">
+<h3><span class="section-number">2.2.21. </span>Example: compare Huffman and Shannon-Fano<a class="headerlink" href="#example-compare-huffman-and-shannon-fano" title="Permalink to this headline">#</a></h3>
+<p>Example: compare binary Huffman and Shannon-Fano for:
+$<span class="math notranslate nohighlight">\(p(s_i) = \left\lbrace 0.35, 0.17, 0.17, 0.16, 0.15 \right\rbrace\)</span>$</p>
+</section>
+<section id="probability-of-symbols">
+<h3><span class="section-number">2.2.22. </span>Probability of symbols<a class="headerlink" href="#probability-of-symbols" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>For every symbol <span class="math notranslate nohighlight">\(x_i\)</span>
+we can compute the average number of symbols <span class="math notranslate nohighlight">\(x_i\)</span> in a code
+$<span class="math notranslate nohighlight">\(\overline{l_{x_i}} = \sum_i p(s_i) l_{x_i}(s_i)\)</span>$</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(l_{x_i}(s_i) =\)</span> number of symbols <span class="math notranslate nohighlight">\(x_i\)</span> in the codeword of <span class="math notranslate nohighlight">\(s_i\)</span></p></li>
+<li><p>e.g.: average number of 0’s and 1’s in a code</p></li>
+</ul>
+</li>
+<li><p>Divide by average length =&gt; probability (frequency) of symbol <span class="math notranslate nohighlight">\(x_i\)</span>
+$<span class="math notranslate nohighlight">\(p(x_i) = \frac{\overline{l_{x_i}}}{\overline{l}}\)</span>$</p></li>
+<li><p>These are the probabilities of the input symbols for the transmission channel</p>
+<ul>
+<li><p>they play an important role in Chapter IV (transmission channels)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="source-coding-as-data-compression">
+<h3><span class="section-number">2.2.23. </span>Source coding as data compression<a class="headerlink" href="#source-coding-as-data-compression" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Consider that the messages are already written in a binary code</p>
+<ul>
+<li><p>Example: characters in ASCII code</p></li>
+</ul>
+</li>
+<li><p>Source coding  = remapping the original codewords to other codewords</p>
+<ul>
+<li><p>The new codewords are shorter, on average</p></li>
+</ul>
+</li>
+<li><p>This means data <strong>compression</strong></p>
+<ul>
+<li><p>Just like the example in lab session</p></li>
+</ul>
+</li>
+<li><p>What does data compression remove?</p>
+<ul>
+<li><p>Removes <strong>redundancy</strong>: unused bits, patterns, regularities etc.</p></li>
+<li><p>If you can guess somehow the next bit in a sequence, it means the bit is not really necessary,
+so compression will remove it</p></li>
+<li><p>The compressed sequence looks like random data: impossible to guess,
+no discernable patterns</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="discussion-data-compression-with-coding">
+<h3><span class="section-number">2.2.24. </span>Discussion: data compression with coding<a class="headerlink" href="#discussion-data-compression-with-coding" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Consider data compression with Shannon or Huffman coding, like we did in lab</p>
+<ul>
+<li><p>What property do we <em>exploit</em> in order to obtain compression?</p></li>
+<li><p>How does <em>compressible data</em> look like?</p></li>
+<li><p>How does <em>incompressible data</em> look like?</p></li>
+<li><p>What are the limitation of our data compression method?</p></li>
+<li><p>How could it be improved?</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="other-codes-arithmetic-coding">
+<h3><span class="section-number">2.2.25. </span>Other codes: arithmetic coding<a class="headerlink" href="#other-codes-arithmetic-coding" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Other types of coding do exist (info only)</p>
+<ul>
+<li><p>Arithmetic coding</p></li>
+<li><p>Adaptive schemes</p></li>
+<li><p>etc.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="chapter-summary">
+<h3><span class="section-number">2.2.26. </span>Chapter summary<a class="headerlink" href="#chapter-summary" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Average length: <span class="math notranslate nohighlight">\(\overline{l} = \sum_i p(s_i) l_i\)</span></p></li>
+<li><p>Code types: instantaneous <span class="math notranslate nohighlight">\(\subset\)</span> uniquely decodable <span class="math notranslate nohighlight">\(\subset\)</span> non-singular</p></li>
+<li><p>All instantaneous or uniqualy decodable code must obey Kraft:
+$<span class="math notranslate nohighlight">\( \sum_i D^{-l_i} \leq 1\)</span>$</p></li>
+<li><p>Optimal codes: <span class="math notranslate nohighlight">\(l_i = -\log(p(s_i))\)</span>, <span class="math notranslate nohighlight">\(\overline{l_{min}} = H(S)\)</span></p></li>
+<li><p>Shannon’s first theorem: use <span class="math notranslate nohighlight">\(n\)</span>-th order extension of <span class="math notranslate nohighlight">\(S\)</span>, <span class="math notranslate nohighlight">\(S^n\)</span>:
+$<span class="math notranslate nohighlight">\(\boxed{H(S) \leq \overline{l_{S}} &lt; H(S) + \frac{1}{n}}\)</span>$</p>
+<ul>
+<li><p>average length always larger, but as close as desired to <span class="math notranslate nohighlight">\(H(S)\)</span></p></li>
+</ul>
+</li>
+<li><p>Coding techniques:</p>
+<ul>
+<li><p>Shannon: ceil the optimal codeword lengths (round to upper)</p></li>
+<li><p>Shannon-Fano: split in two groups approx. equal</p></li>
+<li><p>Huffman: group last two. Is best of all.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "nikcleju/JupyBook",
+            ref: "main",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content/IT"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script type="text/x-thebe-config">
+      {
+        requestKernel: true,
+        binderOptions: {
+          repo: "matplotlib/ipympl",
+          ref: "0.6.1",
+          repoProvider: "github",
+        },
+      }
+    </script>    
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="InformationSources.myst.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>Discrete Information Sources</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-coding">2.1. The role of coding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-code">2.2. What is a code</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-graph-of-a-code">2.2.1. The graph of a code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#average-code-length">2.2.2. Average code length</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instantaneous-codes">2.2.3. Instantaneous codes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graph-based-decoding-of-instantaneous-codes">2.2.4. Graph-based decoding of instantaneous codes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-kraft-inequality-theorem">2.2.5. The Kraft inequality theorem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-an-instantaneous-code-for-given-lengths">2.2.6. Finding an instantaneous code for given lengths</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimal-codes">2.2.7. Optimal codes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-method-of-lagrange-multipliers">The method of Lagrange multipliers</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minimal-average-length">Minimal average length</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#efficiency-and-redundancy-of-a-code">Efficiency and redundancy of a code</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#optimal-and-non-optimal-codes">Optimal and non-optimal codes</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shannon-coding">2.2.8. Shannon coding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shannon-s-first-theorem">2.2.9. Shannon’s first theorem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.2.10. Shannon’s first theorem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.2.11. Shannon’s first theorem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2.12. Shannon’s first theorem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-with-the-wrong-code">2.2.13. Coding with the wrong code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.2.14. Coding with the wrong code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-kullbackleibler-distance">2.2.15. The Kullback–Leibler distance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.2.16. The Kullback–Leibler distance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shannon-fano-coding-binary">2.2.17. Shannon-Fano coding (binary)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#huffman-coding-binary">2.2.18. Huffman coding (binary)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#properties-of-huffman-coding">2.2.19. Properties of Huffman coding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#huffman-coding-m-symbols">2.2.20. Huffman coding (M symbols)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-compare-huffman-and-shannon-fano">2.2.21. Example: compare Huffman and Shannon-Fano</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-of-symbols">2.2.22. Probability of symbols</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#source-coding-as-data-compression">2.2.23. Source coding as data compression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discussion-data-compression-with-coding">2.2.24. Discussion: data compression with coding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-codes-arithmetic-coding">2.2.25. Other codes: arithmetic coding</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#chapter-summary">2.2.26. Chapter summary</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Nicolae Cleju
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
