@@ -44,7 +44,7 @@ def main(pathsource: Path, outputdir: Path, port: int):
     #server.watch(pathsource / "**/*.md", build)
     #server.watch(pathsource / "**/*.ipynb", build)
     #server.watch(pathsource / "**/*.rst", build)
-    server.watch(pathsource / "./content/IT/*.myst.md", build)
+    server.watch(str(pathsource / "./content/IT/*.myst.md"), build)
     #server.watch(pathsource / "_config.yml", build)
     #server.watch(pathsource / "_toc.yml", build)
 

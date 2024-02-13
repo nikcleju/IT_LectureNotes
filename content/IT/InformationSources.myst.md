@@ -49,22 +49,21 @@ we need a solid and clear definition of information.
 - Channel: delivers the symbols, introduces errors
 - Decoder: detects/corrects the errors, rebuilds the information messages -->
 
-### What is information?
+So, what is information?
 
-Let's start first with some simple examples of messages carrying information.
+Let's start first with some simple examples.
+Imagine you find out the result of a fotball match:
 
-Consider the sentence:
-
-> "Poli Iași (the local football team) lost the last match"
+> "Poli Iași (local football team) lost the last match"
 
 Does this message carry information? How, why, how much?
 
-When thinking about the information brought by such a phrase, let's consider the following facts:
+When thinking about the information brought by such a phrase, let's consider the following principles:
 
-  - the message carries information only when you don't already know the result
-  - if you already known the result, the message is useless (brings no information)
-  - if the result was to be expected, there is little information (e.g. suppose Poli Iași plays agains FC Barcelona)
-  - if the result is highly unusual, there is more information in this message
+- The message carries information only when you don't already know the result. If you already known the result, the message is useless,
+  which means it brings zero information.
+- If the result was to be expected, there is little information (e.g. suppose Poli Iași plays agains FC Barcelona)
+- if the result is highly unusual, there is more information in this message
 
 ```{admonition} Example
 
