@@ -391,18 +391,112 @@ Thus, $H(S)$ is crucial when we discuss how to represent data efficiently.
 
 We prove the following three properties for the entropy of a DMS:
 
-1. $H(S) \geq  0$ (non-negative)
+```{prf:property} Entropy is non-negative
+1. $H(S) \geq  0$
+```
+```{prf:proof}
+Using the definition:
 
-    TODO. Proof: via definition
+$$H(S) = -\sum_{k} p_k \log_2(p_k)$$
 
+Every term in the sum is a product between a positive number ($p_k \geq 0$)
+and a negative number ($p_k \geq 1$ means $\log_2(p_k) \leq 0$),
+or possibly zero.
+Together with the minus sign in front, we have a total result which
+is either positive or zero.
+```
+
+```{prf:property} Maximum when equal
 2. $H(S)$ is maximum when all $n$ messages have equal probability $\frac{1}{n}$.
 The maximum value is $\max H(S) = \log(n)$
+```
 
-    TODO. Proof: only for the case of 2 messages, use derivative in definition
+```{prf:proof}
+We are only proving for the case of $n=2$ messages.
 
-3. *Diversification* of the source always increases the entropy
+Consider a generic source with two messages, with probabilities $p$ and $1-p$:
 
-    TODO. Proof: compare entropies in both cases
+$$
+\sII{S}{p}{1-p}
+$$
+
+Its entropy is:
+
+$$
+H(S) = -p \cdot \log(p) - (1-p) \cdot \log(1-p)
+$$
+
+To look for the maximum, we take the derivative of $H(S)$ with respect to $p$ and set it to zero:
+
+$$ \begin{aligned}
+\frac{dH(S)}{dp} &= -\log(p) - p \frac{1}{p \ln(2)} + \log(1-p) + (1-p) \frac{1}{(1-p) \ln(2)} = 0\\
+&\Leftrightarrow -\log(p) + \log(1-p) = 0 \\
+&\Leftrightarrow \log(p) = \log(1-p) \\
+&\Leftrightarrow p = \frac{1}{2} \\
+\end{aligned} $$
+
+So the maximum entropy is reached when $p = \frac{1}{2}$, and its value is:
+
+$$
+H_{max}(S) = -\frac{1}{2} \log(\frac{1}{2}) - \frac{1}{2} \log(\frac{1}{2}) = 1 = \log(2)
+$$
+
+The same result holds for any number $n$ of messages.
+```
+
+```{prf:property} Diversification
+3. *Diversification* of the source always increases the entropy.
+
+*Diversification* means that the one message $s_1$ is split into two sub-messages
+$s_{1A}$ and $s_{1B}$, preserving the total probability: $p_1 = p_{1A} + p_{1B}$.
+```
+
+```{prf:proof}
+The original source is:
+
+$$
+\snIII{S}{s_1}{p_1}{...}{...}{s_n}{p_n}
+$$
+and the diversified source, with a message $s_1$ split into two sub-messages, is:
+
+$$
+\snIV{S'}{s_{1A}}{p_{1A}}{s_{1B}}{p_{1B}}{s_2}{p_2}{...}{...}
+$$
+
+We want to prove that $H(S') \geq H(S)$, or equivalently that $H(S') - H(S) \geq 0$.
+
+The two entropies are:
+
+$$
+\begin{aligned}
+H(S) &= -p_1 \log_2(p_1) - p_2 \log_2(p_2) - ... - p_n \log_2(p_n) \\
+H(S') &= -p_{1A} \log_2(p_{1A}) - p_{1B} \log_2(p_{1B}) - p_2 \log_2(p_2) - ... - p_n \log_2(p_n) \\
+\end{aligned}
+$$
+
+The terms from $s_2$ to $s_n$ are the same in both entropies, so their difference is given by the terms for $s_1$:
+
+$$
+\begin{aligned}
+H(S') - H(S) &= -p_{1A} \log_2(p_{1A}) - p_{1B} \log_2(p_{1B}) + p_1 \log_2(p_1) \\
+&= -p_{1A} \log_2(p_{1A}) - p_{1B} \log_2(p_{1B}) + (p_{1A} + p_{1B}) \log_2(p_{1A} + p_{1B}) \\
+&= -p_{1A} \log_2(p_{1A}) - p_{1B} \log_2(p_{1B}) + p_{1A} \log_2(p_{1A} + p_{1B}) + p_{1B} \log_2(p_{1A} + p_{1B}) \\
+&= p_{1A} \left( -\log_2(p_{1A}) + \log_2(p_{1A} + p_{1B}) \right) + p_{1B} \left( -\log_2(p_{1B}) + \log_2(p_{1A} + p_{1B}) \right) \\
+&= p_{1A} \log_2(\frac{p_{1A} + p_{1B}}{p_{1A}}) + p_{1B} \log_2(\frac{p_{1A} + p_{1B}}{p_{1B}}) \\
+\end{aligned}
+$$
+
+Since $\frac{p_{1A} + p_{1B}}{p_{1A}} \geq 1$ and $\frac{p_{1A} + p_{1B}}{p_{1B}} \geq 1$, the two logarithms are $\geq 0$,
+and thus the whole sum is $\geq 0$, i.e.:
+
+$$
+\begin{aligned}
+H(S') - H(S) &\geq 0 \\
+H(S') &\geq H(S)
+\end{aligned}
+$$
+
+```
 
 ### Entropy of a binary source
 
@@ -442,7 +536,7 @@ $$
 
 Let's analyze the following guessing games with the tools introduced until now.
 
-```{admonition} Exercise
+```{admonition} Exercises
 
 1. I think of a number between 1 and 8. You have to guess it by asking
    yes/no questions.
@@ -474,7 +568,7 @@ Let's draw some general conclusions:
 - What distribution makes guessing the number the easiest?
 
 An **optimal decision tree** is best sequence of questions to ask in order to find the number with a minimum number
-of questions, reprsented as a binary tree graph. You will see examples when we solve the exercises.
+of questions, represented as a binary tree graph. You will see examples when we solve the exercises.
 ```
 
 ### Efficiency, redundancy, flow
@@ -488,14 +582,15 @@ $$
 $$
 
 The **redundancy** of a source is the remaining gap.
+We can define an absolute redundancy and a relative redundancy.
 
-- **Absolute** redundancy of a DMS:
+**Absolute** redundancy of a DMS:
 
 $$
 R = H_{max} - H(S)
 $$
 
-- **Relative** redundancy of a DMS:
+**Relative** redundancy of a DMS:
 
 $$
 \rho = \frac{H_{max} - H(S)}{H_{max}} = 1 - \eta
@@ -528,15 +623,15 @@ $$
 \end{gather*}
 $$
 
-The probability values of $P$ and $Q$ are close, so the two DMS
-are similar. But exactly how much similar?
+The probability values of $P$ and $Q$ are close, so the two sources
+are similar. But exactly how similar? Can we quantify the "closeness" of the two sources?
 
 In many application we need a way to quantify how similar or how different
 are two probability distributions. The Kullback-Leibler distance
 (also known as *"Kullback-Leibler divergence"*, or *"cross-entropy"*, or *"relative entropy"*)
-is a way to quantify numerically how much different is one distribution from another one,
+is a way to quantify numerically how much different is one distribution from another one.
 
-The **Kullback–Leibler (KL) distance** of two distributions P and Q  is
+The **Kullback–Leibler (KL) distance** of two distributions P and Q  is:
 
 $$
 D_{KL}(P,Q) = \sum_i p(s_i) \log(\frac{p(s_i)}{q(s_i)})
@@ -655,7 +750,7 @@ $$
 
 ```{prf:proof}
 
-TBD. For now will be done in class.
+TBD. For now will be done in class, at the whiteboard.
 
 ```
 
