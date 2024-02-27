@@ -13,24 +13,25 @@ jupytext:
 #  name: python3
 ---
 
-```{math}
-\newcommand{\snII}[5]{#1: \left( \begin{matrix} {#2} & {#4} \\ #3 & #5 \end{matrix} \right)}
-\newcommand{\snIII}[7]{#1: \left( \begin{matrix} {#2} & {#4} & {#6} \\ #3 & #5 & #7 \end{matrix} \right)}
-\newcommand{\snIV}[9]{#1:  \left( \begin{matrix} {#2} & {#4} & {#6} & {#8} \\ #3 & #5 & #7 & #9 \end{matrix} \right)}
+<!-- ```{math}
+%\newcommand{\snII}[5]{#1: \left( \begin{matrix} {#2} & {#4} \\ #3 & #5 \end{matrix} \right)}
+%\newcommand{\snIII}[7]{#1: \left( \begin{matrix} {#2} & {#4} & {#6} \\ #3 & #5 & #7 \end{matrix} \right)}
+%\newcommand{\snIV}[9]{#1:  \left( \begin{matrix} {#2} & {#4} & {#6} & {#8} \\ #3 & #5 & #7 & #9 \end{matrix} \right)}
 
-\newcommand{\sII}[3] {#1: \left( \begin{matrix} s_1 & s_2 \\ #2 & #3 \end{matrix} \right)}
-\newcommand{\sIII}[4] {#1: \left( \begin{matrix} s_1 & s_2 & s_3 \\ #2 & #3 & #4 \end{matrix} \right)}
-\newcommand{\sIV}[5] {#1: \left( \begin{matrix} s_1 & s_2 & s_3 & s_4 \\ #2 & #3 & #4  & #5 \end{matrix} \right)}
-\newcommand{\sVI}[7] {#1: \left( \begin{matrix} s_1 & s_2 & s_3 & s_4 & s_5 & s_6 \\ #2 & #3 & #4 & #5 & #6 & #7\end{matrix} \right)}
-\newcommand{\sVIII}[9] {#1: \left( \begin{matrix} s_1 & s_2 & s_3 & s_4 & s_5 & s_6 & s_7 & s_8\\ #2 & #3 & #4 & #5 & #6 & #7 & #8 & #9 \end{matrix} \right)}
-\newcommand{\fIoII}{\frac{1}{2}}
-\newcommand{\fIoIII}{\frac{1}{3}}
-\newcommand{\fIoIV}{\frac{1}{4}}
-\newcommand{\fIoV}{\frac{1}{5}}
-\newcommand{\fIoVI}{\frac{1}{6}}
-\newcommand{\fIoVII}{\frac{1}{7}}
-\newcommand{\fIoVIII}{\frac{1}{8}}
+%\newcommand{\sII}[3] {#1: \left( \begin{matrix} s_1 & s_2 \\ #2 & #3 \end{matrix} \right)}
+%\newcommand{\sIII}[4] {#1: \left( \begin{matrix} s_1 & s_2 & s_3 \\ #2 & #3 & #4 \end{matrix} \right)}
+%\newcommand{\sIV}[5] {#1: \left( \begin{matrix} s_1 & s_2 & s_3 & s_4 \\ #2 & #3 & #4  & #5 \end{matrix} \right)}
+%\newcommand{\sVI}[7] {#1: \left( \begin{matrix} s_1 & s_2 & s_3 & s_4 & s_5 & s_6 \\ #2 & #3 & #4 & #5 & #6 & #7\end{matrix} \right)}
+%\newcommand{\sVIII}[9] {#1: \left( \begin{matrix} s_1 & s_2 & s_3 & s_4 & s_5 & s_6 & s_7 & s_8\\ #2 & #3 & #4 & #5 & #6 & #7 & #8 & #9 \end{matrix} \right)}
+%\newcommand{\fIoII}{\frac{1}{2}}
+%\newcommand{\fIoIII}{\frac{1}{3}}
+%\newcommand{\fIoIV}{\frac{1}{4}}
+%\newcommand{\fIoV}{\frac{1}{5}}
+%\newcommand{\fIoVI}{\frac{1}{6}}
+%\newcommand{\fIoVII}{\frac{1}{7}}
+%\newcommand{\fIoVIII}{\frac{1}{8}}
 ```
+-->
 
 # Discrete Information Sources
 
@@ -100,12 +101,12 @@ $$
 - When two independent $s_i$ and $s_j$ events take place, their information gets added:
 
 $$
-\begin{align}
+\begin{align*}
 i(s_i \cap s_j) &= -\log_2(p(s_i \cap s_j) \\
 &= -\log_2(p(s_i) \cdot p(s_j) \\
 &= -\log_2(p(s_i) - log_2(p(s_j)) \\
 &= i(s_i) + i(s_j)
-\end{align}
+\end{align*}
 $$
 
 The information is a purely abstract mathematical quantity,
@@ -125,14 +126,14 @@ To understand why the amount of information
 depends on the probability,
 consider a case when information is valuable, for example:
 
-- in an exam or quiz with multiple-choice answers (e.g. Who Wants to be a Millionaire)
-- in sports betting (gambling),
+- in an exam or quiz with multiple-choice answers (e.g. Who Wants to be a Millionaire show);
+- in financial investments.
 
 For easy questions or expected results, you don't win much.
 Knowing these answers is not very valuable, because they
 doesn't contain much information.
 
-You do win a lot by answering hard questions, or betting on surprising results.
+You do win a lot by answering hard questions, or investing in surprising startups.
 Unexpected results (very small probability) have large amounts of information,
 and since information is valuable, you win much.
 
@@ -214,11 +215,13 @@ of information sources:
 
 ## Discrete memoryless sources
 
+```{prf:definition} Discrete memoryless source
 A **discrete memoryless source** (DMS) is an information source which
 produces a sequence of **independent** messages.
 The choice of a message at one time does not depend on the previous messages.
 Each message has a fixed probability,
 and every new message is generated randomly based on the probabilities.
+```
 
 The set of probabilities is the **distribution** of the source,
 also known as a **probabilty mass function**.
@@ -233,14 +236,14 @@ $$
 A DMS is a discrete, complete and memoryless information source. Below
 we give the definition of these terms.
 
-- **Discrete**: the set of messages is a discrete set
+- **Discrete**: the set of messages is a discrete set.
 - **Complete**: the sum of all probabilities is 1, which means that one and only one event must take place at a given time:
 
   $$
   \sum p(s_i) = 1
   $$
 
-- **Memoryless**: each message is independent of the previous messages
+- **Memoryless**: each message is independent of the previous messages.
 
 A good example of a DMS is a coin, or a dice.
 
@@ -309,13 +312,22 @@ $$
 $$
 where $x_k$ are the individual values and $p(x_k)$ are their probabilities (or weights).
 
-The **entropy of a DMS source** $S$ is **the average information of messages**:
+```{prf:definition} Entropy
+The **entropy** of an information source $S$ is **the average information of messages**.
+```
+
+For a DMS, because the messages are independent, we can compute the entropy
+as a weighted average of the information of each message.
+
+```{prf:definition} Entropy of a DMS
+The entropy of a DMS source is:
 
 $$
-H(S) = \sum_{k} p(s_k) i(s_k) = -\sum_{k} p(s_k) \log_2(p_k)
+H(S) = \sum_{k} p(s_k) i(s_k) = -\sum_{k} p_k \log_2(p_k)
 $$
-where $p(s_k)$  is the probability of message $k$
 
+where $p_k = p(s_k)$  is the probability of message $s_k$
+```
 
 Since information of a message is measured in bits,
 entropy is measured in **bits** (or **bits / message**, to indicate it is an average value).
@@ -394,25 +406,35 @@ We prove the following three properties for the entropy of a DMS:
 ```{prf:property} Entropy is non-negative
 1. $H(S) \geq  0$
 ```
+
 ```{prf:proof}
 Using the definition:
 
 $$H(S) = -\sum_{k} p_k \log_2(p_k)$$
+
 
 Every term in the sum is a product between a positive number ($p_k \geq 0$)
 and a negative number ($p_k \geq 1$ means $\log_2(p_k) \leq 0$),
 or possibly zero.
 Together with the minus sign in front, we have a total result which
 is either positive or zero.
+
+```{figure} img/Chapter1_EntropyPos.png
+---
+width: 300px
+name: directive-fig
+---
+Entropy is always non-negative
 ```
+<!-- ``` -->
 
 ```{prf:property} Maximum when equal
-2. $H(S)$ is maximum when all $n$ messages have equal probability $\frac{1}{n}$.
+2. Entropy $H(S)$ is maximum when all $n$ messages have equal probability $\frac{1}{n}$.
 The maximum value is $\max H(S) = \log(n)$
 ```
 
 ```{prf:proof}
-We are only proving for the case of $n=2$ messages.
+We are only proving here for the case of $n=2$ messages.
 
 Consider a generic source with two messages, with probabilities $p$ and $1-p$:
 
@@ -516,7 +538,13 @@ The entropy value as a function of $p$ is represented below:
 
 <!-- ![Entropy of a binary source](img/EntropyBinary.png){height=40%} -->
 
-![Entropy of a binary source](img/EntropyBinary.png)
+```{figure} img/EntropyBinary.png
+---
+width: 200px
+name: directive-fig
+---
+Entropy of a binary source
+```
 
 As an illustration of the property no.2 from above,
 we can see that the maximum entropy value of a DMS with two messages is reached
@@ -752,6 +780,59 @@ $$
 
 TBD. For now will be done in class, at the whiteboard.
 
+Let's consider a DMS $S$ with $k$ messages $s_1, ... s_k$, and its $n$-th order extension $S^n$, with $k^n$ compound messages $\sigma_1, ...\sigma_{k^n}$
+and probabilities $\pi_1, ... \pi_{n^k}$.
+
+$$ \begin{aligned}
+&\sIV{S}{p_1}{p_2}{...}{p_k} \\
+&\snIV{S^n}{\sigma_1}{\pi_1}{\sigma_2}{\pi_2}{...}{...}{\sigma_{k^n}}{\pi_{k^n}}
+\end{aligned} $$
+
+The entropy of $S$ is:
+
+$$
+H(S) = -\sum_{i=1}^{k} p_i \log_2(p_i)
+$$
+
+The entropy of the $n$-th order extension $S^n$ is:
+
+$$
+H(S^n) = -\sum_{i=1}^{k^n} \pi_i \log_2(\pi_i)
+$$
+
+For the extended source, a compound message $\sigma_i$ is just a combination of $n$
+messages from the original source, $\sigma_i = s_{i_1} ... s_{i_n}$, and has the
+probability $\pi_i = p_{i_1} \cdot p_{i_2} \cdot ... \cdot p_{i_n}$, so
+we have:
+
+$$
+\begin{aligned}
+H(S^n) &= -\sum_{i=1}^{k^n} \pi_i \log_2(\pi_i) \\
+&= -\sum_{i_1=1}^k \sum_{i_2=1}^k ... \sum_{i_n=1}^k \left( p_{i_1} \cdot p_{i_2} \cdot ... \cdot p_{i_n} \right) \log_2\left( p_{i_1} \cdot p_{i_2} \cdot ... \cdot p_{i_n} \right) \\
+&= -\sum_{i_1=1}^k \sum_{i_2=1}^k ... \sum_{i_n=1}^k p_{i_1} \cdot p_{i_2} \cdot ... \cdot p_{i_n} \left( \log_2(p_{i_1}) + \log_2(p_{i_2}) + ... + \log_2(p_{i_n}) \right) \\
+&= -\sum_{i_1=1}^k \sum_{i_2=1}^k ... \sum_{i_n=1}^k p_{i_1} \cdot p_{i_2} \cdot ... \cdot p_{i_n} \log_2(p_{i_1}) - ... \\
+&-\sum_{i_1=1}^k \sum_{i_2=1}^k ... \sum_{i_n=1}^k p_{i_1} \cdot p_{i_2} \cdot ... \cdot p_{i_n} \log_2(p_{i_n}) \\
+\end{aligned}
+$$
+
+The first term in the resulting expression is equal to the entropy of the original source $S$.
+This is visible by rearranging, and taking into account that $\sum_{i_j=1}^k p_{i_j} = 1$:
+
+$$
+\begin{aligned}
+&-\sum_{i_1=1}^k \sum_{i_2=1}^k ... \sum_{i_n=1}^k p_{i_1} \cdot p_{i_2} \cdot ... \cdot p_{i_n} \log_2(p_{i_1}) \\
+&= -\sum_{i_1=1}^k p_{i_1} \log_2(p_{i_1}) \sum_{i_2=1}^k p_{i_2} ... \sum_{i_n=1}^k p_{i_n} \\
+&= -\sum_{i_1=1}^k p_{i_1} \log_2(p_{i_1}) \\
+&= H(S)
+\end{aligned}
+$$
+
+The same thing appears $n$ times. Therefore the entropy of the $n$-th order extension is $n$ times larger than the entropy of the original source:
+
+$$
+H(S^n) = \underbrace{H(S) + H(S) + ... + H(S)}_{n \textrm{ times}} = n \cdot H(S)
+$$
+
 ```
 
 This theorem has a nice interpretation:
@@ -775,7 +856,9 @@ since its messages are just groupings of 8 messages from the original source.
 It's entropy is therefore $8 \cdot H(S)$.
 Hence the total information in the sequence is the same: $\approx 125 \cdot 8 H(S)$.
 
-The theorem shows that both interpretations are correct.
+The theorem shows that both interpretations are correct. Grouping $8$ messages
+of a source results in compound messages which are 8 times fewer, but
+carry 8 times more average information, so the total information is the same.
 
 ### DMS as models for language generation
 
@@ -784,32 +867,39 @@ A straightforward example in in text analysis, since text is basically a sequenc
 (letters and punctuation signs), similar to a sequence of messages from an information source.
 
 Is a DMS a good model for text? Let's take the following example, for the English language.
+The probability distribution of letters in English (26 letters, ignoring capitalization) is given below [^imageCover]:
 
-The probability distribution of letters in English (26 letters, ignoring capitalization) is given below:
+[^imageCover]: Image is taken from the book "*Elements of Information Theory" by Cover, Thomas*"
 
-```{margin}
-Images are taken from the book "*Elements of Information Theory" by Cover, Thomas)*"
+```{figure} img/EngLetterProb.jpg
+---
+width: 35%
+name: directive-fig
+---
+Probability distribution of letters in English
 ```
 
-<!-- ![](img/EngLetterProb.jpg){width=30%}\  -->
-![](img/EngLetterProb.jpg)
-
-We consider a DMS whhich has the 26 letters as messages, with these probabilities.
-
+Let's image a DMS which has the 26 letters as messages, with these probabilities.
 Generating a sequence of letters from this DMS produces the following:
 
-<!-- ![](img/EnglishFirstOrder.png){width=50%}\ -->
-![](img/EnglishFirstOrder.png)
+```{figure} img/EnglishFirstOrder.png
+---
+width: 50%
+name: directive-fig
+---
+Text generated from a DMS with English letter probabilities
+```
 
 This doesn't look like English. What's wrong?
 
 A DMS is **memoryless**, which means that every message is generated irrespective
-of the previous ones. This is not a good model for a text in a language. In a real language,
-the frequency of letter depends a lot on the previous letters:
-
-- `a` is a common letter in English (probability $8.2 \%$), but if the previous letter is also `a`,
-  the probability is close to zero because the group `aa` is extremely rare
-- similarly, `h` has a much higher probability if the previous letter is `t` then if the previous letter is `x`
+of the previous ones. This is not a good model for written text.
+In a real language, the frequency of letter depends a lot on the previous letters.
+Foe example, `a` is a common letter in English (probability $8.2 \%$),
+but if the previous letter is also `a`, the probability is close to zero
+because the group `aa` is extremely rare. Similarly, `h` has
+a much higher probability if the previous letter is `t`
+then if the previous letter is `x`.
 
 The DMS is not capturing the dependencies between letters, because the memoryless property
 makes it very restrictive. We need to consider sources with memory.
@@ -821,41 +911,49 @@ A source has **memory of order $m$** if the probability
 of a message depends on the last $m$ messages.
 ```
 
-The last $m$ messages define the **state** of the source (denoted as $S_i$).
+The last $m$ messages define the **state** of the source,
+which is denoted as $S_i$.
 We say that the source "is in the state $S_i$".
+Sources with memory are also known as *Markov sources*.
 
 A source with $n$ messages and memory $m$ has a number of states equal to $n^m$.
 
-The source generates messages randomly, but with different message probabilities
+A source with memory generates messages randomly,
+but the message probabilities are different
 depending in which state the source is.
-We use the following notation:
+We use the notation:
 
-$p(s_i | S_k)$ = probability of message $s_i$ in state $S_k$
+$$
+p(s_i | S_k)
+$$
 
-Sources with memory are also known as *Markov sources*.
+to refer to probability of message $s_i$ being generated when
+the source is in state $S_k$.
+This is called the **conditional probability** of message $s_i$ given state $S_k$.
+
 
 ```{admonition} Example
-The folllwing is a source with $n=4$ messages and memory $m=1$
+The folllowing is a source with $n=4$ messages and memory $m=1$
 
-- if last message was $s_1$, choose next message with distribution
+- if last message was $s_1$ (state $S_1$), choose next message with distribution
 
 $$
 \sIV{S_1}{0.4}{0.3}{0.2}{0.1}
 $$
 
-- if last message was $s_2$, choose next message with distribution
+- if last message was $s_2$ (state $S_2$), choose next message with distribution
 
 $$
 \sIV{S_2}{0.33}{0.37}{0.15}{0.15}
 $$
 
-- if last message was $s_3$, choose next message with distribution
+- if last message was $s_3$ (state $S_3$), choose next message with distribution
 
 $$
 \sIV{S_3}{0.2}{0.35}{0.41}{0.04}
 $$
 
-- if last message was $s_4$, choose next message with distribution
+- if last message was $s_4$ (state $S_4$), choose next message with distribution
 
 $$
 \sIV{S_4}{0.1}{0.2}{0.3}{0.4}
@@ -875,8 +973,16 @@ $$
 ...s_i \underbrace{s_j s_k s_l}_{\text{new state}}
 $$
 
-Therefore we can view the probabilities of messages $s_i$ as **transition probabilities** from
-some state $S_u$ to another state $S_v$s.
+Therefore we can view the conditional probabilities of messages $s_i$
+as **transition probabilities** from some state $S_u$ to another state $S_v$.
+We can write:
+
+$$
+p(s_i | S_u) = p(S_v | S_u)
+$$
+
+which means that generating some message $s_i$ while in state $S_u$
+is the same as transitioning into state $S_v$ from state $S_u$.
 
 The transition probabilities are organized in a **transition matrix** $[T]$
 of size $N \times N$, where $N$ is the total number of states.
@@ -892,7 +998,14 @@ p_{N1} & p_{N2} & ... & p_{NN} \\
 $$
 
 The element $p_{ij}$ from $[T]$, located on row $i$ and column $j$,
-is the transition probability from state $S_i$ to state $S_j$.
+is the transition probability from state $S_i$ to state $S_j$:
+
+$$
+p_{ij} = p(S_j | S_i)
+$$
+
+Note that the sum of the probabilities on each row is $1$,
+because the source must move to some state after generating a message.
 
 ```{admonition} Exercise
 Write the transition matrix $[T]$ for the previous example
@@ -904,23 +1017,50 @@ The transition matrix which defines a source with memory can be represented grap
 as a directed graph where the vertices are the states, and the edges are the transitions.
 Every edge (transition) has a certain probability,
 
-At whiteboard: draw states and transitions for previous example
-(source with $n=4$ messages and memory $m=1$)
+The graphical representation of the previous example source is:
+
+```{figure} img/Chapter1_SourceWithMemory.png
+---
+width: 75%
+name: directive-fig
+---
+A source with memory $m=1$ and $n=4$ messages
+```
+
+For example, generating message $s_3$ while in state $S_2$ means
+we move from state $S_2$ to state $S_3$ (defined as last message $s_2$),
+so we have an arrow from $S_2$ to $S_3$ with probability $0.15$.
+
+Note that the sum of the probabilities of the transitions exiting from a state is $1$,
+since the source must move to some state after generating a message.
+It is possible that the source stays in the same state,
+which is represented as a self-loop.
+
+```{admonition} Warning
+Pay attention to the differente between messages $s_i$ and states $S_i$.
+In general, they are not the same thing. It is only a coincidence
+in this example that the messages and states have the same labels.
+
+Messages are always written with small letter $s$, while states
+with capital letter $S$.
+```
 
 ### Entropy of sources with memory
 
 How to compute the entropy of a source with memory?
 
-Note that each state $S_k$ has a different distribution, so each state can be viewed
-as a kind of DMS. Therefore we can compute an entropy $H(S_k)$ for every state $S_k$,
+In each state $S_k$ there is different distribution, so each state can be viewed
+as a kind of DMS. We can compute an entropy $H(S_k)$ for every state $S_k$,
 using the same formula as for DMS:
 
 $$
 H(S_k) = - \sum_i p(s_i | S_k) \cdot \log(p(s_i | S_k))
 $$
 
-However, the source moves from state to state, and it can spend more time
-in a state than in another one. How to define the global entropy?
+However, $H(S_k)$ is the entropy of a single state.
+While operating, the source moves from state to state,
+and it can spend more time
+in a state than in another one.
 
 The global entropy of a source with memory is **the average entropy of the states**:
 
@@ -933,12 +1073,13 @@ $$
 
 The probabilities $p_k$ are known as the **stationary probabilities**,
 and they represent the probability that the source is in state $S_k$ at a given moment.
+Considering that the source operates for a very long time and generates
+a very long sequence of messages, you can think of $p_k$ as
+the fraction of time when the source was in state $S_k$.
 
-Considering that the source operates for a very long time and generates a very long sequence of messages,
-you can think of $p_k$ as the fraction of time when the source was in state $S_k$.
+#### Stationary probabilities
 
-How to find out the weights $p_k$?
-
+How to find out the stationary probabilities $p_k$?
 To find this, we first need to answer the following question:
 
 > If we know the state $S_k$ at time $n$, what will be the state at time $n+1$?
@@ -948,13 +1089,13 @@ The source generates a message. In what state will the source end up at time $n+
 
 The probabilities of the states at time $n+1$, $p_i^{(n)}$, are found by multiplying with $T$
 
-```{margin} Exercise
-Prove this.
-```
-
 $$
 [p_1^{(n)}, p_2^{(n)}, ... , p_N^{(n)}] \cdot [T] = [p_1^{(n+1)}, p_2^{(n+1)}, ... , p_N^{(n+1)}]
 $$
+
+```{admonition} Exercise
+Prove this.
+```
 
 After one additional message, at time $(n+2)$? Multiply once more with $T$:
 
@@ -975,27 +1116,35 @@ However, in general we don't know the initial state or the initial probabilities
 
 To work around the problem of the unknown initial state, we make use a property called "*ergodicity*".
 
-A source is called **ergodic** if every state can be reached from every state, in a finite number of steps.
+```{prf:definition} Ergodicity
+An information source with memory is called **ergodic** if every state can be reached from every state, in a finite number of steps.
+```
 
 If an ergodic source runs for a very long time $M \to \infty$, it will go through all transitions and all states many times,
 and, eventually, the fraction of time it finds itself in a certain state $S_k$ stabilizes.
 This happens irrespective of what was the starting state.
-Intuitively, the initial state doesn't matter if the source will anyway travel
+Intuitively, the initial state is not important anymore
+if the source will anyway travel
 through all states and transitions many times, as $M \to \infty$.
 
 ```{admonition} Counter-example
 Can you show why ergodicity is important for this?
 
-Think of a non-ergodic source where the initial state always matters, even as the number of generated messages $M \to \infty$.
+Think of a non-ergodic source, where the initial state always matters,
+even as the number of generated messages $M \to \infty$.
 ```
 
 We formalize this as the following property of an ergodic source with memory:
 
 ```{prf:property}
-For an ergodic source with memory, after many messages, the probabilities of the states *become stationary*,
-i.e. that converge to some fixed values, no matter what state the source started from initially).
+For an ergodic source with memory, after many messages, the probabilities of the states
+**become stationary**,
+i.e. that converge to some fixed values,
+no matter what state the source started from initially.
 
-    $$\lim_{n \to \infty} [p_1^{(n)}, p_2^{(n)}, ... p_N^{(n)}] = [p_1, p_2, ... p_N]$$
+$$
+\lim_{n \to \infty} [p_1^{(n)}, p_2^{(n)}, ... p_N^{(n)}] = [p_1, p_2, ... p_N]
+$$
 ```
 
 #### Finding the stationary probabilities
@@ -1008,13 +1157,15 @@ $$
 [p_1, p_2, ... p_N] \cdot [T] = [p_1, p_2, ... p_N]
 $$
 
-Note that we dropped the time $^(n)$ or ^$^(n+1)$, since the values have converged to fixed values
-and the times doesn't matter anymore.
+Note that we dropped the time exponent indicator $(n)$ or $(n+1)$, since the values
+have converged to fixed values and the times doesn't matter anymore.
 
 This is an equation system in matrix form, with $M$ unknowns and $M$ equations.
 
-However, the system is rank-deficient, i.e. one row is actually a linear combination of the others.
-Because of this, one row of the system should be removed, and replaced with a new equation which reflects
+However, the system is rank-deficient, i.e. one row is actually
+a linear combination of the others.
+Because of this, one row of the system should be removed,
+and replaced with a new equation which reflects
 the fact that the sum of probabilities is 1:
 
 $$
@@ -1023,7 +1174,7 @@ $$
 
 With this new equation, we obtain a complete system, which has a unique set of solutions by solving the system.
 
-### Example: modelling English
+### Example: Modelling English
 
 This example is taken from "Elements of Information Theory" by Cover & Thomas.
 
@@ -1033,7 +1184,7 @@ to the most advanced (source with memory of large order).
 
 Let's look at a sample sequence of letters generated from these sources.
 
-1. Text generated by memoryless source with equal probabilities:
+1. Text generated by memoryless source, where all letters have equal probabilities:
 
    <!-- ![](img/EnglishZeroOrder.png){width=40%} -->
    ![](img/EnglishZeroOrder.png)
@@ -1057,6 +1208,9 @@ Let's look at a sample sequence of letters generated from these sources.
 
    <!-- ![](img/EnglishFourthOrder.png){width=40%}\ -->
    ![](img/EnglishFourthOrder.png)
+
+The generated text, while still random, gradually looks more and more
+like actual English as the memory order increases.
 
 Sources with more memory are able to capture better
 the statistical dependencies between the letters, and because
@@ -1165,44 +1319,3 @@ $$
 - We compute the log-probability of the text with every language source model.
   Pick the one with the highest value.
 
-### Sample exercise
-
-1. Consider a discrete source with memory, with the graphical representation given below.
-The states are defined as follows: $S_1: s_1s_1$, $S_2: s_1s_2$, $S_3: s_2s_1$, $S_4: s_2s_2$.
-
-	![Graphical representation of the source](img/MemorySource3.png)
-
-Questions:
-
-  1. What are the values of $x$ and $y$?
-  2. Write the transition matrix $[T]$;
-  3. Compute the entropy in state $S_4$;
-  4. Compute the global entropy of the source;
-  5. What are the memory order, $m$, and the number of messages of the source, $n$?
-  6. If the source is initially in state $S_2$, in what states and with what probabilities
-     will the source be after 2 messages?
-
-## Chapter summary
-
-- Information of a message: $i(s_k) = -\log_2(p(s_k))$
-
-- Entropy of a memoryless source: $H(S) = \sum_{k} p_k i(s_k) = -\sum_{k} p_k \log_2(p_k)$
-
-- Properties of entropy:
-
-    1. $H(S) \geq  0$
-
-    2. Is maximum when all messages have equal probability ($H_{max}(S) = \log(n)$)
-
-    3. *Diversfication* of the source always increases the entropy
-
-- Sources with memory: definition, transitions
-
-- Stationary probabilities of ergodic sources with memory:
-$[p_1, p_2, ... p_N] \cdot [T] = [p_1, p_2, ... p_N]$, $\sum_i p_i = 1$.
-
-- Entropy of sources with memory:
-
-$$
-H(S) = \sum_k p_k H(S_k) = - \sum_k p_k \sum_i p(s_i | S_k) \cdot \log(p(s_i | S_k)
-$$
