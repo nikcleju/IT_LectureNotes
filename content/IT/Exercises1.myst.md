@@ -501,7 +501,7 @@ After 2 messages, it means we multiply twice with $[T]$:
 
 $$
 \begin{bmatrix}
-0 & 1 & 0 & 0]
+0 & 1 & 0 & 0
 \end{bmatrix}
 \cdot [T] \cdot [T]= [p_1^{(2)}, p_2^{(2)}, p_3^{(2)}, p_4^{(2)}]
 $$
