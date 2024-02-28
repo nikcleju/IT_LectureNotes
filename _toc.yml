@@ -1,13 +1,17 @@
 format: jb-book
 root: content/intro
-options:
-  numbered: 3
+#options:
+#  numbered: 3
+# maxdepth: 2
 parts:
   - caption: Theoretical Foundations
+    numbered: 3
     chapters:
     - file: content/IT/InformationSources.myst.md
     - file: content/IT/SourceCoding.myst.md
   - caption: Solved Exercises
+    numbered: 3
+    maxdepth: 2  # ignored?
     chapters:
     - file: content/IT/Exercises1.myst.md
   # - caption: Practical Applications
