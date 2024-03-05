@@ -159,15 +159,12 @@ Nowadays, ASCII is usually replaced by Unicode (UTF-8), which is a more general 
 The codewords of a code can represented as a binary tree.
 We call this representation **the graph of the code**.
 
-Example at blackboard
+TODO: Example at blackboard
 
 ### Average code length
 
-Consider a code for the messages of a discrete memoryless source.
-There are many ways to define the codewords and their mapping to messages.
-
-How to measure representation efficiency of a code? We need this, for example,
-in order to choose the most efficient code out of all possible codes we might define.
+There are many ways to define the codewords for messages,
+but some are better than others.
 
 The most basic quantity indicating efficiency of a code is the average code length.
 
@@ -177,12 +174,14 @@ Given a code, the **average code length** is the average of the codeword lengths
 $$\overline{l} = \sum_i p(s_i) l_i$$
 ```
 
-Here, for every codeword $c_i$ we consider its probability
-to be the probability of the corresponding message $p(s_i)$, and its length $l_i$.
+For every codeword $c_i$, we multiply the probability of the corresponding message $p(s_i)$ with its length $l_i$.
 
-A code with smaller average length is better, because it represents sequences of messages
-with less symbols, on average. However, we expect a certain
-lower limit to the average length (for example, it cannot be 0, for self-evident reasons).
+A code with smaller average length is better,
+because it represents sequences of messages
+with less symbols, on average.
+However, there is a certain lower limit
+to how small the average length can be (for example, it cannot be 0, for self-evident reasons).
+
 This raises the following interesting question:
 
 > Given a source $S$, how small can the average length be?
@@ -193,12 +192,14 @@ This is a fundamental question, to which we will provide an answer later in this
 
 We introduce another set of useful definitions regarding the codeword structure.
 
-A code is:
+A code can be:
 
 - **non-singular**: all codewords are different
-- **uniquely decodable**: for any received sequence of symbols, there is only one corresponding sequence of messages
-  - i.e. no sequence of messages produces the same sequence of symbols
-  - i.e. there is never a confusion at decoding
+- **uniquely decodable**: no two sequences of messages translate
+  to the same sequence of symbols
+  - i.e. there is never a confusion at decoding: there can be only one
+  sequence of messages corresponding to a given sequence of symbols
+
 - **instantaneous** (also known as **prefix-free**): no codeword is prefix to another code
   - A **prefix** = a codeword which is the beginning of another codeword
 
@@ -246,7 +247,7 @@ We can summarize the relation between these three code types as follows:
 Instantaneous $\subset$ uniquely decodable $\subset$ non-singular
 
 
-### Graph-based decoding of instantaneous codes
+#### Graph-based decoding of instantaneous codes
 
 Using the graph of the code, we can use a very simple procedure for decoding any instantaneous code:
 
@@ -263,15 +264,16 @@ Using the graph of the code, we can use a very simple procedure for decoding any
 4. Continue until the end of the symbol sequence
 ```
 
-TBD: Illustrate at whiteboard
+TODO: TBD: Illustrate at whiteboard
 
 This procedure shows the advantage of instantaneous codes over other codes which
-might be uniquely decodable, but are not instantaneous:
-instantaneous codes allow for **simple decoding**. There is never any doubt about
-the next message in the sequence.
+might be uniquely decodable, but are not instantaneous.
+Instantaneous codes allow for **simple decoding**.
+There is never any doubt about the next message in the sequence.
 
 This decoding scheme is also showing why these codes are named "*instantaneous*":
-a codeword can be decoded as soon as it is fully received, immediately, without any delay.
+a codeword can be decoded as soon as it is fully received, immediately, without any delay, because the decoding takes place on-the-fly while the bits are
+received one-by-one.
 
 As a counter example, consider the following uniquely decodable, but non-instantaneous code: $\left\lbrace 0, 01, 011, 1110 \right\rbrace$. When you read the first $0$, you cannot decode it yet, because you need to wait the next bits to understand how to segment the sequence. This implies that the decoding has some delay.
 
@@ -290,7 +292,7 @@ $$\sum_i D^{-l_i} \leq 1$$
 ```
 
 ```{prf:proof}
-At blackboard
+TODO: At blackboard
 ```
 
 Comments on the Kraft inequality:
@@ -340,7 +342,7 @@ brings **no additional benefit** in average codeword length
 - Instead of an uniquely decodable code, we can always use an instantaneous code,
 which has the same lengths, but is much easier to decode.
 
-### Finding an instantaneous code for given lengths
+#### Finding an instantaneous code for given lengths
 
 How to find codewords with code lengths $\{l_i\}$?
 
@@ -358,7 +360,7 @@ to a particular set of messages.
 In practice, there might be more elaborate ways to find the codewords and map them
 to the messages of the source, with additional benefits.
 
-### Optimal codes
+### Minimum average length
 
 We will discuss now one of the most important aspect of this chapter,
 
@@ -474,15 +476,12 @@ Let us discuss some intuitions and consequences related to this result:
 - A message with higher probability must have a shorter codeword, while a message with lower probability has a longer codeword.
   This makes sense because messages we can afford to use a longer codeword for messages which appear rarely in a sequence.
 
-```{margin}
-Think of examples in languages.
-
-- words which are very common are usually short: "yes", "no", "and", "the" "with"
-- we often use abbreviations to replace longer words which we must use often
+```{admonition} Example
+Think of examples in languages. Words which are very common are usually short: "yes", "no", "and", "the" "with". We often use abbreviations to replace longer words which we must use often.
 ```
 
 
-#### Minimal average length
+#### Entropy is the limit
 
 The most important consequence of this result gives us a functional
 definition of the entropy, i.e. it tells us what the entropy really
@@ -517,14 +516,13 @@ $$H(S) \leq \overline{l}$$
 You can think of the relation between information (entropy) and code length
 using the analogy of water and a bottle.
 
-We use a code in order to represent and transfer information,
-just like we use a bottle to carry and store some shapeless quantity of water.
-Information is not the codewords.
-Information is a mathematical quantity implied by the random occurrence of messages, and the codewords are just means of transportation of information.
+We use a bottle to carry and store some quantity of water,
+but the bottle capacity must be larger or equal than the quantity of water.
 
-A quantity of 1 liter of water can be carried with any bottle of size $\geq$ 1 liter, but it does not fit in any bottle smaller than this.
-Similarly, an amount of information (entropy) can be encoded with a code
-for which the average length is larger or equal, but does not "fit" in any code smaller than this.
+We use a code to carry and store information, and the
+code average length must be larger or equal than the quantity of information.
+
+Information is not the codewords, information is a mathematical quantity implied by the random occurrence of messages. The codewords are just means of transportation of information, like a bottle.
 ```
 
 #### Efficiency and redundancy of a code
@@ -545,7 +543,51 @@ $$\rho = 1- \eta$$
 
 For binary codes $M = 2$ so $\eta$ is simply the ratio $\eta = \frac{H(S)}{\overline{l}}$.
 
-For $M > 2$ a factor of $\log(M)$ is needed because we need to express both quantities with the same unit. The entropy $H(S)$ in bits (due to the binary logarithm), but $\overline{l}$ is not in bits, since is the average number of symbols and there are more than 2 symbols, hence the $\log(M)$.
+For $M > 2$, the factor of $\log_2(M)$ is needed because we need to express both quantities with the same unit. The entropy $H(S)$ in bits (due to the binary logarithm), but $\overline{l}$ is not in bits if there are $M > 2$ symbols, hence the need for $\log(M)$.
+```
+
+
+#### Coding with the wrong code
+
+An interesting question arises in practice.
+Consider a source with probabilities $q(s_i)$. We design a code for this source, but we use it to encode messages from a different source, with probabilities $p(s_i)$.
+
+This happens in practice when we estimate the probabilities from a sample
+data file, and then we use the code for general of similar files.
+Those files might not have exactly the same frequencies of messages
+as the sample file used to design the code.
+
+How does this affect us? We lose some efficiency, because
+the codeword lengths $\overline{l_i} \approx -\log_2(q_i) $ are not optimal for the source with probabilities $p_i$, which
+leads to increased average length.
+
+If the codewords were optimal, the codeword lengths would have been
+$\approx -log_2(p_i)$, leading to an average length equal
+to the entropy $H(S)$:
+$$\overline{l_{optimal}} = -\sum{p(s_i) \log{p(s_i)}}$$
+
+But the actual average length we obtain is:
+$$\overline{l_{actual}} = \sum{p(s_i) l_i} = -\sum{p(s_i) \log{q(s_i)}}$$
+
+The difference between average lengths is what we lose due to the mismatch:
+
+$$\overline{l_{actual}} - \overline{l_{optimal}} = \sum_i{p(s_i) \log(\frac{p(s_i)}{q(s_i)})} = D_{KL}(p || q)$$
+
+The difference is exactly **the Kullback-Leibler distance** between the two distributions $p$ and $q$.
+
+Therefore we have a functional definition of the KL distance:
+the KL distance between two distributions $p$ and $q$
+is the number of extra bits spent
+when we encode messages from $p$ using a code
+optimized for a different distribution $q$.
+
+Due to the KL distance properties, the distance is always $\geq 0$,
+which shows that such a mismatch always increases the average length.
+The more different the two distributions are, the larger the increase
+in average length becomes.
+
+```{prf:example}
+TODO
 ```
 
 #### Optimal and non-optimal codes
@@ -578,6 +620,8 @@ This leads to the Shannon coding algorithm described below.
 
 ### Shannon coding
 
+The Shannon coding procedure is a simple algorithm for finding an instantaneous code for a DMS.
+
 ```{prf:algorithm} Shannon coding algorithm
 **Inputs** A DMS source with probabilities $p(s_i)$
 
@@ -592,12 +636,13 @@ This leads to the Shannon coding algorithm described below.
     3. floor the result, convert to binary, retain first $l_i$ bits
 
 ```
+
 The code obtained with this procedure is known as a **Shannon code**.
 
 Shannon coding is one of the simplest algorithms, and some other better schemes are available. However, this simplicity allows to prove fundamental results
 in coding theory, as we shall see below.
 
-```{margin}
+```{annotation} Bad example
 As an example of Shannon coding deficiency, compute the Shannon algorithm for the following source:
 
 $$S: (0.9, 0.1)$$
@@ -612,138 +657,116 @@ $$H(S) \leq \overline{l} < H(S) + 1$$
 ```
 
 ```{prf:proof}
+The first inequality, $H(S) \leq \overline{l}$, is because $H(S)$ is
+the minimum average length.
 
-The proof is as follows:
 
-1. The first inequality is because $H(S)$ is minimum average length
-2. The second inequality:
-    a. Use Shannon code:
-$$l_i = \lceil -\log(p(s_i)) \rceil = -\log(p(s_i)) + \epsilon_i$$ where $0 \leq \epsilon_i < 1$
+To prove the second inequality, consider the lenghts $l_i$ obtained with the
+Shannon algorithm:
 
-    a. Compute average length:
-$$\overline{l} = \sum_i p(s_i) l_i = H(S) + \underbrace{\sum_i p(s_i) \epsilon_i}_{< 1}$$
-    a. Since $\epsilon_i < 1$ => $\sum_i p(s_i) \epsilon_i < \sum_i p(s_i)  = 1$ \qed
+$$l_i = \lceil -\log(p(s_i)) \rceil = -\log(p(s_i)) + \epsilon_i$$
+
+where the values are rounded upwards with a quantity $\epsilon_i$
+which is smaller than 1, $0 \leq \epsilon_i < 1$.
+
+Computing the average length, we have:
+
+$$\begin{aligned}
+\overline{l} &= \sum_i p(s_i) l_i \\
+&= \sum_i p(s_i) (-\log(p(s_i)) + \epsilon_i) \\
+&= H(S) + \underbrace{\sum_i p(s_i) \epsilon_i}_{< 1} \\
+&\leq H(S) + \sum_i p(s_i) \cdot 1 \\
+&= H(S) + 1
+\end{aligned}$$
+
+We have used the fact that $\epsilon_i < 1$, which makes
+the sum $\sum_i p(s_i) \epsilon_i$ smaller or equal to $\sum_i p(s_i)$,
+which is 1.
 ```
 
-* Average length of Shannon code is **at most 1 bit longer** than the minimum possible value
-    * That's quite efficient
-    * There exist even better codes, in general
+Although a Shannon code is not optimal, in the sense that it
+does not lead to the minimum achievable average length,
+we see that it's also not very bad.
+The average length of Shannon code is **at most 1 bit longer** than the minimum possible value, which is quite efficient.
+However, better procedures do exist.
 
-* Q: Can we get even closer to the minimum length?
-* A: Yes, as close as we want!
-    * In theory, at least ... :)
-    * See next slide.
+#### Shannon's first theorem
 
-### Shannon's first theorem
+Shannon's first theorem (coding theorem for noiseless channels)
+shows us that, in theory, we can approach the entropy as close as we want,
+using extended sources.
 
-Shannon's first theorem (coding theorem for noiseless channels):
-
-* It is possible to encode an infinitely long sequences of messages
+```{prf:theorem} Shannon's first theorem
+It is possible to encode an infinitely long sequences of messages
 from a source S with an average length
 as close as desired to H(S),
-but never below H(S)
+but never below H(S).
+```
 
-\
-\
+```{prf:proof}
+First, note that the average length can never go below H(S),
+because this is minimum. We only consider getting close to H(S) from above.
 
-Key points:
+Let's consider the **$n$-th order extension** $S^n$ of the source S.
 
-  * we can always obtain $\overline{l} \to H(S)$
-  * for an infinitely long sequence
+$S^n$ is a source like any other,
+with its own probabilities $p(\sigma_i)$,
+and it can undergo Shannon coding as well.
+When we use Shannon coding for $S^n$, it satisfies the same condition:
 
-### Shannon's first theorem
-
-Proof:
-
-* Average length can never go below H(S) because this is minimum
-* How can it get very close to H(S) (from above)?
-    1. Use **$n$-th order extension** $S^n$ of S
-    2. Use Shannon coding for $S^n$, so it satisfies
 $$H(S^n) \leq \overline{l_{S^n}} < H(S^n) + 1$$
-    3. But $H(S^n) = n H(S)$, and average length **per message of $S$** is
+
+where $\overline{l_{S^n}}$ is the average length of the codewords for $S^n$.
+
+We have $H(S^n) = n H(S)$, due to the theorem for extended sources.
+
+Because a message of $S^n$ is just a group of $n$ messages of $S$,
+we have the average length **per message of $S$** as:
+
 $$\overline{l_{S}} = \frac{\overline{l_{S^n}}}{n}$$
-because messages of $S^n$ are just $n$ messages of $S$ glued together
-    4. So, dividing by $n$:
+
+Therefore, dividing by $n$, we obtain:
+
 $$\boxed{H(S) \leq \overline{l_{S}} < H(S) + \frac{1}{n}}$$
-    5. If extension order $n \to \infty$, then
-$$\overline{l_{S}} \to H(S)$$ \qed
 
-### Shannon's first theorem
+which means that the average length used for a message
+of the original source $S$ is
+at most $1/n$ away from the entropy $H(S)$.
 
-* Analogy: how to buy things online without paying for delivery :)
-    * FanCourier taxes 15 lei per delivery
-        * not efficient to buy something worth a few lei
-    * How to improve efficiency? Buy $n$ things bundled together!
-    * The delivery cost **per unit** is now $\frac{15}{n}$
-    * As $n \to \infty$, the delivery cost per unit $\to 0$
-        * What's 15 lei when you pay $\infty$ lei...
+At the limit, if we consider the extension order $n \to \infty$, we have:
 
-### Shannon's first theorem
+$$\overline{l_{S}} \to H(S)$$
 
-Comments:
+```
 
- * Shannon's first theorem shows that we can approach H(S)
- to any desired accuracy using extensions of large order of the source
-     * This is not practical: the size of $S^n$ gets too large for large $n$
-     * Other (better) algorithms than Shannon coding are used in practice to approach $H(S)$
+The theorem shows that, in principle, we can always obtain
+$\overline{l} \to H(S)$,
+if we consider longer and longer sequences of messages from the source,
+modeled as larger and larger extensions of the source.
+
+However, this result is mostly theoretical, because in practice the size of $S^n$ gets too large for large $n$.
+Other (better) algorithms than Shannon coding are used in practice to approach $H(S)$.
 
 
+```{admonition} Analogy
+When you buy things online and you want to avoid paying for delivery,
+you bundle many things into one order, so that the delivery cost per unit
+becomes smaller and smaller.
 
-### Coding with the wrong code
-
-* Consider a source with probabilities $p(s_i)$
-* We use a code designed for a different source: $l_i = -\log(q(s_i))$
-* The message probabilities are $p(s_i)$ but the code is designed for $q(s_i)$
-\
-
-* Examples:
-    * design a code based on a sample data file (like in lab)
-    * but we use it to encode various other files => probabilities might differ slightly
-    * e.g. design a code based a Romanian text, but encode a text in English
-\
-
-* What happens?
-
-### Coding with the wrong code
-
-* We lose some efficiency:
-    * Codeword lengths $\overline{l_i}$ are not optimal for our source => increased $\overline{l}$
-
-* If code were optimal, best average length = entropy $H(S)$:
-$$\overline{l_{optimal}} = -\sum{p(s_i) \log{p(s_i)}}$$
-
-* But the actual average length we obtain is:
-$$\overline{l_{actual}} = \sum{p(s_i) l_i} = -\sum{p(s_i) \log{q(s_i)}}$$
-
-### The Kullback–Leibler distance
-
-* Difference between average lengths is:
-
-$$\overline{l_{actual}} - \overline{l_{optimal}} = \sum_i{p(s_i) \log(\frac{p(s_i)}{q(s_i)})} = D_{KL}(p || q)$$
-
-* The difference  = **the Kullback-Leibler distance** between the two distributions
-    * is always $\geq 0$ => improper code means increased $\overline{l}$ (bad)
-    * distributions more different => larger average length (worse)
-
-* The KL distance between the distributions = the number of extra bits used because
-of a code optimized for a different distribution $q(s_i)$ than the true distribution
-of our data $p(s_i)$
-
-### The Kullback–Leibler distance
-
-Reminder: where is the Kullback–Leibler distance used
-
-* Here: Using a code optimized for a different distribution:
-    * Average length is increased with $D_{KL}(p || q)$
-
-* In chapter IV (Channels): Definition of mutual information:
-    * Distance between $p(x_i \cap y_j)$ and the distribution of two independent variables $p(x_i) \cdot p(y_j)$
-$$I(X,Y) = \sum_{i,j} p(x_i \cap y_j) \log(\frac{p(x_i \cap y_j)}{p(x_i)p(y_j)})$$
+This is exactly how Shannon's first theorem works. It bundles many
+messages into one (using $n$-th order extensions), so that the
+overhead of maximum +1 incurred by the Shannon code becomes smaller and smaller, when considered per message.
+```
 
 
 ### Shannon-Fano coding (binary)
 
-Shannon-Fano (binary) coding procedure:
+The Shannon-Fano (binary) coding procedure is presented below.
+
+```{prf:algorithm} Shannon-Fano coding (binary)
+**Inputs** A DMS source with probabilities $p(s_i)$
+
+**Outputs** Codewords $l_i$
 
 1. Sort the message probabilities in descending order
 2. Split into two subgroups as nearly equal as possible
@@ -751,16 +774,22 @@ Shannon-Fano (binary) coding procedure:
 4. Repeat on each subgroup
 5. When reaching one single message => that is the codeword
 
+```
+
 Example: blackboard
 
-Comments:
+Remarks:
 
-* Shannon-Fano coding does not always produce the shortest code lengths
-* Connection: yes-no answers (example from first chapter)
+- Shannon-Fano coding does not always produce the shortest code lengths
+- Connection: yes-no answers (example from first chapter)
 
 ### Huffman coding (binary)
 
-Huffman coding procedure (binary):
+```{prf:algorithm} Huffman coding procedure (binary)
+
+**Inputs** A DMS source with probabilities $p(s_i)$
+
+**Outputs** Codewords $l_i$
 
 1. Sort the message probabilities in descending order
 2. Join the last two probabilities, insert result into existing list, preserve descending order
@@ -768,9 +797,8 @@ Huffman coding procedure (binary):
 4. Assign first bit $0$ and $1$ to the final two messages
 5. Go back step by step: every time we had a sum, append $0$ and $1$ to the end of existing codeword
 
-Example: blackboard
+```
 
-### Properties of Huffman coding
 Properties of Huffman coding:
 
 * Produces a code with the **smallest average length** (better than Shannon-Fano)
