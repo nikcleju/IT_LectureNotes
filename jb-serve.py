@@ -41,12 +41,12 @@ def main(pathsource: Path, outputdir: Path, port: int):
 
     # Globbing for all supported file types under jupyter-book
     # Ignore unrelated files
-    #server.watch(pathsource / "**/*.md", build)
-    #server.watch(pathsource / "**/*.ipynb", build)
-    #server.watch(pathsource / "**/*.rst", build)
+    server.watch(str(pathsource / "**/*.md"), build)
+    server.watch(str(pathsource / "**/*.ipynb"), build)
+    server.watch(str(pathsource / "**/*.rst"), build)
     server.watch(str(pathsource / "./content/IT/*.myst.md"), build)
-    #server.watch(pathsource / "_config.yml", build)
-    #server.watch(pathsource / "_toc.yml", build)
+    server.watch(str(pathsource / "_config.yml"), build)
+    server.watch(str(pathsource / "_toc.yml"), build)
 
     server.serve(root=outputdir, port=port)
 

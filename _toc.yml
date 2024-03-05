@@ -14,9 +14,12 @@ parts:
     maxdepth: 2  # ignored?
     chapters:
     - file: content/IT/Exercises1.myst.md
-  # - caption: Practical Applications
-  #   chapters:
-  #   - file: content/IT/Exercises1.myst.md
+  - caption: Practical Applications
+    numbered: 3
+    maxdepth: 2  # ignored?
+    chapters:
+    - file: content/IT/App_EntropyOfFiles.ipynb
+    - file: content/IT/App_DetectLanguage.ipynb
 
 
 
