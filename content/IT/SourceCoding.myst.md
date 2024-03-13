@@ -100,7 +100,7 @@ The advantages of data compression are self-evident:
 - Can decode easily
 
 
-## What is a code
+## Definitions
 
 Let's define what coding means from a mathematical perspective.
 
@@ -277,7 +277,7 @@ received one-by-one.
 
 As a counter example, consider the following uniquely decodable, but non-instantaneous code: $\left\lbrace 0, 01, 011, 1110 \right\rbrace$. When you read the first $0$, you cannot decode it yet, because you need to wait the next bits to understand how to segment the sequence. This implies that the decoding has some delay.
 
-### The Kraft inequality theorem
+## The Kraft inequality theorem
 
 When can an instantaneous code exist? Given a DMS $S$, are we sure we can find an
 instantaneous code for it, and if yes, under which conditions?
@@ -342,7 +342,7 @@ brings **no additional benefit** in average codeword length
 - Instead of an uniquely decodable code, we can always use an instantaneous code,
 which has the same lengths, but is much easier to decode.
 
-#### Finding an instantaneous code for given lengths
+### Finding an instantaneous code for given lengths
 
 How to find codewords with code lengths $\{l_i\}$?
 
@@ -360,7 +360,7 @@ to a particular set of messages.
 In practice, there might be more elaborate ways to find the codewords and map them
 to the messages of the source, with additional benefits.
 
-### Minimum average length
+## Minimum average length
 
 We will discuss now one of the most important aspect of this chapter,
 
@@ -383,7 +383,7 @@ This means that we want to find the unknowns $l_i$
 in order to minimize a certain quantity ($\sum_i p(s_i) l_i$),
 but the unknowns must satisfy a certain constraint ($\sum_i D^{-l_i} \leq 1$).
 
-#### The method of Lagrange multipliers
+### The method of Lagrange multipliers
 
 To solve this problem, we use a standard mathematical tool known as the **method of Lagrange multipliers**.
 
@@ -419,7 +419,7 @@ In our case, the functions and the variables involved are the following:
 - The constraint is $g(x) = g(l_i) = \sum_i D^{-l_i} - 1$
 
 ```{note}
-The method of Lagrange multipliers, as presented below, specifies an equality constraint:
+The method of Lagrange multipliers, as presented here, specifies an equality constraint:
 
 $$
 \textrm{subject to } g(x) = 0
@@ -449,8 +449,6 @@ since they are the length of some codewords.
 We will discuss this problem in the next paragraphs.
 ```
 
-**TBD: Solve at blackboard**
-
 The resulting optimal codeword lengths are:
 
 $$
@@ -458,44 +456,120 @@ l_i = -\log(p(s_i))
 $$
 
 ```{prf:theorem}
-The optimal codeword lenghts $l_i$ for the messages of a DMS in order to minimize the average codeword length $\overline{l}$ are:
+Given a code with $D$ symbols, the optimal codeword lenghts $l_i$ in order to minimize the average codeword length $\overline{l}$ are:
 
-$$l_i = -\log(p(s_i))$$
+$$l_i = -\log_D(p(s_i))$$
+```
+
+```{prf:proof}
+We use the Lagrange multpliers method to solve the following optimization problem:
+
+$$\begin{aligned}
+\textbf{minimize } &\sum_i p(s_i) l_i \\
+\textrm{subject to } &\sum_i D^{-l_i} = 1
+\end{aligned}$$
+
+which is an instance of the general constrained optimization problem:
+
+$$\begin{aligned} \textbf{minimize } & f(x) \\
+\textrm{subject to } & g(x) = 0
+\end{aligned}$$
+
+with $f(x) = \sum_i p(s_i) l_i$ and $g(x) = \sum_i D^{-l_i} - 1$.
+
+The Lagrangean function is:
+
+$$
+L(x, \lambda) = f(x) - \lambda g(x) = \sum_i p(s_i) l_i - \lambda \left( \sum_i D^{-l_i} - 1 \right)
+$$
+
+We derivate the Lagrangean function with respect to all $l_i$ and the $\lambda$,
+and set the results to zero:
+
+$$
+\begin{cases}
+\frac{\partial L(x, \lambda)}{\partial l_i} &= 0, \forall i=1...N \\
+\frac{\partial L(x, \lambda)}{\partial \lambda} &= 0
+\end{cases}
+$$
+
+The second equation gives us:
+
+$$
+\frac{\partial L(x, \lambda)}{\partial \lambda} = \sum_i D^{-l_i} - 1 = 0
+ \Rightarrow \sum_i D^{-l_i} = 1
+$$
+
+which is just the Kraft constraint.
+
+The first equation gives us:
+
+$$
+\frac{\partial L(x, \lambda)}{\partial l_i} = p(s_i) + \lambda \ln(D) D^{-l_i} = 0,\qquad \forall i=1...N
+$$
+
+These are actually $N$ equations, one for each
+variable $l_i$. Summing all of these equations, we obtain:
+
+$$
+\sum_i p(s_i) + \lambda \ln(D) \sum_i D^{-l_i} = 0
+$$
+
+and since $\sum_i p(s_i) = 1$ and $\sum_i D^{-l_i} = 1$, we obtain:
+
+$$
+1 + \lambda \ln(D) = 0 \Rightarrow \lambda = -\frac{1}{\ln(D)}
+$$
+
+Plugging this value back into each of the first equations, we obtain
+
+$$
+p(s_i) -\frac{1}{\ln(D)} \ln(D) D^{-l_i} = 0
+$$
+
+which leads to the optimal codeword lengths:
+
+$$
+l_i = -\log_D(p(s_i))
+$$
+
+In particular, for binary codes ($D=2$), the optimal codeword lengths are:
+
+$$
+l_i = -\log_2(p(s_i))
+$$
+
 
 ```
 
-Let us discuss some intuitions and consequences related to this result:
-
-- Using $l_i = -\log(p(s_i))$ satisfies Kraft with equality, so the lengths cannot be any shorter than that, in general:
-
-  $$
-  \textrm{subject to } \sum_i D^{-(-\log(p(s_i))))} = 1
-  $$
-
-
-- A message with higher probability must have a shorter codeword, while a message with lower probability has a longer codeword.
-  This makes sense because messages we can afford to use a longer codeword for messages which appear rarely in a sequence.
+The fundamental interpretation of this result is that,
+in order to minimize the average length of a code,
+a message with higher probability must have a shorter codeword, while a message with lower probability must have a longer codeword.
+This makes sense because messages we can afford to use a longer codeword for messages which appear rarely in a sequence.
 
 ```{admonition} Example
-Think of examples in languages. Words which are very common are usually short: "yes", "no", "and", "the" "with". We often use abbreviations to replace longer words which we must use often.
+Think of examples in languages. Words which occur very often are usually short: "yes", "no", "and", "the", "with". We often use abbreviations to replace longer words which we must use often.
 ```
 
+### Entropy is the limit
 
-#### Entropy is the limit
-
-The most important consequence of this result gives us a functional
+Another fundamental consequence of the preceding theorem  gives us a functional
 definition of the entropy, i.e. it tells us what the entropy really
 says about an information source.
 
-If the optimal values are $l_i = -\log(p(s_i))$, then the minimal average length is:
+Assume we have a binary code (we choose it binary in order to match the
+choice of $\log_2()$ in the definition of entropy).
 
-$$\min \overline{l} = \sum_i p(s_i) l_i = -\sum_i p(s_i) \log(p(s_i)) = H(S)$$
+Since the optimal codeword lenghts are $l_i = -\log_2(p(s_i))$,
+then the minimal average length obtainable is equal the entropy of the source:
+
+$$\min \overline{l} = \sum_i p(s_i) {l_i}_{min} = -\sum_i p(s_i) \log(p(s_i)) = H(S)$$
 
 ```{prf:corollary}
 The entropy of a discrete memoryless information source is the **minimum average length** that can ever be achieved by a instantaneous or uniquely-decodable code used to encode the messages.
 ```
 
-This result tells us what the entropy really means, besides the formulaic definition provided in chapter I. The entropy gives us the minimum number of bits required to represent the data generated by an information source in binary form. Although we rigorously proved this result only for a discrete memoryless source, it holds for sources with memory as well.
+This result tells us what the entropy really means, besides the algebric definition provided in chapter I. The entropy gives us the minimum number of bits required to represent the data generated by an information source in binary form. Although we rigorously proved this result only for a discrete memoryless source, it holds for sources with memory as well.
 
 ```{margin}
 Question:
@@ -503,7 +577,7 @@ Question:
 Can you sketch the proof for this for sources with memory?
 ```
 
-Immediate consequences:
+Some immediate consequences:
 
 - Messages from a source with small entropy can be written (encoded) with few bits
 - A source with with large entropy requires more bits for encoding the messages
@@ -590,7 +664,9 @@ in average length becomes.
 TODO
 ```
 
-#### Optimal and non-optimal codes
+## Coding procedures
+
+### Optimal and non-optimal codes
 
 A code for which $\eta = 1$ is known as an **optimal code**.
 Such a code attains the minimum average length:
@@ -690,7 +766,7 @@ we see that it's also not very bad.
 The average length of Shannon code is **at most 1 bit longer** than the minimum possible value, which is quite efficient.
 However, better procedures do exist.
 
-#### Shannon's first theorem
+### Shannon's first theorem
 
 Shannon's first theorem (coding theorem for noiseless channels)
 shows us that, in theory, we can approach the entropy as close as we want,
@@ -801,7 +877,7 @@ Remarks:
 
 Properties of Huffman coding:
 
-* Produces a code with the **smallest average length** (better than Shannon-Fano)
+* Produces a code with the **smallest average length** (better than Shannon-Fano). This can be proven, though we won't give the proof here.
 * Assigning $0$ and $1$ can be done in any order => different codes, same lengths
 * When inserting a sum into an existing list, may be equal to another value => options
     * we can insert above, below or in-between equal values
@@ -822,69 +898,63 @@ General Huffman coding procedure for codes with $M$ symbols:
 
 * Example : blackboard
 
-### Example: compare Huffman and Shannon-Fano
-
-Example: compare binary Huffman and Shannon-Fano for:
+```{admonition} Example: compare Huffman and Shannon-Fano
+Compare the average lenghts of a binary Huffman code and a Shannon-Fano for:
 $$p(s_i) = \left\lbrace 0.35, 0.17, 0.17, 0.16, 0.15 \right\rbrace$$
+```
 
 ### Probability of symbols
 
-* For every symbol $x_i$
-we can compute the average number of symbols $x_i$ in a code
-$$\overline{l_{x_i}} = \sum_i p(s_i) l_{x_i}(s_i)$$
-    * $l_{x_i}(s_i) =$ number of symbols $x_i$ in the codeword of $s_i$
-    * e.g.: average number of 0's and 1's in a code
-* Divide by average length => probability (frequency) of symbol $x_i$
-$$p(x_i) = \frac{\overline{l_{x_i}}}{\overline{l}}$$
+Given a code $C$ with symbols $x_i$, we can compute the probability of apparition of each symbol in the code.
 
-* These are the probabilities of the input symbols for the transmission channel
-    * they play an important role in Chapter IV (transmission channels)
+The average number of apparition of a symbol $x_i$ is:
 
-### Source coding as data compression
+$$
+\overline{l}_{x_i} = \sum_i p(s_i) l_{x_i}(s_i)
+$$
 
-* Consider that the messages are already written in a binary code
-    * Example: characters in ASCII code
+where $l_{x_i}(s_i)$ is number of symbols $x_i$ in the codeword of $s_i$
+(e.g. the number of 0's and 1's in a binary codeword)
 
-* Source coding  = remapping the original codewords to other codewords
-    * The new codewords are shorter, on average
 
-* This means data **compression**
-    * Just like the example in lab session
+If we divide this to the average length of the code, $\overline{l}$,
+we obtain the probability of symbol $x_i$:
 
-* What does data compression remove?
-    * Removes **redundancy**: unused bits, patterns, regularities etc.
-    * If you can guess somehow the next bit in a sequence, it means the bit is not really necessary,
-    so compression will remove it
-    * The compressed sequence looks like random data: impossible to guess,
-    no discernable patterns
+$$
+p(x_i) = \frac{\overline{l}_{x_i}}{\overline{l}}
+$$
 
-### Discussion: data compression with coding
+These are the probabilities of the input symbols for the transmission channel,
+which play an important role in Chapter IV (transmission channels).
 
-* Consider data compression with Shannon or Huffman coding, like we did in lab
-    * What property do we *exploit* in order to obtain compression?
-    * How does *compressible data* look like?
-    * How does *incompressible data* look like?
-    * What are the limitation of our data compression method?
-    * How could it be improved?
+## Source coding as data compression
 
-### Other codes: arithmetic coding
+Many times, the input messages are already written in a binary code, such as the ASCII code for characters.
 
-* Other types of coding do exist (info only)
-	* Arithmetic coding
-	* Adaptive schemes
-	* etc.
+In this case, source coding can be understood as a form of data compression,
+by replacing the original binary codewords with different ones,
+which are shorter on average, thus using fewer bits in total to represent
+the same information.
 
-### Chapter summary
+This process is similar to removing predictable or unnecessary bits from a sequence, We thus reducing the **redunancy** of the original data.
+The resulting compressed data appear random and patternless.
 
-* Average length: $\overline{l} = \sum_i p(s_i) l_i$
-* Code types: instantaneous $\subset$ uniquely decodable $\subset$ non-singular
-* All instantaneous or uniqualy decodable code must obey Kraft:
-$$ \sum_i D^{-l_i} \leq 1$$
-* Optimal codes: $l_i = -\log(p(s_i))$, $\overline{l_{min}} = H(S)$
-* Shannon's first theorem: use $n$-th order extension of $S$, $S^n$:
-$$\boxed{H(S) \leq \overline{l_{S}} < H(S) + \frac{1}{n}}$$
-    * average length always larger, but as close as desired to $H(S)$
-* Coding techniques:
-    * Shannon: ceil the optimal codeword lengths (round to upper)
-    * Shannon-Fano: split in two groups approx. equal
-    * Huffman: group last two. Is best of all.
+To obtain the original data back, the decoder must undo the coding procedure.
+If there were no errors during the transmission, the original data is recovered exactly.
+This makes it a **lossless** compression method.
+
+
+```{admonition} Discussion: data compression with coding
+
+Consider data compression with Shannon or Huffman coding.
+
+- What property do we *exploit* in order to obtain compression?
+- How does *compressible data* look like?
+- How does *incompressible data* look like?
+- What are the limitation of our data compression method?
+- How could it be improved?
+- Is this *lossless* or *lossy* compression?
+```
+
+As a final note, we mention that other coding methods do exist beyond Huffman coding,
+which provide better results (arithmetic coding) or other advantages (adaptive schemes).
