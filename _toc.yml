@@ -14,6 +14,7 @@ parts:
     maxdepth: 2  # ignored?
     chapters:
     - file: content/IT/Exercises1.myst.md
+    - file: content/IT/Exercises2.myst.md
   - caption: Practical Applications
     numbered: 3
     maxdepth: 2  # ignored?

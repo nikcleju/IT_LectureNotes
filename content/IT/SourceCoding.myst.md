@@ -707,9 +707,12 @@ The Shannon coding procedure is a simple algorithm for finding an instantaneous 
 2. Compute the codeword lengths $l_i = \lceil -\log(p(s_i)) \rceil$
 3. For every message $s_i$ find the codeword as follows:
 
-    1. sum all the probabilities up to this message (not including current)
-    2. multiply the sum value with $2^{l_i}$
-    3. floor the result, convert to binary, retain first $l_i$ bits
+    1. Sum all the probabilities up to this message (not including current)
+    2. Keep the first $l_i$ bits in the binary representation of this sum (after the point).
+
+       This means:
+       - multiply the value with $2^{l_i}$
+       - floor the result, convert to binary, retain first $l_i$ bits
 
 ```
 
@@ -852,12 +855,14 @@ The Shannon-Fano (binary) coding procedure is presented below.
 
 ```
 
-Example: blackboard
+It's easier to understand the Shannon-Fano coding by looking at an example at the whiteboard, or at a solved exercise.
 
-Remarks:
+Shannon-Fano coding does not always produce the shortest code lengths,
+but in general it is better than Shannon coding in this respect.
 
-- Shannon-Fano coding does not always produce the shortest code lengths
-- Connection: yes-no answers (example from first chapter)
+As a remark, there is a clear connection between Shannon-Fano coding
+and the optimal decision tree examples from the first chapter (with yes-no answers).
+Splitting the messages into two groups is similar to splitting the decision tree into two branches.
 
 ### Huffman coding (binary)
 
@@ -875,39 +880,55 @@ Remarks:
 
 ```
 
-Properties of Huffman coding:
+Huffman coding produces a code with the **smallest average length** (better than Shannon-Fano).
+It can be proven (though we won't give the proof here) that no other algorithm
+which assigns a separate codeword for each message can produce a code with smaller average length than Huffman coding.
+Some better algorithms do exist, but they work differently:
+they do not assign a codeword to every single message, instead they code a whole sequence at once.
 
-* Produces a code with the **smallest average length** (better than Shannon-Fano). This can be proven, though we won't give the proof here.
-* Assigning $0$ and $1$ can be done in any order => different codes, same lengths
-* When inserting a sum into an existing list, may be equal to another value => options
-    * we can insert above, below or in-between equal values
-    * leads to codes with different *individual* lengths, but same *average* length
-* Some better algorithms exist which do not assign a codeword to every single message
-(they code a while sequence at once, not every message)
+Assigning $0$ and $1$ in the backwards pass can be done in any order. This leads to different codewords,
+but with the same codeword lengths, so the resulting codes are equivalent.
+
+When inserting a sum into an existing list, it may be equal to another value(s), so we may
+have several options where to insert: above, below or in-between equal values.
+This leads to codes with different *individual* lengths, but same *average* length.
+In general, if there are several options available, it is better to insert the sum
+as high as possible in the list, because this leads to a more balanced tree, and therefore
+the codewords tend to have more equal lengths. This is helpful in practice
+in things like buffering. Inserting as low as possible tends to
+produce codewords with more widely varying lengths, which increases
+the demands on the buffers.
 
 ### Huffman coding (M symbols)
 
-General Huffman coding procedure for codes with $M$ symbols:
+All coding procedures can be extended to the general case of $M$ symbols $\left\lbrace x_1, x_2, ... x_M \right\rbrace$.
+We illustrate here the generalization for Huffman coding.
 
-* Have $M$ symbols $\left\lbrace x_1, x_2, ... x_M \right\rbrace$
-* Add together the last $M$ symbols
-* When assigning symbols, assign all $M$ symbols
-* **Important**: at the final step must have $M$ remaining values
-    * May be necessary to add *virtual* messages with probability 0 at the end of the initial list,
-    to end up with exactly $M$ messages in the last step
+Procedure:
 
-* Example : blackboard
+- Arrange the probabilities in descending order
+- Forward pass:
+  - Add together the last $M$ symbols, insert the sum into the list etc.
+  - **Important**: at the final step must have $M$ remaining values.
+    It maybe necessary to add *virtual* messages with probability 0 at the end of the initial list,
+    in order to end up with exactly $M$ messages in the last step.
+- Backward pass:
+  - Assign all $M$ symbols $\left\lbrace x_1, x_2, ... x_M \right\rbrace$ to each of the final $M$ messages, then go back step by step.
+
+Example : blackboard
 
 ```{admonition} Example: compare Huffman and Shannon-Fano
 Compare the average lenghts of a binary Huffman code and a Shannon-Fano for:
+
 $$p(s_i) = \left\lbrace 0.35, 0.17, 0.17, 0.16, 0.15 \right\rbrace$$
+
 ```
 
 ### Probability of symbols
 
 Given a code $C$ with symbols $x_i$, we can compute the probability of apparition of each symbol in the code.
 
-The average number of apparition of a symbol $x_i$ is:
+The average number of apparitions of a symbol $x_i$ is:
 
 $$
 \overline{l}_{x_i} = \sum_i p(s_i) l_{x_i}(s_i)
@@ -915,7 +936,6 @@ $$
 
 where $l_{x_i}(s_i)$ is number of symbols $x_i$ in the codeword of $s_i$
 (e.g. the number of 0's and 1's in a binary codeword)
-
 
 If we divide this to the average length of the code, $\overline{l}$,
 we obtain the probability of symbol $x_i$:

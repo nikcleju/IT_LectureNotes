@@ -4,3 +4,4 @@ numpy
 ghp-import
 sphinx-proof
 #sphinxcontrib-bibtex<2.0.0
+dahuffman
