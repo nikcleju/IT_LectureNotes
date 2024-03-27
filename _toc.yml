@@ -21,6 +21,7 @@ parts:
     chapters:
     - file: content/IT/App_EntropyOfFiles.ipynb
     - file: content/IT/App_DetectLanguage.ipynb
+    - file: content/IT/App_HuffmanCodingLetters.ipynb
 
 
 

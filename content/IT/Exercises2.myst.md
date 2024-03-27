@@ -89,7 +89,8 @@ TODO: graphs
 
 Consider a memoryless source with the following distribution:
 $$\sIV{S}{\frac{1}{2}}{\frac{1}{4}}{\frac{1}{8}}{\frac{1}{8}}$$
-	For this source we use two separate codes:
+
+For this source we use two separate codes:
 
 	  Message      Code A	   Code B
 	-----------  ----------  ----------
@@ -98,13 +99,75 @@ $$\sIV{S}{\frac{1}{2}}{\frac{1}{4}}{\frac{1}{8}}{\frac{1}{8}}$$
 	  $s_3$        $10$			$110$
 	  $s_4$        $11$			$111$
 
-	Requirements:
-	a. Compute the average lengths of the two codes
-	b. Compute the efficienty and redundancy of the two codes
-	c. Encode the sequence $s_2s_4s_3s_3s_1$ with each code
-	d. Decode the sequence `0110101010101111000010101` with each code
+Requirements:
+
+- a). Compute the average lengths of the two codes
+- b). Compute the efficienty and redundancy of the two codes
+- c). Encode the sequence $s_2s_4s_3s_3s_1$ with each code
+- d). Decode the sequence `011010101010111100001010` with each code
 
 ### Solution
+
+#### a) Compute the average lengths of the two codes
+
+The average length of a code is given by:
+
+$$L = \sum_{i=1}^{n} p_i l_i$$
+
+where $p_i$ is the probability of the $i$-th message and $l_i$ is the length of the codeword for the $i$-th message.
+
+For Code A, we have:
+
+$$\overline{l}_A = \frac{1}{2} \cdot 2 + \frac{1}{4} \cdot 2 + \frac{1}{8} \cdot 2 + \frac{1}{8} \cdot 2 = 2$$
+
+For Code B, we have:
+
+$$\overline{l}_B = \frac{1}{2} \cdot 1 + \frac{1}{4} \cdot 2 + \frac{1}{8} \cdot 3 + \frac{1}{8} \cdot 3 = 1.75$$
+
+
+#### b) Compute the efficienty and redundancy of the two codes
+
+We need first to compute the entropy of the source.
+
+$$
+H_A(S) = -\frac{1}{2} \log_2(\frac{1}{2}) -\frac{1}{4} \log_2(\frac{1}{4}) - 2 \cdot \frac{1}{8} \log_2(\frac{1}{8}) = 1.75
+$$
+
+Therefore the efficiency of Code A is $\eta_A = H(S) / \overline{l}_A = 1.75 / 2 = 0.875$, and the (relative) redundancy is $\rho_A = 1 - \eta_A = 0.125$.
+
+For Code B, $\eta_B = 1.75 / 1.75 = 1$ and $\rho_B = 0$.
+
+#### c) Encode the sequence $s_2s_4s_3s_3s_1$ with each code
+
+We just replace the messages with their codewords, according to each code.
+
+With Code A we get:
+
+$$
+0111101000
+$$
+
+With Code B:
+
+$$
+101111101100
+$$
+
+#### d) Decode the sequence `011010101010111100001010` with each code
+
+We need to identify the codewords in the sequence and replace them with the corresponding messages.
+
+With Code A we get:
+
+$$
+s_2 s_3 s_3 s_3 s_3 s_3 s_4 s_4 s_1 s_1 s_3 s_3
+$$
+
+With Code B we get:
+
+$$
+s_1 s_3 s_2 s_2 s_2 s_2 s_4 s_2 s_1 s_1 s_1 s_2 s_2
+$$
 
 
 ## Exercise 3
