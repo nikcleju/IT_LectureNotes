@@ -16,7 +16,7 @@ jupytext:
 
 # Source Coding
 
-## Exercise 1 DMS entropy
+## Exercise 1
 
 Consider the binary codes below:
 
