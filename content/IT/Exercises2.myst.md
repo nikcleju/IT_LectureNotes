@@ -83,21 +83,32 @@ $$2^{-1} + 2^{-2} + 2^{-2} + 2^{-2} = 1/2 + 1/4 + 1/4 + 1/4 > 1 (BAD)$$
 The code is not instantaneous nor uniquely decodable, because
 no code with these four lenghts can ever be, since the Kraft inequality is violated.
 
-TODO: graphs
+c). The graphs for the codes are represened below.
+
+```{figure} img/Exercises2_Ex1.png
+---
+width: 100%
+name: fig-ex1
+---
+The graphs of the codes A, B, C, D, E, and F.
+```
 
 ## Exercise 2
 
 Consider a memoryless source with the following distribution:
-$$\sIV{S}{\frac{1}{2}}{\frac{1}{4}}{\frac{1}{8}}{\frac{1}{8}}$$
+
+$$
+\sIV{S}{\frac{1}{2}}{\frac{1}{4}}{\frac{1}{8}}{\frac{1}{8}}
+$$
 
 For this source we use two separate codes:
 
-	  Message      Code A	   Code B
-	-----------  ----------  ----------
-	  $s_1$        $00$			$0$
-	  $s_2$        $01$			$10$
-	  $s_3$        $10$			$110$
-	  $s_4$        $11$			$111$
+  Message   |    Code A	  |   Code B
+:---------: | :---------: | :--------:
+  $s_1$     |    $00$			|    $0$
+  $s_2$     |    $01$			|    $10$
+  $s_3$     |    $10$			|    $110$
+  $s_4$     |    $11$			|    $111$
 
 Requirements:
 
@@ -157,11 +168,19 @@ $$
 
 We need to identify the codewords in the sequence and replace them with the corresponding messages.
 
-With Code A we get:
+With Code A we get
 
 $$
 s_2 s_3 s_3 s_3 s_3 s_3 s_4 s_4 s_1 s_1 s_3 s_3
 $$
+
+```{figure} img/Exercises2_Ex2_1.png
+---
+width: 40%
+name: fig-ex2-1
+---
+Decoding with the first code
+```
 
 With Code B we get:
 
@@ -169,48 +188,164 @@ $$
 s_1 s_3 s_2 s_2 s_2 s_2 s_4 s_2 s_1 s_1 s_1 s_2 s_2
 $$
 
+```{figure} img/Exercises2_Ex2_2.png
+---
+width: 40%
+name: fig-ex2-2
+---
+Decoding with the second code
+```
 
 ## Exercise 3
 
 Fill in the missing bits (marked with ?) such that the resulting code is instantaneous.
 
-	  Message       Codeword
-	----------- -------------------
-		$s_1$       ??
-		$s_2$       1??
-		$s_3$       11?
-		$s_4$       0?
-		$s_5$       ??
+  Message   |   Codeword
+:---------: | :----------:
+  $s_1$     |    $??$
+  $s_2$     |    $1??$
+  $s_3$     |    $11?$
+  $s_4$     |    $0?$
+  $s_5$     |    $??$
 
-	(just replace the '?'; do not add additional bits)
+(just replace the '?'; do not add additional bits)
 
 ### Solution
 
+This is a creative exercise. We don't have a fixed algorithm to solve it, but we can try to find a solution by trial and error.
+Note that since the code is instantaneous, no codeword can be a prefix of another codeword.
+
+For example, we observe that we have three codewords with lengths 2,
+which will occupy three quarters of the graph.
+This means that the codewords for $s_2$ and $s_3$, which have length 3, must
+both stem from the same node (have the same two bits).
+Thus, we can choose:
+
+$$
+s_3 = 111 \\
+s_2 = 110
+$$
+
+The other codewords occupy all other combinations of two bits ($00$, $01$, $10$), for example:
+
+$$
+s_1 = 00 \\
+s_4 = 01 \\
+s_5 = 10
+$$
 
 ## Exercise 4
 
 We perform Shannon coding on an information source with $H(S) = 20$b.
-    a. What are the possible values for the efficiency of the code?
-    b. What are the possible values for the redundancy of the code?
-    c. What is the minimum number of messages the source may possibly have?
+
+- a. What are the possible values for the efficiency of the code?
+- b. What are the possible values for the redundancy of the code?
+- c. What is the minimum number of messages the source may possibly have?
 
 
 ### Solution
+
+#### a. What are the possible values for the efficiency of the code?
+
+We know that if we do Shannon coding, the average length of the resulting code is between $H(S)$ and $H(S) + 1$:
+
+$$
+H(S) \leq \overline{l} < H(S) + 1
+$$
+
+This means the efficiency, which is $\overline{l} / H(S)$, is between:
+
+$$
+\frac{H(S)}{H(S)+1} < \eta \leq 1
+$$
+
+which means $\eta \in (0.95, 1]$
+
+#### b. What are the possible values for the redundancy of the code?
+
+The relative redundancy is $\rho = 1 - \eta$, so it is between 0 and 0.05.
+
+The absolute redundancy is $R = H(S) - \overline{l}$, so it is between 0 and 1.
+
+### c. What is the minimum number of messages the source may possibly have?
+
+Because the entropy of the source is 20 bits, this means the source has many messages.
+
+Remember one of the properties of entropy, that it is maximum when all messages are equally probable,
+and in this case the entropy is $\log_2(n)$, where $n$ is the number of messages:
+
+$$
+H_{max} = \log_2(n)
+$$
+
+Out source has an entropy of $H(S) = 20$ bits, so the maximum entropy is at least 20 bits. We have:
+
+$$
+20 \leq \log_2(n)
+$$
+
+which means $n \geq 2^{20}$, so the source must have at least $2^{20} = 1048576$ messages
+in order to be possible to have an entropy of 20 bits.
+
 
 
 ## Exercise 5
 
 A discrete memoryless source has the following distribution:
 
-    $$\sV{S}{0.05}{0.4}{0.1}{0.25}{0.2}$$
+  $$\sV{S}{0.05}{0.4}{0.1}{0.25}{0.2}$$
 
-    a. Encode the source with Shannon, Shannon-Fano coding and Huffman
-    coding and compute the average length in every case.
-    b. Find the efficiency and redundancy of the Huffman code
-    c. Compute the probabilities of the symbols $0$ and $1$, for the Huffman code
+- a. Encode the source with Shannon, Shannon-Fano coding and Huffman
+  coding and compute the average length in every case.
+- b. Find the efficiency and redundancy of the Huffman code
+- c. Compute the probabilities of the symbols $0$ and $1$, for the Huffman code
 
 ### Solution
 
+#### a. Encode the source with Shannon, Shannon-Fano coding and Huffman coding and compute the average length in every case
+
+**Shannon encoding**:
+
+1. We arrange the probabilities in descending order:
+
+```{figure} img/Exercises2_Ex5_1.png
+---
+width: 40%
+name: fig-ex5-1
+---
+```
+
+2. We compute the codeword lenghts with $l_i = \lceil -\log_2(p_i) \rceil$,
+where $\lceil \cdot \rceil$ means "rounding upwards":
+
+```{figure} img/Exercises2_Ex5_2.png
+---
+width: 40%
+name: fig-ex5-2
+---
+```
+3. We compute the cumulative sum probabilities, i.e. the sum of the probabilities up to the current
+row, but not including the current row:
+
+```{figure} img/Exercises2_Ex5_3.png
+---
+width: 40%
+name: fig-ex5-3
+---
+```
+
+4. We find the codewords as follows, adding another three columns:
+
+   4.1 Compute the values $\lfloor cumsum \cdot 2^l_i \rfloor$ (the cumulative values multiplied by $2^{l_i}$, rounded downwards).
+   4.2 Write these values in binary, using $l_i$ bits. If there are less bits than $l_i$, add zeros to the left. These are the codewords,
+
+```{figure} img/Exercises2_Ex5_4.png
+---
+width: 50%
+name: fig-ex5-3
+---
+Obtaining the codewords using Shannon coding
+```
 
 
 ## Exercise 6
