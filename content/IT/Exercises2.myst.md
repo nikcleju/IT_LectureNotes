@@ -304,6 +304,8 @@ A discrete memoryless source has the following distribution:
 
 #### a. Encode the source with Shannon, Shannon-Fano coding and Huffman coding and compute the average length in every case
 
+The three coding methods are explained below.
+
 **Shannon encoding**:
 
 1. We arrange the probabilities in descending order:
@@ -347,15 +349,213 @@ name: fig-ex5-3
 Obtaining the codewords using Shannon coding
 ```
 
+**Shannon-Fano coding**:
+
+1. We arrange the probabilities in descending order:
+
+```{figure} img/Exercises2_Ex5_Fano1.png
+---
+width: 15%
+name: fig-ex5-Fano1
+---
+```
+
+2. We split the list in two, such that the sum of the probabilities in each part is as close as possible (i.e. as close as possible to $(0.5, 0.5)$).
+   We assign 0 to one part and 1 to the other.
+
+```{figure} img/Exercises2_Ex5_Fano2.png
+---
+width: 40%
+name: fig-ex5-Fano2
+---
+```
+
+3. We repeat the process for each sub-list, splitting each in two as close as possible and assigning 0 and 1 to each sub-part.
+
+```{figure} img/Exercises2_Ex5_Fano3.png
+---
+width: 40%
+name: fig-ex5-Fano3
+---
+```
+
+4. We continue until we have only one element in each sub-list. Each element will have the corresponding codeword.
+
+```{figure} img/Exercises2_Ex5_Fano4.png
+---
+width: 40%
+name: fig-ex5-Fano4
+---
+```
+
+```{figure} img/Exercises2_Ex5_Fano5.png
+---
+width: 40%
+name: fig-ex5-Fano5
+---
+Codewords obtained with Shannon-Fano coding
+```
+
+**Huffman coding**:
+
+1. We arrange the probabilities in descending order:
+
+```{figure} img/Exercises2_Ex5_Huff1.png
+---
+width: 15%
+name: fig-ex5-Huff1
+---
+```
+
+2. We sum the messages with the lowest probabilities, and we insert the sum in the list, keeping the list sorted.
+   All other messages are kept in the same order. In this case, the combined message ends at the bottom of the list.
+
+```{figure} img/Exercises2_Ex5_Huff2.png
+---
+width: 30%
+name: fig-ex5-Huff2
+---
+```
+
+3. We repeat the process until we have just two elements. Every time we add the last two elements,
+   and we insert the result among the other elements, keeping the list sorted.
+
+```{figure} img/Exercises2_Ex5_Huff3.png
+---
+width: 50%
+name: fig-ex5-Huff3
+---
+```
+
+```{figure} img/Exercises2_Ex5_Huff4.png
+---
+width: 65%
+name: fig-ex5-Huff4
+---
+```
+
+4. Now we start the backward pass. We assign 0 and 1 to the final two messages
+
+```{figure} img/Exercises2_Ex5_Huff5.png
+---
+width: 65%
+name: fig-ex5-Huff5
+---
+```
+
+5. We go one column to the left, and we assign codewords to the two messages
+   which were combined in the previous step. The codewords inherit the codeword of the parent (0),
+   to which we append an extra 0 and 1.
+
+```{figure} img/Exercises2_Ex5_Huff6.png
+---
+width: 100%
+name: fig-ex5-Huff6
+---
+```
+
+6. We continue until we reach the first column. Every time we take the codeword of the parent
+   and we append a 0 and a 1 to form the codewords of the combined messages.
+   All other messages just inherit the previous codeword.
+
+```{figure} img/Exercises2_Ex5_Huff7.png
+---
+width: 100%
+name: fig-ex5-Huff7
+---
+```
+
+7. In the end, we read the codewords of each message along the lines.
+
+```{figure} img/Exercises2_Ex5_Huff8.png
+---
+width: 100%
+name: fig-ex5-Huff8
+---
+Codewords obtained with Huffman coding
+```
+
+Once we have the codewords, we can compute the average length of the code:
+
+$$
+\overline{l} = \sum_{i=1}^{n} p_i l_i
+$$
+
+where $p_i$ is the probability of the $i$-th message and $l_i$ is the length of the codeword for the $i$-th message.
+
+For the Shannon code, we have:
+
+$$
+\overline{l}_S = 0.05 \cdot 5 + 0.4 \cdot 2 + 0.1 \cdot 4 + 0.25 \cdot 2 + 0.2 \cdot 3 = 2.45 \text{ bits}
+$$
+
+For the Shannon-Fano code, we have:
+
+$$
+\overline{l}_F = 0.05 \cdot 4 + 0.4 \cdot 1 + 0.1 \cdot 4 + 0.25 \cdot 2 + 0.2 \cdot 3 = 2.1 \text{ bits}
+$$
+
+For the Huffman code, we have:
+
+$$
+\overline{l}_H = 0.05 \cdot 4 + 0.4 \cdot 1 + 0.1 \cdot 4 + 0.25 \cdot 2 + 0.2 \cdot 3 = 2.1 \text{ bits}
+$$
+
+#### b) Find the efficiency and redundancy of the Huffman code
+
+We need first to compute the entropy of the source.
+
+$$
+H(S) = -0.05 \log_2(0.05) - 0.4 \log_2(0.4) - 0.1 \log_2(0.1) - 0.25 \log_2(0.25) - 0.2 \log_2(0.2) = 2.04 \text{ bits}
+$$
+
+The efficiency of the Huffman code is
+
+$$
+\eta = \frac{H(S)}{\overline{l}_H} = \frac{2.04}{2.1} = 0.971$
+$$
+
+The relative redundancy is $\rho = 1 - \eta = 0.029$, and the absolute redundancy is $R = \overline{l}_H - H(S) = 0.06$ bits.
+
+
+#### c) Compute the probabilities of the symbols $0$ and $1$, for the Huffman code
+
+We need first to compute the average numbers of 0's and average number of 1's in the codewords, $\overline{l}_0$ and $\overline{l}_1$.
+We compute them just like the average length, but we consider only the number of 0's and 1's in the codewords, not the full codeword lenghts.
+
+We have:
+
+$$
+\overline{l}_0 = 0.05 \cdot 2 + 0.4 \cdot 0 + 0.1 \cdot 3 + 0.25 \cdot 1 + 0.2 \cdot 3 = 1.25 \text{ bits}
+$$
+
+$$
+\overline{l}_1 = 0.05 \cdot 2 + 0.4 \cdot 1 + 0.1 \cdot 1 + 0.25 \cdot 1 + 0.2 \cdot 0 = 0.85 \text{ bits}
+$$
+
+Note that $\overline{l}_0 + \overline{l}_1 = \overline{l}_H$.
+
+The probabilities of 0 and 1 are:
+
+$$
+p_0 = \frac{\overline{l}_1}{\overline{l}} = \frac{1.25}{2.1} = 0.595
+$$
+
+$$
+p_1 = \frac{\overline{l}_0}{\overline{l}} = \frac{0.85}{2.1} = 0.405
+$$
+
+This means that 0's predominates in the codewords.
+
 
 ## Exercise 6
 
 For the following source, perform Huffman coding and obtain three
 different codes with same average length, but different individual codeword length.
 
-    $$\sVI{S}{0.05}{0.05}{0.15}{0.25}{0.25}{0.25}$$
+$$\sVI{S}{0.05}{0.05}{0.15}{0.25}{0.25}{0.25}$$
 
-    a. Compute the average length in all three cases and show it is the same
+Compute the average length in all three cases and show it is the same.
 
 ### Solution
 
