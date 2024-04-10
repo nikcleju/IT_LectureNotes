@@ -635,7 +635,7 @@ $$\sIII{S}{0.1}{0.7}{0.2}$$
 - a). Find the average code length obtained with Huffman coding on the
 original source and on its second order extension.
 
-- b). Encode the sequence $s_7 s_7 s_3 s_7 s_7 s_7 s_1 s_3 s_7 s_7$
+- b). Encode the sequence $s_2 s_2 s_3 s_2 s_2 s_2 s_1 s_3 s_2 s_2$
 with both codes.
 
 
@@ -643,13 +643,121 @@ with both codes.
 
 #### a). Find the average code length obtained with Huffman coding on the original source and on its second order extension.
 
+For the original source, we have the following coding process:
+
+```{figure} img/Exercises2_Ex7_1.png
+---
+width: 30%
+name: fig-ex7-1
+---
+Huffman coding of the original source
+```
+The average length is:
+
+$$
+\overline{l}_1 = 0.1 \cdot 2 + 0.7 \cdot 1 + 0.2 \cdot 2 = 1.3
+$$
+
+The second order extension is obtained by considering all possible pairs of messages:
+
+$$
+S^2: \left(
+\begin{matrix} s_1s_1 & s_1s_2 & s_1s_3 & s_2s_1 & s_2s_2 & s_2s_3 & s_3s_1 & s_3s_2 & s_3s_3 \\
+0.01 & 0.07 & 0.02 & 0.07 & 0.49 & 0.14 & 0.02 & 0.14 & 0.04
+\end{matrix}
+\right)
+$$
+
+The Huffman coding is:
+
+```{figure} img/Exercises2_Ex7_2.png
+---
+width: 100%
+name: fig-ex7-2
+---
+Huffman coding of the second order extension
+```
+
+The average length is:
+
+$$
+\begin{align*}
+\overline{l}_2 &= 0.01 \cdot 6 + 0.07 \cdot 4 + 0.02 \cdot 5 + 0.07 \cdot 4 + 0.49 \cdot 1 + 0.14 \cdot 3 + 0.02 \cdot 6 + 0.14 \cdot 3 + 0.04 \cdot 4 = \\
+&= 2.33
+\end{align*}
+$$
+
+Note that the second order extension is more efficient than the first,
+because it is better to encode a pair of messages with $2.33$ bits on average
+than each message with $1.3$ bits on average.
+
+#### b). Encode the sequence $s_2 s_2 s_3 s_2 s_2 s_2 s_1 s_3 s_2 s_2$ with both codes.
+
+With the first code, we encode each individual message:
+
+$$
+0010000111000
+$$
+
+With the second code, we encode each pair of messages with its codeword:
+
+$$
+10101011011
+$$
+
+
 ## Exercise 8
 
 A discrete memoryless source has the following distribution
 
-	$$\sVIII{S}{0.4}{0.3}{0.2}{0.04}{0.03}{0.02}{0.009}{0.001}$$
+$$\sVIII{S}{0.4}{0.3}{0.2}{0.04}{0.03}{0.02}{0.009}{0.001}$$
 
-	Find the Huffman code for a code with 4 symbols,
-	$x_1$, $x_2$, $x_3$ and $x_4$, and encode the sequence
+Find the Huffman code for a code with 4 symbols,
+$x_1$, $x_2$, $x_3$ and $x_4$, and encode the following sequence:
 
-	$$s_1 s_7 s_8 s_3 s_3 s_1$$
+$$
+s_1 s_7 s_8 s_3 s_3 s_1
+$$
+
+### Solution
+
+For the Huffman code with 4 symbols, we combine the last 4 messages in the list.
+
+
+```{admonition} Note
+We need to add two virtual messages (of probability 0) to the initial list,
+such that number of messages remaining in the last step is 4.
+
+```
+
+The Huffman coding proceeds as follows:
+
+```{figure} img/Exercises2_Ex8_1.png
+---
+width: 50%
+name: fig-ex8-1
+---
+Huffman coding of the source
+```
+
+At the backward pass, we assign the symbols $x_1$, $x_2$, $x_3$ and $x_4$ from right to left:
+
+```{figure} img/Exercises2_Ex8_2.png
+---
+width: 60%
+name: fig-ex8-2
+---
+Assigning the symbols
+```
+
+The average length of the code is:
+
+$$
+\overline{l} = 0.4 \cdot 1 + 0.3 \cdot 1 + 0.2 \cdot 1 + 0.04 \cdot 2 + 0.03 \cdot 2 + 0.02 \cdot 2 + 0.009 \cdot 3 + 0.001 \cdot 3 = 1.11
+$$
+
+The sequence $s_1 s_7 s_8 s_3 s_3 s_1$ is encoded as:
+
+$$
+x_1 x_4 x_4 x_1 x_4 x_4 x_2 x_3 x_3 x_1
+$$
