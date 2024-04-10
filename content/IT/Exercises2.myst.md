@@ -550,7 +550,7 @@ This means that 0's predominates in the codewords.
 
 ## Exercise 6
 
-For the following source, perform Huffman coding and obtain three
+For the following source, perform Huffman coding and obtain two
 different codes with same average length, but different individual codeword length.
 
 $$\sVI{S}{0.05}{0.05}{0.15}{0.25}{0.25}{0.25}$$
@@ -559,22 +559,89 @@ Compute the average length in all three cases and show it is the same.
 
 ### Solution
 
+Huffman codes with the same average length but different individual codeword lengths
+are obtained when the sum of the probabilities of the two least probable messages is the same
+as some other values in the list, such that we can place the result
+in different positions in the list.
+
+Let us start Huffman coding on this source. At the second step,
+we obtain a combined message with probability $0.25$,
+which could be inserted in several positions in the list.
+
+```{figure} img/Exercises2_Ex6_1.png
+---
+width: 50%
+name: fig-ex6-1
+---
+Different placement options.
+```
+
+Each of the four options will lead to a slightly different code,
+but with the same average length, but with possibly different individual codeword lengths.
+
+Let us proceed with three different cases and compute the average length in each case.
+
+**Variant 1**
+
+Suppose we choose the lowest position for the combined message.
+Continuing the process, we obtain the following codewords:
+
+```{figure} img/Exercises2_Ex6_3.png
+---
+width: 85%
+name: fig-ex6-3
+---
+Codewords for the first variant.
+```
+
+Note that we also had another option to choose for the $0.5$ value,
+but this one has little impact on the final result, because it is close to the end.
+
+The average codeword length is:
+
+$$
+\overline{l}_1 = 0.05 \cdot 4 + 0.05 \cdot 4 + 0.15 \cdot 3 + 0.25 \cdot 2 + 0.25 \cdot 2 + 0.25 \cdot 2 = 1.6
+$$
+
+**Variant 2**
+
+Suppose we choose instead the highest position for the combined message. We obtain:
+
+```{figure} img/Exercises2_Ex6_4.png
+---
+width: 85%
+name: fig-ex6-4
+---
+Codewords for the second variant.
+```
+
+In fact, the codeword lengths are the same as in the previous case,
+because the list of messages is small.
+If we had an example with many more messages, the codeword lengths would have been different.
+
+The average codeword length is the same:
+
+$$
+\overline{l}_2 = 0.05 \cdot 4 + 0.05 \cdot 4 + 0.15 \cdot 3 + 0.25 \cdot 2 + 0.25 \cdot 2 + 0.25 \cdot 2 = 1.6
+$$
+
 
 ## Exercise 7
 
 A discrete memoryless source has the following distribution:
 
-    $$\sIII{S}{0.1}{0.7}{0.2}$$
+$$\sIII{S}{0.1}{0.7}{0.2}$$
 
-    a. Find the average code length obtained with Huffman coding on the
-    original source and on its second order extension.
+- a). Find the average code length obtained with Huffman coding on the
+original source and on its second order extension.
 
-    b. Encode the sequence $s_7 s_7 s_3 s_7 s_7 s_7 s_1 s_3 s_7 s_7$
-    with both codes.
+- b). Encode the sequence $s_7 s_7 s_3 s_7 s_7 s_7 s_1 s_3 s_7 s_7$
+with both codes.
 
 
 ### Solution
 
+#### a). Find the average code length obtained with Huffman coding on the original source and on its second order extension.
 
 ## Exercise 8
 
