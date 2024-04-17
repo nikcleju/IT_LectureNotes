@@ -233,7 +233,7 @@ We first give a general schematic of the error control process, with
 the purpose of fixing general definitions and notation.
 The process is tailored to block codes, which are the most common type of error control codes.
 
-1. The sender needs to send a sequence of $k$ bits, which forms the **information word**:
+1. The sender needs to send a sequence of $k$ bits, which is the **information word**:
 
    $$\mathbf{i} = i_1i_2...i_k$$
 
@@ -248,13 +248,13 @@ The process is tailored to block codes, which are the most common type of error 
 
    $$\mathbf{r} = r_1 r_2 ... r_n$$
 
-6. The decoding algorithm detects and/or corrects the errors.
+6. The decoding algorithm detects and/or corrects thformse errors.
 
    - If it performs only detection, it reports whether there
    are errors or not in $\mathbf{r}$
 
    - If it performs correction, it tries to find the correct codeword $\hat{\mathbf{c}}$
-   and information word $\hat{\mathbf{i}}$.
+   and information word $\hat{\mathbf{i}}$ from $\mathbf{r}$.
 
    Both detection and correction may fail, if the errors are too numerous.
    This is why we denote the output of the decoding algorithm as $\hat{\mathbf{c}}$ and $\hat{\mathbf{i}}$,
@@ -300,162 +300,232 @@ We provide below a list of definitions.
 
 Further examples: at blackboard
 
+### Naive examples
 
-### A first example: parity bit
+#### A first example: parity bit
 
-* Add parity bit to a 8-bit long information word, before sending on a channel
-    * coding rate $R = 8/9$
-    * can detect 1 error in a 9-bit codeword
-    * detection algorithm: check if parity bit matches data
-    * fails for 2 errors
-    * cannot correct error (don't know where it is located)
+One of the simplest ways to do error control coding is to add a **parity bit** to the information word.
 
-* Add more parity bits to be able to locate the error
-    * Example at blackboard
-    * coding rate $R = 8/12$
-    * can detect and correct 1 error in a 9-bit codeword
+The parity bit is defined as the module-2 sum of all the bits in the information word,
+i.e. it is 0 if there are an even number of 1's in the information word, and 1 if there are an odd number of 1's.
 
-### A second example: repetition code
+The codeword is obtained by appending the parity bit at the end of the information word.
 
-* Repeat same block of data $n$ times
-    * want to send a $k$-bit information word
-    * codeword to send = the information word repeated $n=5$ times
-    * coding rate $R = k/n = 1/5$
-    * can detect and correct 2 errors, and maybe even more
-    if they do not affect the same bit
-    * error correcting algorithm = majority rule
-    * not very efficient
+Consider an information word of length $k = 8$ bits, to which we append
+a parity bit, resulting in a codeword of length $n = 9$ bits.
 
-### Redundancy
+The receiver checks if the parity bit is still equal to the modulo-2 sum of the information bits.
 
-* Merriam-Webster: **"redundant"** definition:
+What can we say about this coding procedure:
 
-    a. *exceeding what is necessary or normal : superfluous*
-    b. *characterized by or containing an excess; specifically : using more words than necessary*
+- It can detect 1 error in a 9-bit codeword, because if there is 1 error in the codeword,
+  the parity bit will not anymore match the information bits,
+  and the receiver will understand that an error must have happened.
 
-* Because $k < n$, error control coding introduces **redundancy**
-    * to transmit $k$ bits of information we actually send more bits ($n$)
+- It is not able to detect 2 errors because if there are 2 errors in the codeword,
+  the parity bit will still match the information bits,
+  and the receiver will not know that there are errors.
 
-### Redundancy
+- Therefore this procedure is a **1-error-detecting**
 
-* Error control coding adds redundancy, while source coding aims to reduce redundancy. Contradiction?
+- Even for 1 error, The receiver cannot correct the error,
+  because it doesn't know where the error is located.
+  Therefore this is a **0-error-correcting** code.
 
-* No:
-    * Source coding reduces existing redundancy from the data, which served no purpose
-    * Error control coding adds redundancy **in a controlled way**, with a purpose
+- The coding rate is $R = 8/9$
 
-* Source coding and error control coding in practice: do sequentially, independently
-    1. First perform source coding, eliminating redundancy in representation of data
-    2. Then perform error control coding, adding redundancy for protection
+The coding algorithm could be improved by adding more parity bits,
+(see example at blackboard)
 
-### Transmission channels preview
+#### A second example: repetition code
 
-* In Chapter IV we will study Transmission Channels = mathematical model of how information
-is handled from the sender to the receiver
+Let's discuss another basic way of doing error control coding, the **repetition code**.
 
-* Each channel has a certain **capacity** value = the maximum amount of information
-than can be sent over the channel
-    * e.g. a channel may have capacity $C = 0.8$ bits
+The codeword is created by repeating the information word $N$ times in a row.
+As an example, for $N=5$, to transmit $\mathbf{i} = 100$
+we actually send $\mathbf{c} = 100100100100100$ on the channel
 
-* More about this in Chapter IV
+The receiver uses a **majority rule** for decoding:
+knowing that each bit is repeated $n$ times on certain locations,
+it decides that the correct value of each bit is the one that appears most often
+among those locations.
 
-### Shannon's noisy channel theorem (second theorem, channel coding theorem)
+For example, if it receives $\mathbf{r} = 101100100110000$, the decoder
+views the sequence as 5 groups of 3 bits, and takes the majority value
+in each column:
 
-* A coding rate is called **achievable** for a channel if, for that rate, there exists a coding and decoding
+$$\begin{aligned}
+\mathbf{r} =
+&101 \\
+&100 \\
+&100 \\
+&110 \\
+&000 \\
+\hline
+\hat{\mathbf{i}} = &100
+\end{aligned}$$
+
+Let's analyze this code:
+
+- It can detect up to 4 errors, because for 4 or fewer errors
+  the decoder will understand some errors must be in the codeword,
+  since the 5 groups are not all the same.
+
+- It cannot detect 5 errors everytime, because if the 5 errors affect
+  the same column, all the resulting bits will be the same,
+  and the decoder is fooled into believing everything is correct.
+
+- Therefore the code is 4-error-detecting (in general, $(N-1)$-error-detecting).
+
+- It can correct up to 2 errors, because even if 2 errors affect the same column,
+  the correct value will still appear more often than the wrong value, and
+  the majority rule will identify the errors correctly.
+
+- It is not able to correct 3 errors everytime, because if 3 errors affect the same column,
+  the wrong value will appear more often than the correct value, and the majority rule will
+  produce the wrong result.
+
+- Therefore the code is 2-error-correcting (in general, $\left\lfloor \frac{N-1}{2} \right\rfloor$-error-correcting)$.
+
+- The coding rate $R = k/n = 1/5 = 1/N$
+
+- If the number of repetitions $N$ is increased, the code becomes more robust to errors,
+  but the coding rate decreases, i.e. more redundancy is added.
+
+#### Redundancy
+
+We can see in these examples that error control coding works by adding **redundancy** to the data,
+i.e. adding additional bits, artificially created according to some rule.
+
+The decoding algorithm will then check if the rule still holds:
+
+- if yes, it will decide that there are no errors
+- if not, it will decide that there are errors
+
+Note that error control coding adds redundancy to the data,
+while source coding aims to reduce redundancy. Is there a contradiction?
+
+Well, no, because the two types of redundancy are different.
+Source coding reduces existing redundancy from the data, which served no purpose.
+Error control coding adds redundancy **in a controlled way**, with a purpose.
+The purpose is for the decoder to be able to check if the data is correct or not.
+
+In practice, source coding and error control coding are done sequentially, in an independent manner.
+
+1. First perform source coding, eliminating redundancy in representation of data
+2. Then perform error control coding, adding redundancy for protection
+
+### Coding rate and channel capacity
+
+This is a preview of something which will be discussed in the next chapters,
+but relates to the coding rate of a code, so we can introduce it here.
+
+In Chapter IV we will study transmission channels,
+which are mathematical model of how information is handled from the sender to the receiver.
+In that chapter we will find that each channel has a certain **capacity** value.
+
+The **channel capacity** is the maximum amount of information than can be sent over the channel
+with one symbol, on average.
+
+For example, a binary channel (working with bits 0 and 1) may have capacity $C = 0.8$ bits,
+i.e. for each physical bit delivered, the mathematical information
+actually transmitted is 0.8.
+
+The channel capacity is related to the coding rate of error control codes via
+Shannon's noisy channel coding theorem.
+
+```{prf:definition} Achievable coding rate
+A coding rate is called **achievable** for a channel if, for that rate, there exists a coding and decoding
 algorithm guaranteed to correct all possible errors on the channel
+```
 
-#### Shannon's noisy channel coding theorem (second theorem)
+
+```{prf:theorem} Shannon's noisy channel coding theorem  (Shannon's second theorem, channel coding theorem)
 For a given channel, all rates below capacity $R < C$ are achievable. All rates
 above capacity, $R > C$, are not achievable.
+```
 
-### Channel coding theorem explained
+The rigorous proof of the theorem is too complex to present here. Some key ideas of the proof are:
 
-In layman terms:
+- Use very long information words, $k \to \infty$
+- Use random codes, and compute the probability of having error after decoding
+- If $R < C$, *in average for all possible codes*, the probability of error after decoding goes to 0.
+  This means that there exists at least one code better than the average, therefore
+  this code can correct all errors, and it is the code which we should use.
+  Thus, the coding rate is achievable.
 
-* For all coding rates $R<C$, **there is a way** to recover the transmitted data perfectly (decoding algorithm will detect and correct
+In layman terms, the theorem says that:
+
+- For all coding rates $R<C$, **there is a way** to recover the transmitted data perfectly (decoding algorithm will detect and correct
 all errors)
-* For all coding rates $R>C$, **there is no way** to recover the transmitted data perfectly
+- For all coding rates $R>C$, **there is no way** to recover the transmitted data perfectly
 
-### Channel coding theorem example
+As a numerical example, suppose we send bits on a binary channel with capacity 0.7 bits/message.
 
-* We send bits on a channel with capacity 0.7 bits/message
-* For any coding rate $R < 0.7$ there exists an error correction code that allows fixing of all errors
-    * $R < 0.7$ means we send more than 10 bits for every 7 information bits, on average
-* With less than 10 bits for every 7 information bits  => no code exists that can fix all errors
+- For any coding rate $R < 0.7$ the theorem states that there exists an error correction code that allows fixing of all errors.
+  Coding rate $R < 0.7$ means we send more than 10 bits for every 7 information bits, on average.
 
-* The theorem makes it clear when it is possible to fix all errors, and guarantees that a code exists in this case
+- With less than 10 bits for every 7 information bits, i.e. $R > 0.7$, no code exists that can fix all errors.
 
-### Ideas behind channel coding theorem
+The theorem makes it clear when it is possible to fix all errors,
+giving a clear limit to the coding rate required for this to happen.
+Moreover, it guarantees that such a code exists, but it **doesn't tell us how to find it**.
+It gives no clue of how to actually find the code in practice, only some
+general principles derived from the proof:
 
-* The rigorous proof of the theorem is too complex to present
-* Key ideas of the proof:
-    * Use very long information words, $k \to \infty$
-    * Use random codes, compute the probability of having error after decoding
-    * If $R < C$, *in average for all possible codes*, the probability of error after decoding goes to 0
-    * If the average for all codes goes to 0, there exists at least on code better than the average
-    * That is the code we should use
+- using longer information words is better
+- random codewords are generally good (though in practice they are not efficient to use, because thet don't have a simple implementation)
 
-### Ideas behind channel coding theorem
+In practice, we cannot use infinitely long codewords, and random codewords are no efficient to implement,
+so we will only get a *good enough* code.
 
-* **The theorem does not tell what code to use**, only that some code exists
-    * There is no clue of how to actually find the code in practice
-    * Only some general principles:
-        * using longer information words is better
-        * random codewords are generally good
+## Analyzing linear block codes with the Hamming distance
 
-* In practice, we cannot use infinitely long codewords, so we will only get a *good enough* code
+### The Hamming distance
 
-### Chapter structure
+We start from a practical idea which we can deduce from what we discussed until now.
 
-Chapter structure
+If a codeword $\mathbf{c_1}$ has errors and, as a consequence, it becomes identical to another codeword $\mathbf{c_2}$,
+any decoder will be fooled into thinking everything is correct, and it has received a correct codeword $\mathbf{c_2}$.
+Thus the errors go undetected.
 
-1. General presentation
-2. **Analyzing linear block codes with the Hamming distance**
-3. Analyzing linear block codes with matrix algebra
-4. Hamming codes
-5. Cyclic codes
+Therefore, we want the codewords to be as different as possible from each other.
+The Hamming distance is a way of computing how different two codewords are.
 
-### Distance between codewords
+The **Hamming distance** of two binary sequences **a** and **b** having the same length $n$,
+$d_H(\mathbf{a}, \mathbf{b})$, is the total number of bit differences between them
 
-Practical ideas for error correcting codes:
-
-* If a codeword $\mathbf{c_1}$ has errors and thus becomes identical to another codeword $\mathbf{c_2}$ ==> cannot detect any errors
-    * Receiver will think it received a correct codeword $\mathbf{c_2}$, but actually it was $\mathbf{c_1}$
-* We want codewords **as different as possible** from each other
-* How to measure this difference? **Hamming distance**
-
-### Hamming distance
-
-* The **Hamming distance** of two binary sequences **a**, **b** of length $n$ = the total number
-of bit differences between them
 $$d_H(\mathbf{a}, \mathbf{b}) = \sum_{i=1}^N a_i \oplus b_i$$
 
-* We need at least $d_H(a, b)$ bit changes to convert one sequence into another
+The Hamming distance shows how many bit changes are needed to convert one sequence into the other one.
 
-* Example at blackboard
+The Hamming distance satisfies the 3 properties of a metric function:
 
-### Hamming distance
-
-* It satisfies the 3 properties of a metric function:
-    1. $d_H(\mathbf{a},\mathbf{b}) \geq 0 \;\;\; \forall \mathbf{a},\mathbf{b}$, with $d_H(\mathbf{a},\mathbf{b}) = 0 \Leftrightarrow \mathbf{a} = \mathbf{b}$
-    2. $d_H(\mathbf{a},\mathbf{b}) = d_H(\mathbf{b},\mathbf{a}), \forall \mathbf{a},\mathbf{b}$
-    3. $d_H(\mathbf{a},\mathbf{c}) \leq d_H(\mathbf{a},\mathbf{b}) + d_H(\mathbf{b},\mathbf{c}), \forall \mathbf{a},\mathbf{b},\mathbf{c}$
+1. $d_H(\mathbf{a},\mathbf{b}) \geq 0 \;\;\; \forall \mathbf{a},\mathbf{b}$, with $d_H(\mathbf{a},\mathbf{b}) = 0 \Leftrightarrow \mathbf{a} = \mathbf{b}$
+2. $d_H(\mathbf{a},\mathbf{b}) = d_H(\mathbf{b},\mathbf{a}), \forall \mathbf{a},\mathbf{b}$
+3. $d_H(\mathbf{a},\mathbf{c}) \leq d_H(\mathbf{a},\mathbf{b}) + d_H(\mathbf{b},\mathbf{c}), \forall \mathbf{a},\mathbf{b},\mathbf{c}$
 
 \smallskip
 
-* The **minimum Hamming distance of a code**, ${d_H}_{min}$ = the minimum Hamming distance
-between any two codewords $\mathbf{c_1}$ and $\mathbf{c_2}$
+The **minimum Hamming distance of a code**, denoted as ${d_H}_{min}$,
+is the minimum Hamming distance between any two codewords $\mathbf{c_1}$ and $\mathbf{c_2}$.
+
+The minimum Hamming distance of a code guarantees that all codewords
+are at least ${d_H}_{min}$ bits apart from each other.
 
 ### Nearest-neighbor decoding scheme
 
+We introduce a simple decoding scheme, called **nearest-neighbor decoding**,
+which serves as the underlying approach for many error control codes.
+
 Coding:
 
-* Design a code with large ${d_H}_{min}$
-* Send a codeword $\mathbf{c}$ of the code
+- Design a code with large ${d_H}_{min}$, to make the codewords as different as possible
+- Send a codeword $\mathbf{c}$
 
 Decoding:
 
-* Receive a word $\mathbf{r}$, that may have errors
+- Receive a word $\mathbf{r}$, that may have errors
 
 * Error detecting:
     * check if $r$ is part of the codewords of the code $C$:
