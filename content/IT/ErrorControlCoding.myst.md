@@ -505,10 +505,10 @@ The Hamming distance satisfies the 3 properties of a metric function:
 2. $d_H(\mathbf{a},\mathbf{b}) = d_H(\mathbf{b},\mathbf{a}), \forall \mathbf{a},\mathbf{b}$
 3. $d_H(\mathbf{a},\mathbf{c}) \leq d_H(\mathbf{a},\mathbf{b}) + d_H(\mathbf{b},\mathbf{c}), \forall \mathbf{a},\mathbf{b},\mathbf{c}$
 
-\smallskip
-
 The **minimum Hamming distance of a code**, denoted as ${d_H}_{min}$,
 is the minimum Hamming distance between any two codewords $\mathbf{c_1}$ and $\mathbf{c_2}$.
+We find it by taking all the pairs of codewords, computing the Hamming distance between them,
+and taking the minimum value.
 
 The minimum Hamming distance of a code guarantees that all codewords
 are at least ${d_H}_{min}$ bits apart from each other.
@@ -518,244 +518,339 @@ are at least ${d_H}_{min}$ bits apart from each other.
 We introduce a simple decoding scheme, called **nearest-neighbor decoding**,
 which serves as the underlying approach for many error control codes.
 
-Coding:
+**Coding**
 
-- Design a code with large ${d_H}_{min}$, to make the codewords as different as possible
-- Send a codeword $\mathbf{c}$
+- We use a code $C$ with large ${d_H}_{min}$, to make the codewords as different as possible.
+  The code (i.e. all the possible codewords) is known to both the sender and the receiver.
+- One of the codewords $\mathbf{c}$ is sent.
 
-Decoding:
+**Decoding**
 
-- Receive a word $\mathbf{r}$, that may have errors
+- Receive a word $\mathbf{r}$, that may have errors.
 
-* Error detecting:
-    * check if $r$ is part of the codewords of the code $C$:
-    * if $r$ is part of the code, decide that there have been no errors
-    * if $r$ is not a codeword, decide that there have been errors
+- Error detecting:
+  - check if $\mathbf{r}$ is among the codewords of the code $C$
+  - if $\mathbf{r}$ is among the codewords, decide that there have been no errors
+  - if $\mathbf{r}$ is not among the list of codewords, decide that there have been errors
 
-* Error correcting:
-	* if $\mathbf{r}$ is a codeword, decide there are no errors
-    * else, choose codeword **nearest** to the received $\mathbf{r}$, in terms of Hamming distance
-    * this is known as **nearest-neighbor decoding**
+- Error correcting:
+  - if $\mathbf{r}$ is among the codewords, decide there are no errors
+  - else, choose the codeword from $C$ which is **nearest** to the received $\mathbf{r}$, in terms of Hamming distance.
+    Decide that the correct codeword is this one.
+    This is known as **nearest-neighbor decoding**
 
-### Performance of nearest neighbor decoding
 
-Theorem:
 
-* If the minimum Hamming distance of a code is ${d_H}_{min}$, then:
-    1. the code can *detect* up to **${d_H}_{min} - 1$** errors
-    2. the code can *correct* up to **$\left\lfloor \frac{{d_H}_{min} - 1}{2} \right\rfloor$** errors using nearest-neighbor decoding
+The performance of this scheme, in terms of how many errors it can detect and correct,
+is related to the minimum Hamming distance of the code.
+As the next theorem shows, a larger ${d_H}_{min}$ means better performance.
+Note, however, that increasing the ${d_H}_{min}$
+usually means longer codewords, i.e. smaller coding rate, i.e. more redundancy,
+so there is a price to pay for better performance.
 
-Consequence:
+```{prf:theorem} Performance of nearest neighbor decoding
+If the minimum Hamming distance of a code is ${d_H}_{min}$, then:
 
-* It is good to have ${d_H}_{min}$ as large as possible
-    * This implies longer codewords, i.e. smaller coding rate, i.e. more redundancy
+1. The code can *detect* up to **${d_H}_{min} - 1$** errors
+2. The code can *correct* up to **$\left\lfloor \frac{{d_H}_{min} - 1}{2} \right\rfloor$** errors using nearest-neighbor decoding
+```
 
-### Performance of nearest neighbor decoding
+```{prf:proof}
 
-Proof:
+To prove the first assertion, observe that at least ${d_H}_{min}$ binary changes
+are needed to change one codeword into another.
+Therefore, if a codeword undergoes a number of errors up to ${d_H}_{min} - 1$,
+is not enough to obtain a new codeword, so the result will not be in the list
+of allowed codewords of the code. Thus, errors are detected.
 
-1. at least ${d_H}_{min}$ binary changes are needed to change one codeword into another, ${d_H}_{min} - 1$ is not enough => the errors are detected
-2. the received word $\mathbf{r}$ is closer to the original codeword than to any other codeword => nearest-neighbor algorithm will find the correct one
-    * because $\left\lfloor \frac{{d_H}_{min} - 1}{2} \right\rfloor$ = less than half the distance to another codeword
+For the second assertion, observe that as long as the number of errors is
+strictly less than half of the distance to another codeword, the received word $\mathbf{r}$
+is closer to the original codeword than to any other.
+The condition of being strictly less than half of ${d_H}_{min}$ is expressed
+as $\left\lfloor \frac{{d_H}_{min} - 1}{2} \right\rfloor$.
 
-Note: if the number of errors is higher, can fail:
+You can think in terms of geometry:
+the original codeword $\mathbf{c}$ is a point in space,
+separated by a distance of at least ${d_H}_{min}$ from any other codeword.
+The received word $\mathbf{r}$ is somewhere around $\mathbf{c}$.
+If the distance between $\mathbf{r}$ and $\mathbf{c}$ is less than half of ${d_H}_{min}$,
+i.e. less than half of the distance to any other codeword,
+then $\mathbf{c}$ is still closer to $\mathbf{r}$ than to any other codeword.
+In this case, the nearest-neighbor algorithm will find $\mathbf{c}$ as the correct codeword.
 
-* Detection failure: decide that there were no errors, even if they were (more than ${d_H}_{min} - 1$)
-* Correction failure: choose a wrong codeword
+All this geometrical intuition is possible because the Hamming distance
+satisfies the properties of a distance function, and thus it behaves
+like the geometrical distance in a space.
 
-Example: blackboard
+```
+
+The theorem gives the maximum number of errors for which
+the decoding scheme is **guaranteed** to work.
+If the number of errors is higher than these limits, the decoding
+scheme may or may not work, depending on the specific errors.
+We may have:
+
+- Detection failure: decide that there were no errors, even if they were (more than ${d_H}_{min} - 1$)
+- Correction failure: choose a wrong codeword as original
 
 ### Computational complexity
 
-* **Computational complexity** = the amount of computational resources required
-by an algorithm
-    * only refers to the **order of magnitude of the dominant term**
-        * neglects the other terms
-        * neglects actual coefficient values in front
+The nearest-neighbor decoding scheme is simple to understand and implement,
+and it underpins many error control codes (if not all).
+However, it in not always used in practice, because of a fundamental
+problem: it requires a lot of computational resources, especially for large codes
+(e.g. in practice).
 
-* Computational complexity with respect to number of information bits $k$,
-of the search-based nearest neighbor decoding
-(as presented earlier), is
+To understand this, we need to use the concept of **computational complexity**
+of an algorithm, coming from computer science.
+
+The computational complexity of an algorithm is the amount of computational resources required
+by the algorithm, expressed as a function of the size of the input data.
+In general, we are interested in the **order of magnitude** of the computational complexity,
+i.e. the dominant term in the expression, neglecting the other terms and the coefficients.
+
+The computational complexity of an algorithm is expressed using the **big-O notation**,
+for example $\mathcal{O}(n^2)$, which means that the computational complexity is proportional to $n^2$,
+or $\mathcal{O}(n \log n)$, which means that the computational complexity is proportional to $n \log n$.
+This gives an idea about how the computational complexity grows with the size of the input data, $n$.
+
+For the nearest-neighbor decoding scheme, if the number of information bits
+is $k$, the computational complexity is $\mathcal{O}(2^k)$,
+which is absolutely huge for large $k$.
+
 $$\mathcal{O}(k) = 2^k$$
 
-* Proof: Requires comparing with all codewords, and there are $2^k$ codewords
-in total
+This is because both error detection and correction require comparing the received word
+with all the possible codewords, and there are $2^k$ codewords in total,
+one for each possible information word. Thus, the algorithm needs to go
+through an array of size $2^k$ to find the correct codeword.
 
-### Computational complexity
+A computation complexity of $\mathcal{O}(2^k)$ means that the algorithm
+is very inefficient, and is not feasible in practice:
 
-* This implementation is **very inefficient**
-    * $k$ doubles => the amount of computations is squared
-    * $k$ increases 10 times => computations are raised to a power of 10
-    * $k$ increases 100 times => computations are raised to a power of 1000
-    * for $k = 256$ you'd need all the energy of the Sun
+- when $k$ doubles, the amount of computations is squared
+- when $k$ increases 10 times, the amount of computations is raised to a power of 10
+- when $k$ increases 100 times, the amount of computations is raised to a power of 1000
+- for $k = 256$ bits, you'd need more than all the energy of the Sun (not a joke, it can be calculated)
+  to go through a list of size $2^{256}$ codewords.
 
-\smallskip
+Therefore, we need ways to make decoding simpler and more efficient.
 
-* Need to find ways to make it simpler
+## Analyzing linear block codes with matrix algebra
 
-### Chapter structure
+### Vector algebra in a binary world
 
-Chapter structure
+#### A short review of basic vector algebra
 
-1. General presentation
-2. Analyzing linear block codes with the Hamming distance
-3. **Analyzing linear block codes with matrix algebra**
-4. Hamming codes
-5. Cyclic codes
+A **vector space** is a set with two operations, sum and multiplication by a constant,
+having the following properties:
 
-### Review of basic algebra
+- an element + another element = still an element from the set
+- an element $\times$ a constant = still an element from the set
 
-Informal definitions:
+In other words, we cannot escape from the set by summing or multiplying by a constant.
 
-* **Vector space** = a set such that:
+The elements of a vector space are called "vectors".
 
-    a. one element + another element = still an element from the set
-    a. one element $\times$ a constant = still an element from the set
+Intuitive examples of vector spaces are Euclidian (geometrical) vector spaces: a line, points in 2D, 3D.
+For example, adding two vectors in a 2D plane gives another vector in the same 2D plane,
+and multiplying a vector by a constant gives another vector in the same 2D plane.
 
-    * Examples: Euclidian vector spaces: a line, points in 2D, 3D
-    * Elements are called "vectors"
+A **basis** of a vector space $V$ is a set of $n$ independent vectors $\mathbf{e_1}, ...\mathbf{e_n}$,
+such that any vector $\mathbf{v}$ can be expressed as a linear combination of the basis elements
 
-* **Basis** = a set of $n$ independent vectors $\mathbf{e_1}, ...\mathbf{e_n}$
-    * Any vector $\mathbf{v}$ can be expressed as a linear combination of
-    the basis elements
-    $$\mathbf{v} = \mathbf{e_1} \cdot \alpha_1 +  ... + \mathbf{e_n} \cdot \alpha_n$$
+$$\mathbf{v} = \mathbf{e_1} \cdot \alpha_1 +  ... + \mathbf{e_n} \cdot \alpha_n$$
 
-### Review of basic algebra
+A **subspace** is a smaller dimensional vector space embedded inside a larger vector space.
 
-* **Subspace** = a smaller dimensional vector space inside a larger
-vector space
-    * Examples: a line in a plane
-        * sum of two vectors on a line = still on the line
-        * size of subspace = 1
-        * size of larger space = 2
+For example, a line in a 2D plane is a subspace of the 2D plane:
 
-    * A plane in 3D space
-        * sum of two vectors from the plane = still on the plane
-        * size of subspace = 2
-        * size of larger space = 3
+- sum of two vectors on the line is still on the same line
+- the size of the line subspace is 1, and the embedding plane has size 2
 
-### Binary sequences form a vector space
+Another example is a 2D plane in 3D space:
 
-* The set of all binary sequences of size $n$ is a vector space of size $n$
-    * sum of two sequences of size $n$ is still a sequence of size $n$
+- sum of two vectors from the plane is still on the plane
+- size of subspace is 2, size of the larger space is 3
 
-* The sum operation = modulo-2 sum $\oplus$
+#### How to look at matrix-vector multiplications
 
-* Multiplication with $0$ and $1$ = as in usual arithmetic
+When we multiply a matrix with a vector (in this order),
+the output is a column vector which is a linear combination of the columns of the matrix.
+The multiplicating vector gives the coefficients of the linear combination.
 
-### How to look at matrix-vector multiplications
+When we multiply a vector with a matrix (in this order),
+the output is a row vector which is a linear combination of the rows of the matrix.
+The multiplicating vector gives the coefficients of the linear combination.
 
-* Matrix-vector multiplication
-    * Output vector = linear combination of the matrix columns
+TODO: Explain with draw picture
 
-\smallskip
+Vector spaces can be perfectly described with matrix-vector multiplications
 
-* Vector-matrix multiplication
-    * Output vector = linear combination of the matrix rows
+- Matrix columns/rows = elements of the basis
+- The output vector = the vector
+- The multiplicated vector = the coefficients of the linear combination
 
-\smallskip
+Any vector $\mathbf{v}$ can be expressed as a linear combination of
+the basis elements:
 
-* Explain at the blackboard, draw picture
+$$\mathbf{v} = \mathbf{e_1} \cdot \alpha_1 +  ... + \mathbf{e_n} \cdot \alpha_n$$
 
-### How to look at matrix-vector multiplications
+$$\mathbf{v} =
+\begin{bmatrix}
+\mathbf{e_1}  & \mathbf{e_2} & ... & \mathbf{e_n}
+\end{bmatrix}
+\begin{bmatrix}
+\alpha_1  \\ \alpha_2 \\ ... \\ \alpha_n
+\end{bmatrix}
+$$
 
-* Vector spaces can be perfectly described with matrix-vector multiplications
-    * Matrix columns/rows = elements of the basis
-    * The output vector = the vector
-    * The multiplicated vector = the coefficients of the linear combination
+where $\mathbf{e_1}, ... \mathbf{e_n}$ are **column vectors**.
 
-* Any vector $\mathbf{v}$ can be expressed as a linear combination of
-the basis elements
-    $$\mathbf{v} = \mathbf{e_1} \cdot \alpha_1 +  ... + \mathbf{e_n} \cdot \alpha_n$$
+The equation can be transposed, which would mean that all vectors become row vectors,
+but the usual mathematical convention is to use column vectors wherever possible.
 
-    $$\mathbf{v} =
-    \begin{bmatrix}
-    \mathbf{e_1}  & \mathbf{e_2} & ... & \mathbf{e_n}
-    \end{bmatrix}
-    \begin{bmatrix}
-    \alpha_1  \\ \alpha_2 \\ ... \\ \alpha_n
-    \end{bmatrix}
-    $$
+#### Vector spaces of binary codewords
 
-* $\mathbf{e_1}, ... \mathbf{e_n}$ are **column vectors**
+```{prf:theorem} Vector space of binary sequences
+The set of all binary sequences of size $n$ is a vector space of size $n$,
+when considering the sum operation as modulo-2 sum $\oplus$ between sequences,
+and the multiplication with a constant as multiplication with 0 or 1 as in usual arithmetic.
+```
+```{prf:proof}
+The two properties defining a vector space are satisfied:
 
-* Equation can be transposed => all vectors become row vectors
+- the sum of two sequences of size $n$ is still a sequence of size $n$,
+  when using modulo-2 sum $\oplus$
 
-### Codewords form a vector space
+- the multiplication of a sequence with a constant is still a sequence of size $n$:
+  when multiplying with 0, the sequence becomes all 0's, and when multiplying with 1,
+  it stays the same. Eiher way, it is still a binary sequence of size $n$.
+```
 
-* The set of all binary codewords of a linear block code is a vector subspace
-of dimension $k$
+Furthermore the codewords of a linear block code
+with code length $n$ and information length $k$
+is a vector subspace of the larger vector space of all binary sequences of size $n$.
 
-* Proof:
-    * code is linear => because sum (XOR) of two codewords is still a codeword
-    * codeword $\times$ a constant (0 or 1) => still a codeword
-    * total number of codewords is $2^k$ => dimension is $k$
+```{prf:theorem} Codewords of a linear block code form a subspace
+The codewords of a linear block code with code length $n$ and information length $k$
+form a vector subspace of the larger vector space of all binary sequences of size $n$.
+```
 
-* Length of codewords is $n$, but size of space is $k$ =>
- they form a **subspace** of the larger space of all binary sequences
-    of length $n$
+```{prf:proof}
+Again, the set of codewords of a linear block code satisfies the two properties of a vector space:
 
-### Codewords form a vector space
+- the sum of two codewords is still a codeword, because the code is linear
+  (this is what the linearity property of a code means)
 
-* Since all codewords form a (sub)space => all codewords can be expressed as matrix-vector multiplications
+- a codeword multiplied by 0 or 1 is still a codeword, either all 0's or the same codeword.
+  Note that the all-0 sequence must be a codeword, because it is the sum of any
+  codeword with itself, so it is the sum of two codewords.
 
-\smallskip
+The codewords are binary sequences of size $n$,
+so they are part of the larger vector space of all binary sequences of size $n$.
+But the size of this codeword vector space itself is $k$, because the total number of codewords is $2^k$,
+so any codeword can be expressed with just $k$ coefficients (i.e. the information bits,
+since every codeword is associated with one information word).
 
-* Need to find a basis for the codewords
+We thus have a vector subspace of size $k$ embedded in a larger vector space of size $n$.
+Not all sequences of size $n$ from the larger space are codewords.
+```
 
-### Generator matrix
+You can imagine the set of codewords as forming a 2D plane embedded in a 3D space.
+All codewords live in this plane, and all point on this plane are codewords.
+The larger space contains lots of other points which are not on the plane, so are not codewords,
+just like there are many sequences of size $n$ which are not codewords.
 
-* All codewords for a linear block code can be generated via a **matrix-vector multiplication**:
+Since all codewords of a linear block code form a subspace,
+it follows that all codewords can be expressed as matrix-vector multiplications.
+
+### The generator matrix
+
+All codewords for a linear block code can be generated via a **vector-matrix multiplication**
+as follows:
+
 $$\mathbf{i} \cdot [G] = \mathbf{c}$$
 
-    ![Codeword construction with generator matrix](img/GeneratorMatrix.png){width=50%}
+```{figure} img/GeneratorMatrix.png
+---
+width: 50%
+name: GeneratorMatrix
+---
+Codeword construction with generator matrix
+```
 
-* $[G]$ = **generator matrix** of size $k \times n$ ("fat" matrix, $k < n$)
-    * it is fixed, it fully defines the whole code
+The matrix $[G]$ is known as the **generator matrix** of the code.
+Its size of size $k \times n$, and it is a "wide" matrix since we have $k < n$.
+The generator matrix fully defines the code, i.e. if we know the generator matrix,
+we know everything about the code.
 
-### Generator matrix
+The vector $\mathbf{i}$ is the information word, of size $k$.
 
-* Row-wise interpretation:
-    * Any codeword $\mathbf{c}$ = a linear combination of rows in $[G]$
-    * The rows of $[G]$ = a *basis* for the linear block code
-    * Could also be transposed, i.e. use column vectors instead
+Such a vector-matrix multiplication can be interpreted as follows:
+the resulting codeword $\mathbf{c}$
+is a linear combination of the rows in the matrix $[G]$,
+with the coefficients given by the information word $\mathbf{i}$.
+This means the rows of $[G]$ are a *basis* for the linear block code.
+All the vector space theory we discussed before applies here:
 
-* All operations are done in modulo-2 arithmetic
+- the rows of the generator matrix are a basis for the codewords
+- all codewords are obtained by linear combinations of the rows of the generator matrix, i.e.
+  by multiplcation with $[G]$
+- the information word $\mathbf{i}$ gives the coefficients of the linear combination
+- for each information word $\mathbf{i}$, there is a corresponding codeword $\mathbf{c}$
+  obtained by multiplying with $[G]$
 
-* There exists a separate codeword for all possible information words $\mathbf{i}$
+Note that the equation could also be transposed, i.e. use column vectors instead of row vectors,
+but it is more customary to use row vectors here.
 
-### Proof of linearity
+This way of generating codewords guarantees that the code is linear.
+Indeed, we can show that the sum of two codewords is also a codeword, by construction.
+If we have two codewords $\mathbf{c_1}$ and $\mathbf{c_2}$,
+corresponding to two information words $\mathbf{i_1}$ and $\mathbf{i_2}$,
+then the sum of the two codewords is still something multiplied with $[G]$,
+so it is still a codeword.
 
-* Prove that a codeword + another codeword = also codeword:
 $$\mathbf{i_1} \cdot [G] = \mathbf{c_1}$$
 $$\mathbf{i_2} \cdot [G] = \mathbf{c_2}$$
 $$\mathbf{c_1} \oplus \mathbf{c_2} = (\mathbf{i_1} \oplus \mathbf{i_2}) \cdot [G] = codeword$$
 
+### The control (parity-check) matrix
 
-### Parity check matrix
+Every generator matrix $[G]$ has a related **control matrix** $[H]$ (also known as **parity-check matrix**)
+such that
 
-* Every generator matrix $[G]$ has a related **parity-check matrix** $[H]$ such that
 $$\mathbf{0} = [H] \cdot [G]^T$$
-    * also known as **control matrix**
-    * size of $[H]$ is $(n-k) \times n$
-    * $[G]$ and $[H]$ are related, one can be deduced from the other
 
-* $[H]$ is very useful to check if a binary word is a codeword or not
-(i.e. for nearest neighbor error detection)
+The size of $[H]$ is $(n-k) \times n$.
 
-### Using the parity check matrix
+The two matrices $[G]$ and $[H]$ are related, and one can always be deduced from the other.
 
-* Theorem: every codeword $\mathbf{c}$ generated with $[G]$ ($\mathbf{i} \cdot [G] = \mathbf{c}$)
-will produce a 0 vector when multiplied with the corresponding $[H]$ matrix:
+The control matrix $[H]$ is very useful to check if a binary word is a codeword or not
+(i.e. for nearest neighbor error detection), based on the following theorem.
+
+```{prf:theorem} Codeword checking with parity-check matrix
+Consider a code with generator matrix $[G]$ and control matrix $[H]$.
+
+Every codeword $\mathbf{c}$ multiplied with $[H]$ will produce the zero vector:
+
 $$\mathbf{0} = [H] \cdot \mathbf{c}^T$$
 
-* Proof:
+```
+
+```{prf:proof}
+The proof is straightforward, based on the fact that $\mathbf{0} = [H] \cdot [G]^T$.
+
 $$\mathbf{i} \cdot [G] = \mathbf{c}$$
 $$[G]^T \cdot \mathbf{i}^T = \mathbf{c}^T$$
 $$[H] \cdot \mathbf{c}^T = [H] \cdot [G]^T \cdot \mathbf{i}^T = \mathbf{0}$$
+```
 
-* All codewords generated with $[G]$ will produce $0$ when multiplied with $[H]$
-* All binary sequences that are not codewords will produce $\neq 0$ when multiplied with $[H]$
+The theorem shows that all codewords generated with $[G]$ will produce $0$ when multiplied with $[H]$.
+On the other hand, all binary sequences that are not codewords will produce something
+different from $0$ when multiplied with $[H]$. In this way, multiplcation with
+$[H]$ can be used as a quick way to check if a binary sequence is a codeword or not.
+This is what error detection is all about.
 
 ### Relation between [G] and [H]
 
