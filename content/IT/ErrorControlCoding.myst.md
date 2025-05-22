@@ -539,8 +539,6 @@ which serves as the underlying approach for many error control codes.
     Decide that the correct codeword is this one.
     This is known as **nearest-neighbor decoding**
 
-
-
 The performance of this scheme, in terms of how many errors it can detect and correct,
 is related to the minimum Hamming distance of the code.
 As the next theorem shows, a larger ${d_H}_{min}$ means better performance.
@@ -852,85 +850,71 @@ different from $0$ when multiplied with $[H]$. In this way, multiplcation with
 $[H]$ can be used as a quick way to check if a binary sequence is a codeword or not.
 This is what error detection is all about.
 
-### Relation between [G] and [H]
+The generator matrix $[G]$ and $[H]$ are related.
+In linear algebra terminology, $[G]$ is the matrix which generates the $k$-dimensional subspace of the codewords,
+and the rows of $[H]$ are the "missing" dimensions of the subspace (the "orthogonal complement")
 
-* [G] and [H] are related
-    * The codewords form a $k$-dimensional subspace inside the larger $n$-dimensional
-vector space
-    * The rows of $[H]$ are the "missing" dimensions of the subspace (the "orthogonal complement")
+In terms of matrix shape, $[G]$ and $[H]$ together form a full square matrix $n \times n$:
 
-* Together $[G]$ and $[H]$ form a full square matrix $n \times n$, which
-is a basis for the full $n$-dimensional vector space
-    * size of $[H]$ is $(n-k) \times n$
-    * size of $[G]$ is $k \times n$
+- size of $[G]$ is $k \times n$
+- size of $[H]$ is $(n-k) \times n$
 
-* Examples:
-    * line in a 2D plane, has one orthogonal dimension
-    * plane in 3D space, has one orthogonal dimension
-    * line in 3D space, has 2 orthogonal dimension
+### Matrices [G] and [H] for systematic codes
 
-### Standard [G] and [H] for systematic codes
+For systematic codes, $[G]$ and $[H]$ have special forms (known as **"standard"** forms)
 
-* For systematic codes, [G] and [H] have special forms (known as **"standard"** forms)
-* Generator matrix
-    * first part = identity matrix
-    * second part = some matrix $Q$
+The generator matrix can be decomposed into two parts:
+
+- First part is the **identity matrix**. This copies the information bits in the resulting codeword.
+- Second part is some matrix $Q$, which generates the control bits
 $$[G]_{k \times n} = [I_{k \times k} \;\; Q_{k \times (n-k)}]$$
 
-* Parity-check matrix
-    * first part = same Q, but **transposed**
-    * second part = identity matrix
+The control matrix $[H]$ is related to $[G]$ as follows:
+
+- First part is $Q^T$ (the same $Q$ as in $[G]$, but **transposed**)
+- Second part is an identity matrix of corresponding size
 $$[H]_{(n-k) \times n} = [Q^T_{(n-k) \times k} \;\; I_{(n-k) \times (n-k)}]$$
 
-* Can easily compute one from the other
-
-* Example at blackboard
+Thus, one matrix can be derived from the other.
 
 ### Interpretation as parity bits
 
-* Multiplication with $G$ in standard form produces the codeword as
-    * first part = information bits (since first part of $[G]$ is identity matrix)
-    * additional bits = combinations of information bits = *parity bits*
+Multiplication with $[G]$ in standard form produces the codeword composed of two parts:
+
+- the information bits themselves (since the first part of $[G]$ is an identity matrix)
+- some additional control bits, which are linear combinations of the information bits, i.e. *parity bits*
+
+Each column of $[G]$ corresponds to one parity bit in the codeword,
+and the values in the column define which bits are combined to create the parity bit.
+
+The control matrix in standard form $[H]$ checks if parity bits correspond to information bits
+
+- Proof: write down the parity check equation (see example)
 
 \smallskip
 
-* The additional bits added by coding are actually just parity bits
-    * Proof: write the generation equations (example)
+If all parity bits match the data, the result of multiplying with $[H]$ is 0.
+Otherwise it is $\neq 0$, signaling that at least one parity bit does not check out.
 
-\smallskip
+Therefore, the generator & control matrices are just mathematical tools
+for easy computation and checking of parity bits.
+We're still just computing and checking parity bits, but we do it easier with matrices.
 
-* Parity-check matrix in standard form $[H]$ checks if parity bits correspond to information bits
-     * Proof: write down the parity check equation (see example)
+### Syndrome-based error detection and correction
 
-\smallskip
+When considering error detection and correction,
+we multiply the received word $\mathbf{r}$ with the control matrix $[H]$.
 
-* If all parity bits match the data, the result of multiplying with $[H]$ is 0
-    * otherwise it is $\neq 0$
+$$\mathbf{z} = [H] \cdot \mathbf{r}^T$$
 
-### Interpretation as parity bits
+The vector $\mathbf{z}$ is called the **syndrome** of the received word $\mathbf{r}$.
 
-* Generator & parity-check matrices are just mathematical tools
-for easy computation and checking of parity bits
+The syndrome is a linear combination of the columns of $H$,
+according to the column-wise interpretation of the multiplication.
 
-* We're still just computing and checking parity bits, but we do it easier with matrices
+![Codeword checking with control matrix](img/ParityCheckMatrix.png){width=30%}
 
-### Syndrome
-
-* Nearest neighbor error detection = check if received word
-$\mathbf{r}$ is a codeword
-
-* We do this easily by multiplying with $[H]$
-
-* The resulting vector $z = [H] \cdot [r]^T$ is known as **syndrome**
-
-* Column-wise interpretation of multiplication:
-
-![Codeword checking with parity-check matrix](img/ParityCheckMatrix.png){width=30%}
-
-
-### Nearest neighbor error detection with matrices
-
-Nearest neighbor error **detection** with matrices:
+The process of **error detection** with matrices is therefore as follows:
 
 1. generate codewords with generator matrix:
 $$\mathbf{i} \cdot [G] = \mathbf{c}$$
@@ -946,16 +930,18 @@ $$\mathbf{z} = [H] \cdot \mathbf{r}^T$$
     * If $\mathbf{z} = 0$ => $\mathbf{r}$ has no errors
     * If $\mathbf{z} \neq 0$ => $\mathbf{r}$ has errors
 
-### Nearest neighbor error correction with matrices
-
-Nearest neighbor error **correction** with matrices:
-
-* Syndrome $\mathbf{z} \neq 0$ => $\mathbf{r}$ has errors, we need to locate them
-
-* The syndrome is the effect only of the error word:
+For **error correction**, we need to locate the errors.
+For this, observe that the syndrome $\mathbf{z}$ is the effect only of the error word $\mathbf{e}$,
+and not of the codeword $\mathbf{c}$ (considering that $\mathbf{r}$ is the sum of $\mathbf{c}$ and $\mathbf{e}$):
 $$\mathbf{z} = [H] \cdot \mathbf{r}^T = [H] \cdot (\mathbf{c}^T \oplus \mathbf{e}^T) = [H] \cdot \mathbf{e}^T$$
 
-7. Create a **syndrome lookup table**:
+We identify the error word $\mathbf{e}$ by searching exhaustively through all possible error words $\mathbf{e}$,
+until we find the first one that produces the same syndrome $\mathbf{z}$.
+Once we find it, we know where the errors are, and we can correct them.
+
+The process is summarized as follows:
+
+7. Create a **syndrome table**:
     * for every possible error word $\mathbf{e}$, compute the syndrome $\mathbf{z} = [H] \cdot \mathbf{e}^T$
     * start with error words with 1 error (most likely), then with 2 errors (less likely), and so on
 
@@ -965,43 +951,52 @@ $$\mathbf{z} = [H] \cdot \mathbf{r}^T = [H] \cdot (\mathbf{c}^T \oplus \mathbf{e
     * adding the error word again will invert the errored bits back to the originals
 $$\mathbf{\hat{c}} = \mathbf{r}  \oplus \mathbf{\hat{e}}$$
 
-### Example
-
 Example: at blackboard
 
 ### Computational complexity
 
-* Computational complexity for error detection
-    * Error detection = multiplication with $[H]$
-    * Complexity is $\mathcal{O}(n^2)$ (size of $[H]$ is $(n-k) \times n$
-    * Much more efficient!
+When using matrices, the computational complexity is much lower
+than the scheme based on codeword tables.
 
-\smallskip
+Error detection requires a multiplication with $[H]$,
+so the complexity is $\mathcal{O}(n^2)$ (size of $[H]$ is $(n-k) \times n$).
 
-* Computational complexity for error correction
-    * Need to check all possible error words => bad performance
-    * In practice, other tricks are used to make it much faster (see Hamming codes
-    for example)
-
+Error correction still needs to check all possible error words,
+which means bad performance, but at least we don't need to check all codewords.
+In practice, other tricks are used to make it much faster (see Hamming codes for example)
 
 ### Conditions on [H] for error detection and correction
 
-* How to design a good matrix $[H]$?
+The performance of the error detection and correction scheme,
+i.e. how many errors can be detected and corrected,
+can be deduced from the properties of the control matrix $[H]$.
 
-* Conditions on [H] for successful error **detection**:
-    * We can detect errors if the syndrome is **non-zero**
-    * To detect a single error: every column of $[H]$ must be non-zero
-    * To detect two error: sum of any two columns of $[H]$ cannot be zero
-        * that means all columns are different
-    * To detect $n$ errors: sum of any $n$ or less columns of $[H]$ cannot be zero
+For error detection, we can detect errors if the syndrome is **non-zero**.
+Whenever an error word $\mathbf{e}$, when multiplied with $[H]$,
+produces a zero syndrome, the algorithm is fooled into thinking
+there are no errors. Therefore, we need to make sure that the syndrome is non-zero.
+Considering that the syndrome is a linear combination of the columns of $[H]$,
+with only the columns corresponding to values of $1$ in the error word $\mathbf{e}$,
+we can say:
 
-### Conditions on [H] for error detection and correction
+- To detect a single error, every column of $[H]$ must be non-zero,
+  such that the syndrome is non-zero whenever the error word has a single $1$,
+  no matter where it is located.
+- To detect two error, sum of any two columns of $[H]$ cannot be zero, i.e. all columns are different.
+- In general, to detect $n$ errors, we need that the sum of any $n$ or less columns of $[H]$ is non-zero.
 
-* Conditions for syndrome-based error **correction**:
-    * We can correct errors if the syndrome is **unique**
-    * To correct a single error: all columns of $[H]$ are different
-        * so the syndromes, for a single error, are all different
-    * To correct $n$ errors: sum of any $n$ or less columns of $[H]$ are all different
+For error correction, we use the syndrome table to identify the error word.
+When two different error words produce the same syndrome,
+the algorithm is unable to identify which is the true one.
+Therefore, error correction works only if the syndrome is **unique**:
+
+- To correct a single error, all columns of $[H]$ must be different,
+  such that the syndrome is unique for all error words with a single $1$.
+- To correct two errors, the sum of any two columns of $[H]$ must be different,
+  such that the syndrome is unique for all error words with two $1$s.
+  We also
+
+- To correct $n$ errors: sum of any $n$ or less columns of $[H]$ are all different
         * much more difficult to obtain than for decoding
 
 * Conditions for error correction are more demanding than for detection
@@ -1232,7 +1227,7 @@ $$0 = [H] \cdot \mathbf{c}^T$$
 * Syndrome:
 $$\mathbf{z} = [H] \cdot \mathbf{r}^T$$
 * Syndrome-based error detection: syndrome non-zero
-* Syndrome-based error correction: lookup table
+* Syndrome-based error correction: syndrome table
 * Hamming codes: $[H]$ contains all numbers $1 ... 2^r - 1$
 * SECDED Hamming codes: add an extra parity bit
 
@@ -1476,8 +1471,8 @@ Decoding
 
 ### Decoding - The mathematical way
 
-* Error **correction**: use a lookup table (just like with matrices)
-    * build a lookup table for all possible error words (like with matrix codes)
+* Error **correction**: use a syndrome table (just like with matrices)
+    * build a table for all possible error words (like with matrix codes)
     * for each error code, divide by $g(x)$ and compute the remainder
     * when the remainder is identical to the remainder obtained with $\mathbf{r(x)}$, we found the error word => correct errors
 
@@ -1528,8 +1523,8 @@ Decoding
         * If the remainder is non-zero => errors detected!
 
 * Error correction:
-    * use a lookup table (just like with matrices)
-        * build a lookup table for all possible error words (same as with matrix codes)
+    * use a syndrome table (just like with matrices)
+        * build a table for all possible error words (same as with matrix codes)
         * for each error word, compute the CRC
         * when the resulting remainder is identical to the remainder obtained with $\mathbf{r}$, we found the error word => correct errors
 
