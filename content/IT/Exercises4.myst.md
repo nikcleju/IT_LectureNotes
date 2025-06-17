@@ -110,7 +110,7 @@ where:
 - $I(X,Y)$ is the intersection of the two circles
 
 Knowing three of the six entropies, we can compute the other three using
-relation deduced from the figure.
+relations deduced from the figure.
 
 In this case, we already know $H(X) = 1$ and $H(Y) = 1.5$ from a).
 Another easy one is $H(X,Y)$, which is the entropy of all the values in the joint probability matrix:
@@ -123,7 +123,7 @@ H(X,Y) &= -\sum_{i,j} P(x_i \cap y_j) \log_2 P(x_i \cap y_j) \\
 \end{align*}
 $$
 
-From the the figure, we can see the folllowing relation:
+From the figure, we can see the following relation:
 
 $$I(X,Y) = H(X) + H(Y) - H(X,Y)$$
 
@@ -132,7 +132,7 @@ which gives:
 $$I(X,Y) = 1 + 1.5 - 1.5 = 1$$
 
 For the geometrical representation,
-we observe that $H(X,Y)$ is equal to $H(X)$,
+we observe that $H(X,Y)$ is equal to $H(Y)$,
 which means that the first circle is completely contained in the second circle.
 
 ```{figure} img/Exercises4_Ex1_geom_actual.png
