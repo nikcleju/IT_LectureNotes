@@ -327,7 +327,7 @@ we find the transmitted information bits are:
 
 $$\mathbf{i} = [1 0 1 0]$$
 
-#### d). Find out how many errors this code can detect, and how many it can correct.
+#### *d). Find out how many errors this code can detect, and how many it can correct*
 
 This is from the theory of linear block codes.
 
@@ -694,7 +694,7 @@ $$
 The syndrome $\mathbf{z} = [0 1 1]^T$ corresponds to the error on the 3rd position,
 so the decoder will believe that the error is on the 3rd position, which is not true.
 
-## Exercise 7 Cyclic Codes - encoding
+## Exercise 8 Cyclic Codes - encoding
 
 Find the non-systematic and then the systematic cyclic codeword for the
 sequence $\mathbf{i} = [1 0 1 0 0 0 1 1 0 0]$ (first bit is LSB),
@@ -705,7 +705,7 @@ considering a cyclic code with generator polynomial $g(x) = 1\oplus x \oplus x^3
 
 ### Solution
 
-#### a). "the mathematical way" (with polynomials)
+#### *a). "the mathematical way" (with polynomials)*
 
 We first convert the binary sequence into a polynomial.
 The LSB corresponds to $x^0$, and the MSB corresponds to the highest degree.
@@ -715,9 +715,14 @@ $$
 $$
 
 Also, we note that the generator polynomial has degree $3$, which means that the
-length of the codeword is 3 bits longer than the information word.
+codeword is 3 bits longer than the information word.
 Since the information word given length $k = 10$,
 the codeword will have $n = k + 3 = 13$ bits.
+
+```{admonition} Degree of generator polynomial
+For cyclic codes, the degree of the generator polynomial $g(x)$
+is the increase in number of bits due to the code.
+```
 
 **Non-systematic codeword**
 
@@ -752,7 +757,7 @@ $$
 c(x) = x^{n-k} \cdot i(x) + b(x)
 $$
 
-where $n-k$ is the degree of $g(x)$ (3 in our case),
+where $n-k$ is the degree of $g(x)$ ($n-k = 3$ in our case),
 and $b(x)$ is the remainder of the division of $x^{n-k} \cdot i(x)$ by $g(x)$.
 
 In our case, we have:
@@ -764,19 +769,37 @@ $$
 We divide this to $g(x)$ to find the remainder. Note that the polynomial
 division requires writing the polynomials in descending order.
 
-INSERT IAMGE HERE
+```{figure} img/Exercises3_Ex8_division.png
+---
+width: 70%
+name: fig-ex8-division
+---
+Computing the remainder of the division of $x^{n-k} \cdot i(x)$ by $g(x)$
+```
 
-We add the remainder to $x^{n-k} \cdot i(x)$ to find the systematic codeword:
+The remainder is $1 \oplus x$. We add the remainder to $x^{n-k} \cdot i(x)$ to find the systematic codeword polynomial:
 
 $$
-c(x) = ... + x^3 \oplus x^5 \oplus x^9 \oplus x^{10}
+c(x) = 1 \oplus x \oplus x^3 \oplus x^5 \oplus x^9 \oplus x^{10}
 $$
 
-#### b). "the programming way" (XOR-ing bit sequences)
+We read out the coefficients of the polynomial to get the codeword in binary,
+appending two zeros at the end to obtain the prescribed length $n = 13$:
+
+```{figure} img/Exercises3_Ex8_syscw.png
+---
+width: 50%
+name: fig-ex8-sysvw
+---
+Final systematic codeword
+```
+
+
+#### *b). "the programming way" (XOR-ing bit sequences)*
 
 We use this only for the systematic codeword.
-This method is equivalent to the mathematical way, but it is easier to describe
-with binary sequences
+This method is equivalent to the mathematical way,
+but it is easier to implement as an algorithm on binary sequences.
 
 We start from the information word and the generator polynomial written in binary,
 from MSB to LSB, so in our case in reverse order.
@@ -798,24 +821,36 @@ The procedure is as follows:
 3. Add the two sequences using XOR. Note that the first $1$ is cancelled out.
 4. Locate the next $1$ in the resulting sequence, and repeat.
 
-We stop when we reached the end of the information word.
-The three bits remaining at the end are control bits (i.e. the CRC, the remainder of the division).
-
-Append the control bits at the end of the information word to get the systematic codeword.
-
-If needed, revert the sequence afterwards, to get the final codeword in the original order
-(here, from LSB to MSB).
-
-INSERT IMAGE HERE
-
-
-```{admonition} Explanation
-The binary procedure is nothing else than the polynomial division we did earlier,
-in which we avoided writing the powers $x^k$ explicitly, and instead
-we relied on the position of the bits to give us the power implicitly.
+```{figure} img/Exercises3_Ex8_progway.png
+---
+width: 70%
+name: fig-ex8-progway
+---
+Final systematic codeword
 ```
 
-## Exercise 7 Cyclic Codes - decoding
+We stop when we reached the end of the information word.
+The three bits obtained at the end are control bits (i.e. the CRC, the remainder of the division).
+
+Append the control bits at the LSB side of the information word to get the systematic codeword.
+
+We revert the sequence afterwards, to get the final codeword in the original order
+(here, from LSB to MSB).
+
+```{admonition} Explanation
+This binary procedure is nothing else than the polynomial division we did earlier,
+but, instead of writing the powers $x^k$ explicitly,
+we rely on the position of the bits to give us the power implicitly.
+
+```{figure} img/Exercises3_Ex8_equiv.png
+---
+width: 95%
+name: fig-ex8-equiv
+---
+Equivalence between polynomial division and binary algorithm
+```
+
+## Exercise 9 Cyclic Codes - decoding
 
 We receive a sequence $\mathbf{r} = 101011100101$ (first bit is the LSB), which was encoded with
 a systematic cyclic code with generator polynomial $g(x) = 1 \oplus x^2 \oplus x^3$.
@@ -837,10 +872,17 @@ $$
 
 To check for errors, we divide $r(x)$ by $g(x)$, and we check the remainder.
 If it is zero, then there are no errors. If not, then there are errors.
+Remember to arrange the polynomials in descending order of powers (MSB to LSB)
 
-INSERT IMAGE HERE
+```{figure} img/Exercises3_Ex9_divpol.png
+---
+width: 70%
+name: fig-ex9-divpol
+---
+Polynomial division at decoding
+```
 
-In our case we have the remainder $b(x) = ...$, so there are errors.
+In our case we have the remainder $b(x) = x^2$, so there are errors.
 
 To correct the errors, we need to find the error pattern $\mathbf{e}$
 which produces the same remainder when divided by $g(x)$.
@@ -848,8 +890,62 @@ which produces the same remainder when divided by $g(x)$.
 As for linear block codes, we try all possible error patterns with 1 error,
 then with 2 errors, and so on, until we find the one that produces the same remainder.
 
+The error patterns with 1 error are $1$, $x$, $x^2$, $x^3$ ... $x^{11}$,
+so we take each one and we divide it by $g(x)$ to find the remainder,
+until the remainder is equal to $b(x) = x^2$.
+
+|   Error pattern                   | Remainder       |
+|-----------------------------------|-----------------|
+| $[1 0 0 0 0 0 0 0 0 0 0 0] = 1$   | $[1 0 0] = 1$   |
+| $[0 1 0 0 0 0 0 0 0 0 0 0] = x$   | $[0 1 0] = x$   |
+| $[0 0 1 0 0 0 0 0 0 0 0 0] = x^2$ | $[0 0 1] = x^2$ |
+
+The third error pattern matches, so we have $\mathbf{e} = [0 0 1 0 0 0 0 0 0 0 0 0]$,
+the error being on the third bit.
+
+The correct codeword is:
+
+$$
+\mathbf{c} = \mathbf{r} \oplus \mathbf{e} = [1 0 1 0 1 1 1 0 0 1 0 1] \oplus [0 0 1 0 0 0 0 0 0 0 0 0] = [1 0 0 0 1 1 1 0 0 1 0 1]
+$$
+
+We know that the first 3 bits on the LSB side are the CRC, so the other bits are the information bits:
+
+$$
+\mathbf{i} = [0 1 1 1 0 0 1 0 1]
+$$
+
+#### b). "the programming way" (XOR-ing bit sequences)
+
+We can use the binary algorithm instead of the division, in the same way as we did before.
+
 ## Exercise 7 Cyclic Codes - general
 
-3. We do cyclic coding on information words of length $k = 8$ bits.
+We do cyclic coding on information words of length $k = 8$ bits.
 We want the coding rate $R$ to be at most $0.6$. What degree must the generator polynomial $g(x)$ have?
+
+### Solution
+
+The coding rate $R$ is:
+
+$$
+R = \frac{k}{n}$$
+
+where $k$ is the length of the information word, and $n$ is the length of the codeword.
+
+If $k = 8$ and $R \leq 0.6$, this implies a lower limit of $n$:
+
+$$
+\frac{8}{n} \leq 0.6 \implies n \geq \frac{8}{0.6} \approx 13.33
+$$
+
+The degree of the generator polynomial $g(x)$ is $n - k$,
+so we have:
+
+$$
+\text{degree}(g(x)) = n - k \geq 13.33 - 8 = 5.33
+$$
+
+Since the degree must be an integer, we round it up to the next integer.
+Therefore, the degree of the generator polynomial must be at least $6$.
 
