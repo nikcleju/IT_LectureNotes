@@ -13,24 +13,6 @@ jupytext:
 #  name: python3
 ---
 
-```{math}
-\newcommand{\snII}[5]{#1: \left( \begin{matrix} {#2} & {#4} \\ #3 & #5 \end{matrix} \right)}
-\newcommand{\snIII}[7]{#1: \left( \begin{matrix} {#2} & {#4} & {#6} \\ #3 & #5 & #7 \end{matrix} \right)}
-\newcommand{\snIV}[9]{#1:  \left( \begin{matrix} {#2} & {#4} & {#6} & {#8} \\ #3 & #5 & #7 & #9 \end{matrix} \right)}
-
-\newcommand{\sII}[3] {#1: \left( \begin{matrix} s_1 & s_2 \\ #2 & #3 \end{matrix} \right)}
-\newcommand{\sIII}[4] {#1: \left( \begin{matrix} s_1 & s_2 & s_3 \\ #2 & #3 & #4 \end{matrix} \right)}
-\newcommand{\sIV}[5] {#1: \left( \begin{matrix} s_1 & s_2 & s_3 & s_4 \\ #2 & #3 & #4  & #5 \end{matrix} \right)}
-\newcommand{\sVI}[7] {#1: \left( \begin{matrix} s_1 & s_2 & s_3 & s_4 & s_5 & s_6 \\ #2 & #3 & #4 & #5 & #6 & #7\end{matrix} \right)}
-\newcommand{\sVIII}[9] {#1: \left( \begin{matrix} s_1 & s_2 & s_3 & s_4 & s_5 & s_6 & s_7 & s_8\\ #2 & #3 & #4 & #5 & #6 & #7 & #8 & #9 \end{matrix} \right)}
-\newcommand{\fIoII}{\frac{1}{2}}
-\newcommand{\fIoIII}{\frac{1}{3}}
-\newcommand{\fIoIV}{\frac{1}{4}}
-\newcommand{\fIoV}{\frac{1}{5}}
-\newcommand{\fIoVI}{\frac{1}{6}}
-\newcommand{\fIoVII}{\frac{1}{7}}
-\newcommand{\fIoVIII}{\frac{1}{8}}
-```
 
 # Error control coding
 
@@ -1004,43 +986,47 @@ Therefore, error correction works only if the syndrome is **unique**:
 * Note: Rearranging the columns of $[H]$ (the order of bits in the codeword) does not affect performance
 
 
-### Chapter structure
+## Hamming codes
 
-Chapter structure
-
-1. General presentation
-2. Analyzing linear block codes with the Hamming distance
-3. Analyzing linear block codes with matrix algebra
-4. **Hamming codes**
-5. Cyclic codes
-
-### Hamming codes
-
-* A particular class of linear error-correcting codes
-
-* Definition: a **Hamming code** is a linear block code where the columns of $[H]$
+:::{prf:definition} Hamming codes
+**Hamming codes** are a particular family of linear block codes where the columns of $[H]$
 are *the binary representation of all numbers from 1 to $2^r-1$*, $\forall r \geq 2$
 
-* Example (blackboard): (7,4) Hamming code
+Example: the (7,4) Hamming code has the following $[H]$ matrix:
 
-* Systematic: arrange the bits in the codeword, such that the control bits correspond to the columns having a single 1
-    * no big difference from the usual systematic case, just a rearrangement of bits
-    * makes implementation easier
+$$
+[H] =
+\begin{bmatrix}
+0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+0 & 1 & 1 & 0 & 0 & 1 & 1 \\
+1 & 0 & 1 & 0 & 1 & 0 & 1
+\end{bmatrix}
+$$
+
+Note that every column is the binary representation of a number from $1$ to $7$, using 3 bits (since $r=3$, 7 = $2^3-1$).
+For example the third column is $0 1 1$.
+:::
 
 
 ### Properties of Hamming codes
 
-* From definition of $[H]$ it follows:
-    1. Codeword has length $n = 2^r - 1$
-    2. $r$ bits are parity bits (also known as ***control bits***)
-    3. $k = 2^r-r-1$ bits are information bits
+Hamming codes are almost-systematic:
+while they are not systematic according to our previous definition,
+they can be made systematic by simply rearranging the columns of $[H]$,
+which corresponds to rearranging the bits in the codeword.
+Thus, we can say that Hamming codes are **systematic up to a rearrangement of bits**.
 
-\smallskip
+From the structure of $[H]$, we can say the following:
 
-* Notation: **(n,k) Hamming code**
-    * n = codeword length = $2^r-1$,
-    * k = number of information bits  = $2^r - r - 1$
-    * Example: (7,4) Hamming code, (15,11) Hamming code, $(127,120)$ Hamming code
+1. The codeword has length $n$ equal to $n = 2^r - 1$ (the width of $[H]$)
+2. Out of them, $r$ bits are parity bits (also known as ***control bits***)
+3. The remaining $k = 2^r-r-1$ bits are information bits
+
+We use the notation: **(n,k) Hamming code**
+
+ * n = codeword length = $2^r-1$,
+ * k = number of information bits  = $2^r - r - 1$
+ * Example: (7,4) Hamming code, (15,11) Hamming code, $(127,120)$ Hamming code
 
 ### Structure of a Hamming codeword
 

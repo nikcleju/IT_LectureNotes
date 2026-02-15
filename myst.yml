@@ -1,0 +1,94 @@
+# See docs:
+# - myst.yml structure: https://jupyterbook.org/stable/get-started/init
+# - TOC in myst.yml: https://jupyterbook.org/stable/authoring/table-of-contents
+# - MyST math + macros: https://mystmd.org/guide/math
+version: 1
+
+project:
+  title: IT Lecture Notes
+  description: Lecture notes for the Information Technology class, ETTI, TUIASI
+  authors:
+    - name: Nicolae Cleju
+
+  # GitHub repo used for UI links + launch features
+  github: nikcleju/IT_LectureNotes
+
+  # Table of contents (converted from your old _toc.yml)
+  toc:
+    - file: content/intro
+
+    - title: Theoretical Foundations
+      numbered: true
+      children:
+        - file: content/IT/InformationSources.myst.md
+        - file: content/IT/SourceCoding.myst.md
+        - file: content/IT/ErrorControlCoding.myst.md
+
+    - title: Solved Exercises
+      children:
+        - file: content/IT/Exercises1.myst.md
+        - file: content/IT/Exercises2.myst.md
+        - file: content/IT/Exercises3.myst.md
+        - file: content/IT/Exercises4.myst.md
+
+    - title: Practical Applications
+      children:
+        - file: content/IT/App_EntropyOfFiles.ipynb
+        - file: content/IT/App_DetectLanguage.ipynb
+        - file: content/IT/App_HuffmanCodingLetters.ipynb
+
+  # Your TeX macros moved from sphinx:config:mathjax3_config into MyST's declarative math macros.
+  # Use SINGLE QUOTES to avoid YAML backslash escapes.
+  math:
+    '\snII':  '#1: \left( \begin{matrix} {#2} & {#4} \\ #3 & #5 \end{matrix} \right)'
+    '\snIII': '#1: \left( \begin{matrix} {#2} & {#4} & {#6} \\ #3 & #5 & #7 \end{matrix} \right)'
+    '\snIV':  '#1: \left( \begin{matrix} {#2} & {#4} & {#6} & {#8} \\ #3 & #5 & #7 & #9 \end{matrix} \right)'
+    '\sII':   '#1: \left( \begin{matrix} s_1 & s_2 \\ #2 & #3 \end{matrix} \right)'
+    '\sIII':  '#1: \left( \begin{matrix} s_1 & s_2 & s_3 \\ #2 & #3 & #4 \end{matrix} \right)'
+    '\sIV':   '#1: \left( \begin{matrix} s_1 & s_2 & s_3 & s_4 \\ #2 & #3 & #4 & #5 \end{matrix} \right)'
+    '\sV':    '#1: \left( \begin{matrix} s_1 & s_2 & s_3 & s_4 & s_5 \\ #2 & #3 & #4 & #5 & #6 \end{matrix} \right)'
+    '\sVI':   '#1: \left( \begin{matrix} s_1 & s_2 & s_3 & s_4 & s_5 & s_6 \\ #2 & #3 & #4 & #5 & #6 & #7 \end{matrix} \right)'
+    '\sVII':  '#1: \left( \begin{matrix} s_1 & s_2 & s_3 & s_4 & s_5 & s_6 & s_7 \\ #2 & #3 & #4 & #5 & #6 & #7 & #8 \end{matrix} \right)'
+    '\sVIII': '#1: \left( \begin{matrix} s_1 & s_2 & s_3 & s_4 & s_5 & s_6 & s_7 & s_8\\ #2 & #3 & #4 & #5 & #6 & #7 & #8 & #9 \end{matrix} \right)'
+    '\fIoII':   '\frac{1}{2}'
+    '\fIoIII':  '\frac{1}{3}'
+    '\fIoIV':   '\frac{1}{4}'
+    '\fIoV':    '\frac{1}{5}'
+    '\fIoVI':   '\frac{1}{6}'
+    '\fIoVII':  '\frac{1}{7}'
+    '\fIoVIII': '\frac{1}{8}'
+
+
+  numbering:
+    # title: true
+    heading_1: true
+    heading_2: true
+    heading_3: true
+    heading_4: false
+    heading_5: false
+    heading_6: false
+
+  # Enable “launch / execute” behavior (JB2/MyST replacement for launch_buttons+thebe)
+  # Binder config here is used for in-page computation (like Thebe) and/or launch flows.
+  jupyter:
+    binder:
+      url: https://mybinder.org
+      repo: nikcleju/IT_LectureNotes
+      ref: main
+
+# myst:
+#   enable_extensions:
+#     - amsmath
+#     - dollarmath
+#     - colon_fence
+#     - deflist
+#     - annotations
+#     - html_admonition
+#     - html_image
+
+
+
+site:
+  template: book-theme
+  options:
+    logo: logo.png

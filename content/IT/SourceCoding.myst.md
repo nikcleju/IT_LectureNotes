@@ -13,7 +13,7 @@ jupytext:
 #  name: python3
 ---
 
-```{math}
+<!-- ```{math}
 \newcommand{\snII}[5]{#1: \left( \begin{matrix} {#2} & {#4} \\ #3 & #5 \end{matrix} \right)}
 \newcommand{\snIII}[7]{#1: \left( \begin{matrix} {#2} & {#4} & {#6} \\ #3 & #5 & #7 \end{matrix} \right)}
 \newcommand{\snIV}[9]{#1:  \left( \begin{matrix} {#2} & {#4} & {#6} & {#8} \\ #3 & #5 & #7 & #9 \end{matrix} \right)}
@@ -30,7 +30,7 @@ jupytext:
 \newcommand{\fIoVI}{\frac{1}{6}}
 \newcommand{\fIoVII}{\frac{1}{7}}
 \newcommand{\fIoVIII}{\frac{1}{8}}
-```
+``` -->
 
 # Source Coding
 
@@ -715,8 +715,9 @@ The code obtained with this procedure is known as a **Shannon code**.
 Shannon coding is one of the simplest algorithms, and some other better schemes are available. However, this simplicity allows to prove fundamental results
 in coding theory, as we shall see below.
 
-```{annotation} Bad example
-As an example of Shannon coding deficiency, compute the Shannon algorithm for the following source:
+```{tip} Bad example
+As an example of Shannon coding deficiency, compute the Shannon algorithm for the following source.
+Does the code seem efficient?
 
 $$S: (0.9, 0.1)$$
 ```

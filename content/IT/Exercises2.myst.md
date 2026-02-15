@@ -512,7 +512,7 @@ $$
 The efficiency of the Huffman code is
 
 $$
-\eta = \frac{H(S)}{\overline{l}_H} = \frac{2.04}{2.1} = 0.971$
+\eta = \frac{H(S)}{\overline{l}_H} = \frac{2.04}{2.1} = 0.971
 $$
 
 The relative redundancy is $\rho = 1 - \eta = 0.029$, and the absolute redundancy is $R = \overline{l}_H - H(S) = 0.06$ bits.

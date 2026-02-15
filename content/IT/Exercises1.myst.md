@@ -389,7 +389,7 @@ There are only two messages which can be generated, $s_1$ and $s_2$,
 but the other two zeros do no harm anyway to the entropy.
 
 $$
-[0 \quad 0 \quad \frac{1}{2} \quad \frac{1}{2}\
+[0 \quad 0 \quad \frac{1}{2} \quad \frac{1}{2}]
 $$
 
 The entropy in state $S_4$ is therefore the entropy computed for this distribution:
