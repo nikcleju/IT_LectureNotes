@@ -536,6 +536,7 @@ If the minimum Hamming distance of a code is ${d_H}_{min}$, then:
 ```
 
 ```{prf:proof}
+:nonumber:
 
 To prove the first assertion, observe that at least ${d_H}_{min}$ binary changes
 are needed to change one codeword into another.
@@ -697,7 +698,10 @@ The set of all binary sequences of size $n$ is a vector space of size $n$,
 when considering the sum operation as modulo-2 sum $\oplus$ between sequences,
 and the multiplication with a constant as multiplication with 0 or 1 as in usual arithmetic.
 ```
+
 ```{prf:proof}
+:nonumber:
+
 The two properties defining a vector space are satisfied:
 
 - the sum of two sequences of size $n$ is still a sequence of size $n$,
@@ -718,6 +722,8 @@ form a vector subspace of the larger vector space of all binary sequences of siz
 ```
 
 ```{prf:proof}
+:nonumber:
+
 Again, the set of codewords of a linear block code satisfies the two properties of a vector space:
 
 - the sum of two codewords is still a codeword, because the code is linear
@@ -819,6 +825,8 @@ $$\mathbf{0} = [H] \cdot \mathbf{c}^T$$
 ```
 
 ```{prf:proof}
+:nonumber:
+
 The proof is straightforward, based on the fact that $\mathbf{0} = [H] \cdot [G]^T$.
 
 $$\mathbf{i} \cdot [G] = \mathbf{c}$$
@@ -1004,104 +1012,187 @@ $$
 $$
 
 Note that every column is the binary representation of a number from $1$ to $7$, using 3 bits (since $r=3$, 7 = $2^3-1$).
-For example the third column is $0 1 1$.
+For example the third column is $0 1 1$, which is number 3 in binary.
 :::
 
 
-### Properties of Hamming codes
-
-Hamming codes are almost-systematic:
-while they are not systematic according to our previous definition,
-they can be made systematic by simply rearranging the columns of $[H]$,
-which corresponds to rearranging the bits in the codeword.
-Thus, we can say that Hamming codes are **systematic up to a rearrangement of bits**.
-
-From the structure of $[H]$, we can say the following:
-
-1. The codeword has length $n$ equal to $n = 2^r - 1$ (the width of $[H]$)
-2. Out of them, $r$ bits are parity bits (also known as ***control bits***)
-3. The remaining $k = 2^r-r-1$ bits are information bits
-
-We use the notation: **(n,k) Hamming code**
-
- * n = codeword length = $2^r-1$,
- * k = number of information bits  = $2^r - r - 1$
- * Example: (7,4) Hamming code, (15,11) Hamming code, $(127,120)$ Hamming code
-
 ### Structure of a Hamming codeword
 
-- The codeword contains information bits and parity (control) bits
-- The control bits correspond to the columns of the parity-check matrix $[H]$
-  which have a single 1 (i.e. columns which form the identity matrix)
-- The information bits are placed in the remaining positions,
-  where the columns of $[H]$ have two or more 1s
+From the structure of $[H]$, we observe that Hamming codes are almost-systematic: they are **systematic up to a rearrangement of bits**.
 
-- Codeword for Hamming(7,4):
-$$c_1c_2i_3c_4i_5i_6i_7$$
+   $[H]$ is not systematic according to our previous definition,
+but we can make it systematic by simply rearranging the columns in a different order.
+All the columns of the identity matrix $I$ are among
+the columns of $[H]$, just not in the correct locations as to form
+the identity matrix at the beginning or at the end.
+However, we could obtain a systematic code by a simple rearranging
+of the columns in $[H]$, which corresponds to rearranging the bits in the codeword,
+which is a fairly benign operation.
 
-- Codeword for Hamming(15,11):
-$$c_1c_2i_3c_4i_5i_6i_7c_8i_9i_{10}i_{11}i_{12}i_{13}i_{14}i_{15}$$
+For Hamming codes we use the notation **(n,k) Hamming code**, where:
+
+- n = codeword length = $2^r-1$,
+- k = number of information bits  = $2^r - r - 1$
+
+Examples:
+
+- $(7,4)$ Hamming code: $n=7$ bits in a codeword, 4 information bits, 3 control bits
+- $(15,11)$ Hamming code: $n=15$ bits in a codeword, 11 information bits, 4 control bits
+- $(31,26)$ Hamming code: $n=31$ bits in a codeword, 26 information bits, 5 control bits
+- $(127,120)$ Hamming code: $n=127$ bits in a codeword, 120 information bits, 7 control bits
+
+Just like for any linear block code,
+a Hamming codeword has length $n$ equal to the width of $[H]$ ($n = 2^r - 1$),
+and consists of information bits and control bits (also known as "parity bits").
+
+- in the codeword, $r$ bits are control bits, and they
+   correspond to the locations of the columns of $[H]$ that are identical to the columns of an identity matrix $I_r$ (having only a single 1 in each column)
+
+- the remaining $k = 2^r-r-1$ bits are information bits
+
+For example, the codeword of the Hamming(7,4) code, with the $[H]$ matrix
+above, consists of three control bits ($c_x$) and four information bits ($i_x$),
+with the subscript indicating the position:
+$$c_1 \; c_2 \; i_3 \; c_4 \; i_5 \; i_6 \; i_7$$
+
+Similarly, the codeword for Hamming(15,11) has the following structure:
+$$c_1 \; c_2 \; i_3 \; c_4 \; i_5 \; i_6 \; i_7 \; c_8 \; i_9 \; i_{10} \; i_{11} \; i_{12} \; i_{13} \; i_{14} \; i_{15}$$
+
 
 ### Construction of Hamming codewords
 
-- Every Hamming code has a generator matrix $[G]$, but we
-  don't provide it explicitly, because it is hard to remember
+Every Hamming code has a generator matrix $[G]$, just like any other linear
+block code, but we don't provide it explicitly, because it is hard to remember.
+(we could deduce it by rearranging the columns of $[H]$ to make it systematic first)
 
-- Instead, we deduce the values from the equation system of the parity-check matrix $[H]$,
-  $\mathbf{0} = [H] \cdot \mathbf{c}^T$
+Instead, we can deduce the values from the equation system of the parity-check matrix $[H]$,
+We know that every codeword satisfies the relation:
 
-- For example, for Hamming(7,4), we have:
+$$\mathbf{0} = [H] \cdot \mathbf{c}^T$$
 
-  $$
-  \begin{cases}
-  0 = c_4 \oplus i_5 \oplus i_6 \oplus i_7 \\
-  0 = c_2 \oplus i_3 \oplus i_5 \oplus i_6 \\
-  0 = c_1 \oplus i_3 \oplus i_5 \oplus i_7
-  \end{cases}
-  $$
-  which means:
-  $$
-  \begin{cases}
-  c_4 = i_5 \oplus i_6 \oplus i_7 \\
-  c_2 = i_3 \oplus i_5 \oplus i_6 \\
-  c_1 = i_3 \oplus i_5 \oplus i_7
-  \end{cases}
-  $$
+Writing this as an equation system we obtain, for example for Hamming(7,4):
 
-### Properties of Hamming codes
+$$
+\begin{cases}
+0 = c_4 \oplus i_5 \oplus i_6 \oplus i_7 \\
+0 = c_2 \oplus i_3 \oplus i_5 \oplus i_6 \\
+0 = c_1 \oplus i_3 \oplus i_5 \oplus i_7
+\end{cases}
+$$
 
-* Can detect two errors
-	* All columns are different => can detect 2 errors
-	* Sum of two columns equal to a third => cannot correct 3
+Observe that in every equation there is a single control bit appearing,
+which means that it must be equal to the sum of the information bits in that equation:
 
-**OR**
+$$
+\begin{cases}
+c_4 = i_5 \oplus i_6 \oplus i_7 \\
+c_2 = i_3 \oplus i_5 \oplus i_6 \\
+c_1 = i_3 \oplus i_5 \oplus i_7
+\end{cases}
+$$
 
-* Can correct one error
-	* All columns are different => can correct 1 error
-	* Sum of two columns equal to a third => cannot correct 2
-	* Non-systematic: syndrome = error position
+We can apply the same process for other Hamming codes.
 
-**BUT**
+### Error detection and correction with Hamming codes
 
-* Not simultaneously!
-    * same non-zero syndrome can be obtained with 1 or 2 errors, can't distinguish
+As for any linear block code, by analyzing the columns of $[H]$
+we can deduce how many errors can be detected or corrected.
 
-### Coding rate of Hamming codes
+```{prf:theorem} Codeword checking with parity-check matrix
+Hamming codes can detect up to two errors in a codeword,
+or can correct one error in a codeword,
+but not both simultaneously.
 
-Coding rate of a Hamming code:
+When there is one error detected,
+the syndrome gives directly the position of the error,
+since the syndrome is equal to the column of $[H]$ corresponding to the error position.
+
+```
+
+```{prf:proof}
+:nonumber:
+
+We use the general rules for all linear block codes, based on analyzing the columns of $[H]$.
+
+Detection:
+
+- All columns of $[H]$ are different => can detect up to 2 errors
+- Sum of two columns is equal to a third => cannot detect 3
+
+Correction:
+- All columns are different => can correct 1 error
+- Sum of two columns equal to a third => cannot correct 2
+
+```
+
+The detection and correction process is the same as with all
+linear block codes. Having received a word $\mathbf{r}$, we compute the syndrome:
+
+$$\mathbf{z} = [H] \cdot \mathbf{r}^T$$
+
+If $\mathbf{z}$ is non-zero, then there are errors.
+If there is a single error, $\mathbf{z}$ is equal to the column of $[H]$ corresponding to the error position,
+which is exactly the position of the error, written in binary.
+Therefore, keep in mind:
+
+**For error correction with Hamming codes,
+the position of the error is given by reading the
+binary value of the syndrome.**
+
+```{prf:example}
+:nonumber:
+
+Consider the received word $\mathbf{r} = [1 0 1 1 0 1 0]$ or a Hamming (7,4) code.
+The syndrome is computed as:
+
+$$
+\mathbf{z} = [H] \cdot \mathbf{r}^T =
+\begin{bmatrix}
+0 & 0 & 0 & 1 & 1 & 1 & 1\\
+0 & 1 & 1 & 0 & 0 & 1 & 1\\
+1 & 0 & 1 & 0 & 1 & 0 & 1
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+1\\0\\1\\0\\0\\1\\0
+\end{bmatrix}
+= \begin{bmatrix}1\\0\\0\end{bmatrix}
+$$
+
+The syndrome $\mathbf{z} = \begin{bmatrix}1\\0\\0\end{bmatrix}$ means
+the error is on bit number $4 = (1 0 0)_2$,
+which is the fourth column of $[H]$.
+
+This easy conversion from syndrome to bit position is the reason Hamming codes are constructed in this way,
+with each column of $[H]$ being the binary representation of its position.
+```
+
+It is important to note that the code **cannot do both detection
+and correction simultaneously**:
+when we obtain a non-zero syndrome, we cannot tell if it is a single error or two errors, so there is no way to know if we should attempt to fix the error (if it's a single error)
+or just detect (if they are two errors).
+This must be decided beforehand, at the design stage.
+
+For example, the syndrome $\mathbf{z} = \begin{bmatrix}1\\0\\0\end{bmatrix}$ in the previous example could also have come from two errors located on positions 1 and 5,
+and in this case fixing the error would have been incorrect.
+The system designer must decide at the design stage how to handle such cases:
+
+- either the code is used for detection only, and it never attempts to correct errors
+- or the code is used for correction only, and it assumes there is at most one error, and always attempts to correct it
+
+The coding rate of a Hamming code is given by:
+
 $$R = \frac{k}{n} = \frac{2^r - r - 1}{2^r-1}$$
 
-The Hamming codes can correct 1 OR detect 2 errors in a codeword of size $n$
+Since Hamming codes detect 2 and fix 1 error in codeword,
+longer Hamming codes are progressively weaker:
 
-* (7,4) Hamming code: $n = 7$
-* (15,11) Hamming code: $n = 15$
-* (31,26) Hamming code: $n = 31$
+- they have weaker error correction capability
+- better efficiency (higher coding rate $R$)
+- more appropriate for transmissions with error probabilities
 
-Longer Hamming codes are progressively weaker:
-
-* weaker error correction capability
-* better efficiency (higher coding rate)
-* more appropriate for smaller error probabilities
+The choice of which code to use is ultimately based on the
+expected bit error probabilities during the transmission.
 
 
 ### Encoding & decoding example for Hamming(7,4)
@@ -1114,435 +1205,470 @@ $$\begin{bmatrix}0\\0\\0\end{bmatrix} = [H] \begin{bmatrix}c_1\\c_2\\i_3\\c_4\\i
 For a single error, the syndrome **is the binary representation of the location of the error**.
 
 
-### Circuit for encoding Hamming(7,4)
+### Hardware circuits for Hamming(7,4)
 
-![Hamming Encoder](img/HammingCoder.png){width=40%}
+Due to their simplicity, Hamming coding and decoding can
+easily be done with logic gates.
 
-* Components:
-    * A **shift register** to hold the codeword
-    * Logic OR gates to compute the parity bits
+The Hamming encoder consists of:
 
-### Circuit for decoding Hamming(7,4)
+- A **shift register** to hold the codeword
+- Logic OR gates to compute the parity bits
 
-![Hamming Encoder](img/HammingDecoder.png){width=40%}
+The four information bits are loaded in the shift register, and the logic gates automatically compute the parity bits.
 
-* Components:
-    * A **shift register** to hold the received word
-    * Logic OR gates to compute the bits of the syndrome ($z_i$)
-    * **Binary decoder**: activates the output corresponding to the binary input value, fixing the error
+```{figure} img/HammingCoder.png
+:width: 40%
+:align: center
 
+Hamming encoder circuit with logic gates
+```
 
-### SECDED Hamming codes
+The Hamming decoder consists of:
 
-* Hamming codes can correct 1 error OR can detect 2 errors, but we cannot differentiate the two cases
+- A **shift register** to hold the received word
+- Logic OR gates to compute the bits of the syndrome ($z_i$)
+- A **binary decoder** ("descifrator): is a base-2 to base-10 converter, activates the output corresponding to the binary input value, in this way fixing the error at the correct position
 
-* Example:
+```{figure} img/HammingDecoder.png
+:width: 40%
+:align: center
 
-    * the syndrome $\mathbf{z} = [H] \cdot \mathbf{r}^T = \begin{bmatrix}0\\1\\1\end{bmatrix}$ can be caused by:
-        * a single error in location 3 (bit $i_3$)
-        * two errors in location 1 and 2 (bits $c_1$, bits $c_2$)
-
-    * if we know it is a single error, we can go ahead and correct it, then use the corrected data
-    * if we know there are two errors, we should NOT attempt to correct them, because we cannot locate the errors correctly
-
-* Unfortunately, it is **not possible to differentiate** between the two cases.
-
-* **Solution?** Add additional parity bit $\rightarrow$ SECDED Hamming codes
-
+Hamming decoder circuit with logic gates
+```
 
 ### SECDED Hamming codes
 
-* Add an additional parity bit to differentiate the two cases
-    * $c_0$ = sum of all $n$ bits of the codeword
+A normal Hamming code can correct 1 error or it can detect 2 errors, but we cannot differentiate between the two cases at runtime.
 
-* For (7,4) Hamming codes: $$\mathbf{c_0}c_1c_2i_3c_4i_5i_6i_7$$
+A solution to this is to add an additional parity bit, which helps identify the correct situation.
 
-* The parity check matrix is extended by 1 row and 1 column
+```{prf:definition} SECDED Hamming codes
+
+**S**ingle **E**rror **C**orrection - **D**ouble **E**rror **D**etection (SECDED) Hamming codes
+are an extension of Hamming codes which have an additional parity bit $c_0$ prepended at the front of the codeword,
+in order to differentiate a single error from two errors.
+
+$c_0$ is defined s the sum of all the other bits of the codeword.
+```
+
+For example, the (8,4) SECDED Hamming code is based in the normal (7,4) Hamming code, with the additional bit in front:
+
+$$\mathbf{c_0} \; c_1 \; c_2 \; i_3 \; c_4 \; i_5 \; i_6 \; i_7$$
+
+where $c_0$ is defined as:
+
+$$c_0 = c_1 \oplus c_2 \oplus i_3 \oplus c_4 \oplus i_5 \oplus i_6 \oplus i_7$$
+
+The parity check matrix of a SECDED Hamming code, $\tilde{H}$, is based on the matrix of the normal code, extended by one row and one column:
+
 $$\tilde{H} =
 \begin{bmatrix}
-1 &1 \\
+1 &...1 \\
 0 &\mathbf{H} \\
 \end{bmatrix}$$
 
-* Known as SECDED Hamming codes
-    * **S**ingle **E**rror **C**orrection - **D**ouble **E**rror **D**etection
-
-
 ### Encoding and decoding of SECDED Hamming codes
 
-* Encoding:
-    * compute codeword using $\tilde{H}$
-    * alternatively, prepend $\mathbf{c_0}$ = sum of all other bits
+The encoding of SECDED Hamming codes can be done in two ways:
 
-### Encoding and decoding of SECDED Hamming codes
+1. Compute the codeword directly using $\tilde{H}$, as we did for normal Hamming codes,
 
-* Decoding
-    * Compute syndrome of the received word using $\tilde{H}$
-$$\tilde{\mathbf{z}} = \begin{bmatrix}z_0\\\mathbf{z}\end{bmatrix} = [\tilde{H}] \cdot \mathbf{r}^T$$
-    * $z_0$ is an additional bit in the syndrome corresponding to $c_0$
-    * $z_0$ tells us whether the received $c_0$ matches the parity of the received word
-        * $z_0 = 0$: the additional parity bit $c_0$ matches the parity of the received word
-        * $z_0 = 1$: the additional parity bit $c_0$ does not match the parity of the received word
+   or
 
-### Encoding and decoding of SECDED Hamming codes
+2. Alternatively, compute the normal Hamming code first, and then prepend the additional bit $\mathbf{c_0}$ = sum of all other bits
 
-* Decoding (continued):
-    * Decide which of the following cases happened:
-        * If no error happened: $z_1 = z_2 = z_3 = 0, z_0 = \forall$
-        * If 1 error happened: syndrome is non-zero, $z_0 = 1$ (does not match)
-        * If 2 errors happened: syndrome is non-zero, $z_0 = 0$ (does match, because the two errors cancel each other out)
-        * If 3 errors happened: same as 1, can't differentiate
+Decoding of SECDED Hamming codes makes use of the additional parity bit to decide whether there is a single error,
+which can be fixed,
+or there are two errors, when no fix is attempted.
 
-* Now can simultaneously differentiate between:
-    * 1 error: $\rightarrow$ perform correction
-    * 2 errors: $\rightarrow$ detect, but do not perform correction
+The decoding process is as follows:
 
-* Also, if correction is never attempted, can detect up to 3 errors
-    * minimum Hamming distance = 4 (no proof given)
-    * don't know if 1 error, 2 errors or 3 errors, so can't try correction
+1. Compute the syndrome of the received word using $\tilde{H}$:
 
+   $$\tilde{\mathbf{z}} = \begin{bmatrix}z_0\\\mathbf{z}\end{bmatrix} = [\tilde{H}] \cdot \mathbf{r}^T$$
 
+   The syndrome $\mathbf{\tilde{z}}$ has one additional bit in front, $z_0$, which
+   corresponds to the extra line added on top of $[\tilde{H}]$.
 
-### Summary until now
+   The new bit $z_0$ tells us whether the received $c_0$ matches the parity of the received word
 
-* Systematic codes: information bits + parity bits
-* Generator matrix: use to generate codeword
-$$\mathbf{i} \cdot [G] = \mathbf{c}$$
-* Parity-check matrix: use to check if a codeword
-$$0 = [H] \cdot \mathbf{c}^T$$
-* Syndrome:
-$$\mathbf{z} = [H] \cdot \mathbf{r}^T$$
-* Syndrome-based error detection: syndrome non-zero
-* Syndrome-based error correction: syndrome table
-* Hamming codes: $[H]$ contains all numbers $1 ... 2^r - 1$
-* SECDED Hamming codes: add an extra parity bit
+   - if $z_0 = 0$: the additional parity bit $c_0$ matches the parity of the received word, so there is an even number of errors (0 or 2)
+   - $z_0 = 1$: the additional parity bit $c_0$ does not match the parity of the received word, so there is an odd number of errors (1)
+
+2. Decide which of the following cases happened:
+
+   1. If no error happened: $z_1 = z_2 = z_3 = 0, z_0 = \forall$
+   2. If 1 error happened: $z_0 = 1$ (does not match), the remaining part $\mathbf{z}$ is non-zero.
+
+      In this case there is 1 error on position given by $\mathbf{z}$, and we can fix it.
+
+   3. If 2 errors happened: $z_0 = 0$ (does match, because the two errors cancel each other out), the remaining part $\mathbf{z}$ is non-zero.
+
+      In this case we can just report that errors are detected, but we cannot fix them, since it is more than 1 error
+
+   4. If 3 errors happened: same as case 1, but we can't differentiate it from the case of a single error.
+
+With the help of the additional parity bit, we can now simultaneously differentiate between 1 error (perform correction) and 2 errors (can detect, but do not perform correction).
+
+Also, if the design decision is made that error correction is never attempted, the code can detect up to 3 errors, but this cannot be differentiated from the case of 1 error. This can be verified from the columns of $[\tilde{H}]$: the sum of any three columns is non-zero (because of the top row of 1's), so we know that the code can detect up to three errors.
 
 
-### Chapter structure
+## Cyclic codes
 
-Chapter structure
-
-1. General presentation
-2. Analyzing linear block codes with the Hamming distance
-3. Analyzing linear block codes with matrix algebra
-4. Hamming codes
-5. **Cyclic codes**
-
-
-### Cyclic codes
-
-Definition: **cyclic codes** are a particular class of linear block codes
+```{prf:definition}
+**Cyclic codes** are a particular class of linear block codes
 for which *every cyclic shift of a codeword is also a codeword*
+```
 
-* Cyclic shift: cyclic rotation of a sequence of bits (any direction)
+A "cyclic shift" means a circular (cyclic) rotation of a sequence of bits, in any direction,
+as illustrated below. Note that the ending bits are rotated to the start positions.
 
-* Are a particular class of linear block codes, so all the theory up to now still applies
-    * they have a generator matrix, parity check matrix etc.
+```{figure} img/ErrorControlCoding_CyclicShift.png
+:width: 40%
 
-* But they can be implemented more efficient than general linear block codes (e.g. Hamming)
+A cyclic shift of two positions to the right
+```
 
-* Used **everywhere** under the common name **CRC** (**C**yclic **R**edundancy **C**heck)
-    * Network communications (Ethernet), data storage in Flash memory
+Cyclic codes are a particular class of linear block codes, so all the theory up to now still applies: they have a generator matrix, parity check matrix etc.
+However, they can be implemented more efficient than general linear block codes (e.g. Hamming), using their special properties.
 
-### Usage example: Ethernet frame
+Cyclic codes are **widely used in practice** under the name **CRC** (**C**yclic **R**edundancy **C**heck),
+for example in network communications (Ethernet protocol), data storage (Flash memory) etc.
 
-* CRC codes are used in Ethernet frames:
+As an example, Ethernet frames (i.e., data packets on normal Internet connections) use CRC codes to check data integrity.
 
-![CRC value in an Ethernet frame](img/EthernetFrame.png){widht=50%}
+```{figure} img/EthernetFrame.png
+:width: 90%
+
+Structure of an Etherner frame, including a CRC field for error detection ("*Frame check sequence (32-bit CRC)*")
+```
 
 ### Binary polynomials
 
-* Every binary sequence $\mathbf{a}$ corresponds to a polynomial $\mathbf{a(x)}$ with binary coefficients
-$$a_0a_1...a_{n-1} \rightarrow \mathbf{a(x)} = a_0 \oplus a_1x \oplus ... \oplus a_{n-1}x^{n-1}$$
+Working with cyclic codes relies heavily on binary polynomials.
 
-* Example:
+Every binary sequence $\mathbf{a}$ corresponds to a polynomial $\mathbf{a(x)}$ with binary coefficients:
+$$a_0 \; a_1  \; ... \; a_{n-1} \rightarrow \mathbf{a(x)} = a_0 \oplus a_1x \oplus ... \oplus a_{n-1}x^{n-1}$$
+
+for example:
 $$10010111 \rightarrow 1 \oplus x^3 \oplus x^5 \oplus x^6 \oplus x^7$$
 
-* From now on, by "codeword" we also mean the corresponding polynomial.
+From now on, when we refer to a "word" or "codeword" we also mean the corresponding polynomial.
 
-
-* Can perform all mathematical operations with these polynomials:
-    * addition, multiplication, division etc. (examples)
-
-* There are efficient circuits for performing multiplications and divisions.
+We can perform all mathematical operations with these polynomials (addition, multiplication, division etc.), just like we do with normal polynomials, but considering the fact that we are in a binary world where $1 \oplus 1 = 0$.
+Cyclic coding relies on these operations with polynomials,
+and there exist efficient circuits for performing such operations (multiplications and divisions).
 
 ### Generator polynomial
 
-**Theorem**:
+```{prf:theorem}
 
-* All the codewords of a cyclic code are multiples of a certain polynomial $g(x)$,
-known as **generator polynomial**.
+All the codewords of a cyclic code are multiples of a certain polynomial $g(x)$,
+known as the **generator polynomial**.
+```
 
+No proof given.
 
-### Properties of generator polynomial
+This is fundamental property that codewords have, which is checked when performing error detection.
 
-The generator polynomial $g(x)$ must satisfy the following:
+The generator polynomial $g(x)$ must satisfy the following properties:
 
-* $g(x)$ must have first and last coefficient equal to 1
-* $g(x)$ must be a factor of $X^n \oplus 1$
-* The *degree* of $g(x)$ is $n-k$, where:
-    * n = the size of codeword (codeword polynomial has degree $n-1$)
+- $g(x)$ must have first and last coefficient equal to 1
+- $g(x)$ must be a factor of $X^n \oplus 1$
+- The *degree* of $g(x)$ is $n-k$, where:
+    * n = the size of codeword (codeword polynomial has degree $n-1$, which means $n$ bits)
     * k = the size of the information word (information polynomial has degree $k-1$)
-$$ (k-1) + (n-k) = n-1$$
-* **The degree of $g(x)$ is the number of parity bits of the code.**
 
-### Example of generator polynomials
+Since $n$ is the size of the codeword, and $k$ is the size of the information word, it follows that $n-k$ is the number of control bits added by the code:
 
-Example:
+**The degree of $g(x)$ is the number of control bits added by the code.**
+
+To give some examples of generator polynomials matching these properties, consider the following relation. We can write $1 \oplus x^7$ as a product of three polynomials (do the calculations and check this):
 
 $$1 \oplus x^7 = (1 \oplus x)(1 \oplus x + \oplus x^3)(1 \oplus x^2 \oplus x^3)$$
 
-Each factor can generate a code:
+$1 \oplus X^7$ is the $X^n \oplus 1$ mentioned in the properties, so we have $n=7$. Each of the three factors have first and last coefficient equal to 1. Therefore each factor
+can generate a different cyclic code, the degree of each factor being the number of control bits added by the code.
 
-* $1 \oplus x$ generates a (7,6) cyclic code
-* $1 \oplus x \oplus x^3$ generates a (7,4) cyclic code
-* $1 \oplus x^2 \oplus x^3$ generates a (7,4) cyclic code
+- $1 \oplus x$ generates a (7,6) cyclic code ($n=7$, degree=1 so there is $1$ control bit, therefore $k=6$ information bits)
+- $1 \oplus x \oplus x^3$ generates a (7,4) cyclic code ($n=7$, degree=3, $k=4$ information bits)
+- $1 \oplus x^2 \oplus x^3$ generates another (7,4) cyclic code ($n=7$, degree=3, $k=4$ information bits)
 
-### Popular polynomials
+Several polynomials are standardized in various protocols:
 
-![Popular generator polynomials $g(x)$](img/PopularPolys.png){widght=80%}
+```{figure} img/PopularPolys.png
+:width: 80%
 
-* Image from *http://www.ross.net/crc/download/crc_v3.txt*
+Popular generator polynomials (image from *http://www.ross.net/crc/download/crc_v3.txt)
+```
 
-* Your turn: write the polynomials in mathematical form
+Your turn: write the polynomials in mathematical form.
 
 ### Proving the cyclic property
 
-Theorem:
+```{prf:theorem}
 
-* Any cyclic shift of a codeword is also a codeword.
+If the generator polynomial $g(x)$ satisfies the properties above,
+and any codeword is a multiple of $g(x)$,
 
-Proof:
+then any cyclic shift of a codeword is also a codeword.
+```
 
-* It is enough to consider a cyclic shift by 1 position
+```{prf:proof}
+:nonumber:
 
-* Original codeword
-$$c_0c_1c_2...c_{n-1} \rightarrow \mathbf{c(x)} = c_0 \oplus c_1x \oplus ... \oplus c_{n-1}x^{n-1}$$
+It is enough to prove only for a cyclic shift by 1 position to the right, since we can obtain any shift in any direction with several such consecutive shifts.
 
-* Cyclic shift to the right by 1 position
-$$c_{n-1}c_0c_1...c_{n-2} \rightarrow \mathbf{c'(x)} = c_{n-1} \oplus c_0x \oplus ... \oplus c_{n-2}x^{n-1}$$
+Consider the original codeword:
+$$c_0 \; c_1 \; c_2 \; ... \; c_{n-1} \rightarrow \mathbf{c(x)} = c_0 \oplus c_1x \oplus ... \oplus c_{n-1}x^{n-1}$$
 
-* We can rewrite:
+and its cyclic shift to the right by 1 position:
+$$c_{n-1} \; c_0 \; c_1 \; ... \; c_{n-2} \rightarrow \mathbf{c'(x)} = c_{n-1} \oplus c_0x \oplus ... \oplus c_{n-2}x^{n-1}$$
+
+We want to show that if $\mathbf{c(x)}$ is a multiple of $g(x)$, then $\mathbf{c'(x)}$ is also a multiple of $g(x)$.
+
+We can rewrite:
 $$\begin{split}
 \mathbf{c'(x)}
 =& x \cdot \mathbf{c(x)} \oplus c_{n-1}x^n \oplus c_{n-1}\\
 =& x \cdot \mathbf{c(x)} \oplus c_{n-1}(x^n \oplus 1)\\
 \end{split}$$
 
-### Proving the cyclic property
+Now, if $\mathbf{c(x)}$ is a multiple of $g(x)$, so is $x \cdot \mathbf{c(x)}$. Also $(x^n \oplus 1)$ is always a multiple of $g(x)$, due to the properties of $g(x)$, and therefore so is $c_{n-1}(x^n \oplus 1)$. It follows that their sum:
 
-Proof (continued):
+$$\mathbf{c'(x)} = x \cdot \mathbf{c(x)} \oplus c_{n-1}(x^n \oplus 1)$$
 
-* Since $\mathbf{c(x)}$ is a multiple of $g(x)$, so is $x \cdot \mathbf{c(x)}$
-* Also $(x^n \oplus 1)$ is always a multiple of $g(x)$
-* => It follows that their sum $\mathbf{c'(x)}$ is a also a multiple of $g(x)$, which means it is a codeword.
+is a multiple of $g(x)$, which means it is a codeword.
+```
 
-QED
+Note that the proof relied on two properties mentioned before:
 
-* Note that we relied on two properties mentioned before:
-    * that a codeword $\mathbf{c(x)}$ is always a multiple of $g(x)$
-    * that $g(x)$ is a factor of $(x^n \oplus 1)$
+- that a codeword $\mathbf{c(x)}$ is always a multiple of $g(x)$
+- that $g(x)$ is a factor of $(x^n \oplus 1)$
 
 ### Coding and decoding of cyclic codes
 
-* Cyclic codes can be used for detection or correction
+Cyclic codes can be used for detection or correction.
+In practice, they are used mostly for **detection only** (e.g. in Ethernet protocol),
+because there are other codes with better performance for correction.
 
-* In practice, they are used mostly for **detection only** (e.g. in Ethernet)
-    * because there are other codes with better performance for correection
+Cyclic codes can be designed to be either systematic or non-systematic.
+but in practice the systematic variant is much preferred.
 
-* Can be systematic / non-systematic
-    * In practice, the systematic variant is much preferred
+We will show the coding and decoding from 3 perspectives, all equivalent to each other:
 
-* We study coding/decoding from 3 perspectives:
-    * The mathematical way, with polynomials
-    * The programming way, e.g. as a programming algorithm
-    * The hardware way, via schematics
+- "The mathematical way", with polynomials
+- "The programming way", as a programming algorithm
+- "The hardware way", via circuit schematics
 
-### 1. Coding and decoding - The mathematical way
+#### The mathematical way
 
-Reminder: polynomial multiplication and division
+First, a reminder on polynomial multiplication and division.
 
-* Two polynomials $a(x)$ and $b(x)$ can be multiplied
-    * the result has degree = degree of $a(x)$ + degree of $b(x)$
-* A polynomials $a(x)$ can be divided to another polynomial $b(x)$:
+Two polynomials $a(x)$ and $b(x)$ can be multiplied,
+and their result has degree equal to the degree of $a(x)$ + degree of $b(x)$.
+
+A polynomials $a(x)$ can be divided to another polynomial $b(x)$, producing
+a quotient and a remainder (which may be zero):
+
 $$a(x) = b(x) q(x) \oplus r(x)$$
-    * $q(x)$ = the quotient ("câtul")
-    * $r(x)$ = the remainder ("restul")
-    * the degree of $r(x)$ is strictly smaller than the degree of $b(x)$
+
+where:
+
+- $q(x)$ is the the quotient ("câtul");
+- $r(x)$ is the remainder ("restul");
+- the degree of $r(x)$ is strictly smaller than the degree of $b(x)$.
 
 
-### 1. Coding and decoding - The mathematical way
+**Coding**. We want to encode an information word with $k$ bits:
+$$i_0 \; i_1 \; i_2 \; ... \; i_{k-1} \rightarrow i(x) = i_0 \oplus i_1x \oplus ... \oplus i_{k-1}x^{k-1}$$
 
-Coding
+The **non-systematic** codeword generation relies simply on polynomial multiplication of $i(x)$ with $g(x)$:
 
-* We want to encode the **information word** with $k$ bits
-$$i_0i_1i_2...i_{k-1} \rightarrow i(x) = i_0 \oplus i_1x \oplus ... \oplus i_{k-1}x^{k-1}$$
+$$c(x) = i(x) \cdot g(x)$$
 
-* **Non-systematic** codeword generation:
-$$\boxed{c(x) = i(x) \cdot g(x)}$$
+Note that the degrees in the equation match:
 
-* The degrees match:
-    - $i(x)$ has degree $k-1$ ($k$ bits)
-    - $g(x)$ has degree $n-k$ ($n-k+1$ bits)
-    - $c(x)$ has degree $n-1 = (n-k) + (k-1)$ ($n$ bits)
+- $i(x)$ has degree $k-1$ ($k$ bits)
+- $g(x)$ has degree $n-k$ ($n-k+1$ bits)
+- $c(x)$ has degree $n-1 = (n-k) + (k-1)$ ($n$ bits)
 
-### Systematic coding - The mathematical way
+However, this is non-systematic because we have no guarantee
+that the information bits are preserved in the codeword.
 
-* **Systematic** codeword generation:
-$$\boxed{c(x) = x^{n-k} \cdot i(x) \oplus b(x)}$$
+The **systematic** codeword generation is achieved using:
 
-* $b(x)$ is the remainder of dividing $x^{n-k} i(x)$ to $g(x)$:
-$$x^{n-k} i(x) = a(x) g(x) \oplus b(x)$$
-    * $b(x)$ is known as "the CRC value"
+$$c(x) = x^{n-k} \cdot i(x) \oplus b(x)$$
 
-* Is this $c(x)$ really a multiple of $g(x)$? Yes, because:
-$$c(x) = x^{n-k} \cdot i(x) \oplus b(x) = a(x) g(x) \oplus b(x) \oplus b(x) = a(x) g(x)$$
+where $b(x)$ is the remainder of dividing $x^{n-k} i(x)$ to $g(x)$:
 
-### Interpretation
+$$x^{n-k} i(x) = g(x) a(x) \oplus b(x)$$
 
-* Why is the code systematic?
+In normal parlance, the remainder $b(x)$ is also known as "**the CRC value**".
 
-* Let's analyze the systematic codeword generation step by step
+Let us consider more closely the systematic codeword generation formula.
+First, is the resulting $c(x)$ really a multiple of $g(x)$?
+It is, because we have:
+$$\begin{aligned}
+c(x) &= x^{n-k} \cdot i(x) \oplus b(x) \\
+&= a(x) g(x) \oplus b(x) \oplus b(x) \\
+&= a(x) g(x)
+\end{aligned}$$
 
-* Consider the information word/polynomial
-$$\mathbf{i} = [\underbrace{i_0i_1...i_{k-1}}_k] \rightarrow i(x) = i_0 \oplus i_1 x \oplus ... \oplus i_{k-1} x^{k-1}$$
+Second, why is the code systematic? Let's analyze the systematic codeword generation step by step. We start from the information word:
 
-* Multiplying $x^{n-k} \cdot i(x)$ shifts all bits to the right with $(n-k)$ positions
-$$[\underbrace{00...0}_{n-k} \underbrace{i_0i_1...i_{k-1}}_k] \rightarrow i(x) = i_0 x^{n-k} \oplus i_1 x^{n-k+1} \oplus ... \oplus i_{k-1} x^{n-1}$$
+$$\mathbf{i} = [\underbrace{i_0 \; i_1 \; ... \; i_{k-1}}_k] \rightarrow i(x) = i_0 \oplus i_1 x \oplus ... \oplus i_{k-1} x^{k-1}.$$
 
-### Interpretation (continued)
+Multiplying it with $x^{n-k}$ to obtain $x^{n-k} \cdot i(x)$
+just shifts all bits to the right with $(n-k)$ positions:
+$$[\underbrace{0 \; 0 \; ... \; 0}_{n-k} \underbrace{i_0 \; i_1 \; ... \; i_{k-1}}_k] \rightarrow i(x) = i_0 x^{n-k} \oplus i_1 x^{n-k+1} \oplus ... \oplus i_{k-1} x^{n-1}$$
 
-* The remainder $b(x)$ has degree strictly less than $n-k$ (degree of $g(x)$), so at most $n-k$ bits
+Now, the remainder $b(x)$ has degree strictly less than the degree of $g(x)$,
+which is $n-k$, so it at most $n-k$ bits.
 
-* Therefore adding $b(x)$ will not overlap with $x^{n-k} \cdot i(x)$
-    * the $(n-k)$ bits of $b(x)$ will fit in the first $n-k$ locations
+Therefore adding $b(x)$ to $x^{n-k} \cdot i(x)$ to construct the codeword
+
+$$c(x) = x^{n-k} \cdot i(x) \oplus b(x)$$
+
+means the two terms **do not overlap**, because
+$x^{n-k} \cdot i(x)$ has powers starting from $x^{n-k}$ upwards,
+whereas $b(x)$ has powers strictly less than $x^{n-k}$.
+
+Alternatively, $x^{n-k} \cdot i(x)$ has $n-k$ zeros in front,
+whereas $b(x)$ has at most $n-k$ bits, so they will not overlap when adding.
+
 $$\begin{aligned}
 &\mathbf{c} =  [\underbrace{b_0b_1...b_{n-k}}_{n-k} \underbrace{i_0i_1...i_{k-1}}] \rightarrow \\
 &\rightarrow c(x) = b_0 \oplus b_1 x \oplus ... \oplus b_{n-k-1} x^{n-k-1} \oplus i_0 x^{n-k} \oplus i_1 x^{n-k+1} \oplus ... \oplus i_{k-1} x^{n-1}
 \end{aligned}$$
 
-* Hence the code is systematic: the information bits are in the codeword
+Therefore the code is systematic: the information bits are in the codeword,
+unchanged, in the positions corresponding to the higher powers of $x$ (towards the MSB), whereas the CRC value (i.e., $b(x)$) occupies the first $n-k$ positions
+ (towards the LSB).
 
-* The code adds $b(x)$ (the remainder) = the **CRC value**
+We see now that a systematic cyclic codeword can be interpreted as
+computing a CRC value and appending it to the data.
+The CRC value $b(x)$ represents the control bits added by the code.
 
-### Interpretation
+Even though in our analysis and equations we always write it at the start of the codeword,
+in practice there exist different conventions for writing the codeword:
 
-* Systematic cyclic codeword = compute a CRC value and append it to the data
-
-* Different writing conventions:
-
-    * when writing the codewords from LSB -> MSB (increasing order of degrees), the CRC appears in front
-        * like in lecture slides
-    * when writing the codewords from MSB -> LSB (decreasing order of degrees), the CRC appears at the end
-        * like in laboratory
-    * same thing, just bit ordering is reversed
-    * (LSB = Least Significant Bit, MSB = Most Significant Bit)
+- when writing the codewords from LSB to MSB (increasing order of degrees), the CRC appears in front (like here);
+- when writing the codewords from MSB to LSB (decreasing order of degrees), the CRC appears at the end (like in laboratory); it is same thing, just bit ordering is reversed
+- in practice, the CRC just needs to be appended somewhere; for example in an Ethernet frame there is a special field for it.
 
 
-### Decoding - The mathematical way
+**Decoding**. Assume we receive a word
 
-Decoding
+$$\mathbf{r} = r_0 \; r_1 \; r_2 \; ... \; r_{n-1} \rightarrow \mathbf{r(x)} = r_0 \oplus r_1x \oplus ... \oplus r_{n-1}x^{n-1}$$
 
-* We receive $\mathbf{r} = r_0r_1r_2...r_{n-1} \rightarrow \mathbf{r(x)} = r_0 \oplus r_1x \oplus ... \oplus r_{n-1}x^{n-1}$$
+For error **detection**, we just want to see if $r(x)$ is a codeword or not.
+For this, we check if the received $\mathbf{r(x)}$ still is a multiple of $g(x)$,
+by dividing $\mathbf{r(x)}$ to $g(x)$ and checking the remainder:
 
-* Error **detection**: check if $r(x)$ is a codeword or not
+- if remainder of $r(x) : g(x)$ is $0$, then it is a codeword, no errors present;
+- if remainder is non-zero, then it's not a true codeword, **errors detected**.
 
-* Check if the received $\mathbf{r(x)}$ still is a multiple of $g(x)$
-    * Divide $\mathbf{r(x)}$ to $g(x)$:
-        * If remainder of $r(x) : g(x)$ is 0 => it is a codeword, no errors present
-        * If remainder is non-zero => it's not a true codeword, **errors detected**
+Note that computing the remainder is the same to computing the CRC of the received data (including the CRC bits in the received word).
 
-* Computing the remainder = computing the CRC of the received data
-    * Remember lab: decoding = compute CRC of all coded data, if 0 => OK, if non-zero => NOK
+For error **correction**, ww need to use a syndrome table, just like with any
+linear block code, using the same general procedure:
 
-### Decoding - The mathematical way
+- build a table for all possible error words;
+- for each error code, divide by $g(x)$ and compute the remainder
+- when the remainder is identical to the remainder obtained from our $\mathbf{r(x)}$, we found the error word, so we can go on and correct the errors.
 
-* Error **correction**: use a syndrome table (just like with matrices)
-    * build a table for all possible error words (like with matrix codes)
-    * for each error code, divide by $g(x)$ and compute the remainder
-    * when the remainder is identical to the remainder obtained with $\mathbf{r(x)}$, we found the error word => correct errors
-
-\smallskip
-
-* Example: at blackboard
+Example: at blackboard
 
 
-### 2. Coding and decoding - The programming way
+#### The programming way
 
-* Only for systematic codes (mostly used)
+We show this method only for systematic codes, which is the mostly used variant.
 
-* Steps:
-
-    * 1. Compute the CRC = $b(x)$ = remainder of $x^{n-k} i(x)$ divided to $g(x)$
-
-    * 2. Put the CRC in front of the information word, mirrored
-
-* Good reference: *"A Painless Guide to CRC Error Detection Algorithms"*, Ross N. Williams
-    * http://www.ross.net/crc/download/crc_v3.txt
-
-### Coding
-
-* The mathematical polynomial division = just like XOR-ing succesively with $g(x)$
-    * align the binary sequence of $g(x)$ under the leftmost 1
-    * XOR the sequences
-    * repeat
-    * just like in the lab
-
-\smallskip
-
-* See example at blackboard / lab
-
-### Example
-
-![Polynomial division = XORing succesively with $g(x)$](img/CRCAlgoXORing.png){height=60%}
+A good reference for the procedure is found here:
+["A Painless Guide to CRC Error Detection Algorithms"*, Ross N. Williams](http://www.ross.net/crc/download/crc_v3.txt)
 
 
-### Decoding
+The key fact is that mathematical polynomial division algorithm
+is identical to XOR-ing the binary sequence succesively with $g(x)$:
 
-* We receive $\mathbf{r} = r_0r_1r_2...r_{n-1} \rightarrow \mathbf{r(x)} = r_0 \oplus r_1x \oplus ... \oplus r_{n-1}x^{n-1}$
+- align the binary sequence of $g(x)$ under the leftmost 1
+- XOR the sequences
+- repeat
+- (just like in the lab)
 
-* Step 1: Mirror the sequence $\mathbf{r}$ (CRC must be at the end!)
+See example at blackboard / lab.
 
-* Error detection:
-    * compute the CRC of all sequence $\mathbf{r}$
-        * If the remainder is 0 => no errors
-        * If the remainder is non-zero => errors detected!
+In other words, we don't have to think of binary polynomial division as a complicated mathematical operation.
+It is a simple, recursive bitwise XOR operation,
+easy to implement algorithmically in code.
+Polynomial division is the foundation of both (systematic) coding and decoding,
+so we just replace the mathematical computations with the equivalent binary algorithm.
 
-* Error correction:
-    * use a syndrome table (just like with matrices)
-        * build a table for all possible error words (same as with matrix codes)
-        * for each error word, compute the CRC
-        * when the resulting remainder is identical to the remainder obtained with $\mathbf{r}$, we found the error word => correct errors
+```{figure} img/CRCAlgoXORing.png
+:height: 60%
 
-### Skip next slides for 2018-2019
+Polynomial division = XORing succesively with $g(x)$
+```
 
-**The remaining slides in this file are skipped for the class of 2018-2019.**
+**Coding**. We have to perform the two steps:
 
-### 3. Coding and encoding - The hardware way
+1. Compute the CRC value $b(x)$, which is the remainder of $x^{n-k} i(x)$ divided to $g(x)$, using the binary algorithm above;
+2. Put the CRC in front of the information word (mirrored, from LSB to MSB).
 
-* Coding = based on polynomial multiplications and divisions
-* Efficient circuits for multiplication / division exist, that can be used for systematic or non-systematic codeword generation (draw on blackboard)
 
-### Circuits for multiplication of binary polynomials
+**Decoding**. We receive $\mathbf{r} = r_0 \; r_1 \; r_2 \; ... \; r_{n-1} \rightarrow \mathbf{r(x)} = r_0 \oplus r_1x \oplus ... \oplus r_{n-1}x^{n-1}$
 
-![Circuits for polynomial multiplication](img/MultiplicationCircuits.png)
+Steps:
 
-### Operation of multiplication circuits
+1. Mirror the sequence $\mathbf{r}$, so it is aligned MSB to LSB (CRC must be at the end)
+
+2. For error detection:
+
+   - compute the CRC of all sequence $\mathbf{r}$
+   - if the remainder is 0 => no errors
+   - if the remainder is non-zero => errors detected
+
+3. Error correction:
+
+   - use a syndrome table
+   - build a table for all possible error words (same as with matrix codes)
+   - for each error word, compute the CRC
+   - when the resulting remainder is identical to the remainder obtained with $\mathbf{r}$, we found the error word => correct errors
+
+
+#### The hardware way
+
+There exist efficient circuits for polynomial multiplication and division,
+which can be used for systematic or non-systematic codeword generation.
+
+Two schematics for polynomial multiplication are presented below.
+
+```{figure} img/MultiplicationCircuits.png
+
+Circuits for polynomial multiplication
+```
+
+Operation of the multiplication circuits:
 
 - The circuits multiply an input polynomial $a(x)$ with a polynomial $g(x)$
 defined by their structure
-
 - The input polynomial is applied at the input, 1 bit at a time, starting from highest degree
 - The output polynomial is obtained at the output, 1 bit at a time, starting from highest degree
 - Because output polynomial has larger degree, the circuit needs to operate a few more samples until the final result is obtained. During this time the input is 0.
 - Examples: at the whiteboard
 
 
-### Circuits for division binary polynomials
+Two schematics for division of binary polynomials are presented below.
 
-![Circuits for polynomial division](img/DivisionCircuits.png)
 
-### Operation of division circuits
+```{figure} img/DivisionCircuits.png
+
+Circuits for polynomial division
+```
+
+Operation of polynomial division circuits:
 
 - The circuits divide an input polynomial $a(x)$ to a polynomial $g(x)$
 defined by their structure
@@ -1553,314 +1679,51 @@ defined by their structure
 - Examples: at the whiteboard
 
 
-### Non-systematic cyclic encoder circuit
+A non-systematic cyclic encoder circuit relies simply on polynomial multiplication,
+without any other modifications,
+where the input is $i(x)$ and the resulting output is the codeword $c(x)$.
 
-* Non-systematic cyclic encoder circuit:
-    * simply a polynomial multiplication circuit
-    * input is $i(x)$, output is $c(x)$
+```{figure} img/MultiplicationCircuits.png
+:height: 40%
 
-![Circuits for polynomial multiplication](img/MultiplicationCircuits.png){height=40%}
+Circuits for polynomial multiplication
+```
 
-### Systematic cyclic encoder circuit
+A systematic cyclic encoder circuit relies instead on a division circuit,
+which computes the CRC value which is appended:
 
-![Systematic cyclic encoder circuit](img/CyclicCoder.png){width=80%}
+```{figure} img/CyclicCoder.png
+:width: 80%
 
-* It contains inside a division circuit (upper right part)
+Systematic cyclic encoder circuit
+```
 
-### Systematic cyclic encoder circuit
+This schematic contains a division circuit (upper right part),
+and operates as follows:
 
-Operation of the cyclic encoder circuit:
+- Initially all cells are 0
 
-* Initially all cells are 0
+- First, the switch is in position I:
 
-* Switch in position I:
-    - information bits are applied to the output and to the division circuit
-    - first bits of the output are the information bits => indeed systematic
-    - the input bits are applied to the division circuit
+  - information bits are applied to the output and to the division circuit
+  - first bits of the output are the information bits, so the codeword is indeed systematic
+  - the input bits are also applied to the division circuit
 
-* Switch in position II:
-    - some output bits are put at the ouput
-    - the same output bits are also applied to the input of the division circuit
+- Switch in position II:
 
-* **In the end all cells end up with value 0**
-    - because in phase II we add the input (A) with itself (B) at the input of the division circuit,
-    so they cancel each other
+  - some output bits are put at the output
+  - the same output bits are also applied to the input of the division circuit
+  - **In the end all cells end up with value 0**, because in phase II we add the input (A) with itself (B) at the input of the division circuit, so they cancel each other
 
+Why is the output $c(x)$ the desired codeword? Because:
 
-### Systematic cyclic encoder circuit
+1. has the information bits in the first part (systematic)
+2. is a multiple of $g(x)$
 
-* Why is the output $c(x)$ the desired codeword? Because:
-    1. has the information bits in the first part (systematic)
-    2. is a multiple of $g(x)$
+Why is it a multiple of $g(x)$? Because:
 
-* Why is it a multiple of $g(x)$? Because:
-    * the output $c(x)$ is always applied also to the input of the division circuit
-        * in both phases of operation
-    * after division, the cells end up in 0, which means there is no remainder of division
+- the output $c(x)$ is always applied also to the input of the division circuit, in both phases of operation
+-  after division, the cells end up in 0, which means there is no remainder of division
 
-* Side note: we haven't really explained *why* the output $c(x)$ is a codeword,
-we just showed that it is so
-
-
-### The parity-check matrix for systematic cyclic codes
-
-* Requires a more in-depth anaysis of Linear Feedback Shift Registers (LFSR)
-
-### Linear-Feedback Shift Registers (LFSR)
-
-* A **flip-flop**  = a cell holding a bit value (0 or 1)
-    * called *"bistabil"* in Romanian
-    * operates on the edges of a clock signal
-
-* A **register** = a group of flip-flops, holding multiple bits
-    * example: an 8-bit register
-
-* A **shift register** = a register where the output of a flip-flop is connected
-to the input of the next one
-    - the bit sequence is shifted to the right
-    - has an input (for the first cell)
-
-* A  **linear feedback shift register** (LFSR) =  a shift register for which
-the input is a computed as a linear combination of the flip-flops values
-    - input = usually a XOR of some cells from the register
-    - like a division circuit without any input
-    - feedback = all flip-flops, with coefficients $g_i$ in general
-    - example at whiteboard
-
-
-### States and transitions of LFSR
-
-* **State** of the LFSR = the sequence of bit values it holds at a certain
-moment (in order: right to left)
-
-* The state at the next moment, $S(k+1)$,  can be computed by multiplication
-of the current state $S(k)$ with the **companion matrix** (or **transition matrix**) $[T]$:
-$$S(k+1) = [T]*S(k)$$
-
-* The companion matrix is defined based on the feedback coefficients $g_i$:
-$$T =
-\begin{bmatrix}
-0 & 1 & 0 & ... & 0 \\
-0 & 0 & 1 & ... & 0 \\
-\cdot & \cdot & \cdot & ... & \cdot \\
-0 & 0 & 0 & ... & 1 \\
-g_0 & g_1 & g_2 & ... & g_{m-1} \\
-\end{bmatrix}$$
-
-* Note: reversing the order of bits in the state => transposed matrix
-
-* Starting at time 0, then the state at time $k$ is:
-$$S(k) = [T]^k S(0)$$
-
-### Period of LFSR
-
-* The number of states is finite => they must repeat at some moment
-* The state equal to 0 must not be encountered (in this case the LFSR will remain 0 forever)
-* The **period** of the LFSR = number of time moments until the state repeats
-* If period is $N$, then state at time $N$ is same as state at time $0$:
-$$S(N) = [T]^N S(0) = S(0),$$
-which means:
-$$[T]^N = I_m$$
-
-* Maximum period is $N_{max} = 2^m-1$ (excluding state 0), in this case the
-polynomial $g(x)$ is called **primitive polynomial**
-
-### LFSR with inputs
-
-* What if the LFSR has an input added to the feedback (XOR)?
-    * exactly like a division circuit
-    * assume the input is a sequence $a_{N-1}, ... a_0$
-
-* Since a LFSR is a **linear circuit**, the effect is added:
-$$S(1) = [T] \cdot S(0) \oplus
-\begin{bmatrix}
-0\\
-0\\
-...\\
-a_{N-1}
-\end{bmatrix}$$
-
-* In general:
-$$S(k_1) = [T] \cdot S(k) \oplus a_{N-k}\cdot [U],$$
-where $[U]$ is:
-$$[U] = \begin{bmatrix}
-0\\
-0\\
-...\\
-1
-\end{bmatrix}$$
-
-
-### The parity-check matrix for systematic cyclic codes
-
-* Cyclic codes are linear block codes, so they have a parity-check and a generator matrix
-    * but it is more efficient to implement them with polynomial multiplication / division circuits
-
-* The parity-check matrix $[H]$ can be deduced by analyzing the states of the LFSR (divider) inside
-the encoder:
-    * it is a LFSR with feedback and input
-    * the input is the codeword $c(x)$
-    * do computations at whiteboard ...
-    * ... arrive at expression for matrix $[H]$
-
-### The parity-check matrix for systematic cyclic codes
-
-* The parity check matrix $[H]$ has the form
-$$[H] = [U, TU, T^2U, ... T^{n-1}U]$$
-
-* The cyclic codeword satisfies the usual relation
-$$S(n) = 0 = [H] \mathbf{c^T}$$
-
-* In case of an error, the state at time $n$ will be the syndrome (non-zero):
-$$S(n) = [H] \mathbf{r^T} \neq 0$$
-
-### Error detection and correction capability
-
-**Theorem**:
-
-Any (n,k) cyclic code with $g(x)$ being a primitive polynomial is capable of detecting 2 errors, or of correcting 1 error
-
-* Proof:
-    * $g(x)$ is primitive polynomial => the LSFR cycles through all possible states (non-zero)
-    * therefore all the columns of [H] are distinct
-    * Use the conditions based on the columns of [H] from first part of chapter
-        * sum of any two columns is non-zero => can detect 2 errors
-        * any two columns are distinct => can correct 1 error
-
-### Packets of errors
-
-* Until now, we considered a single error (i.e errors appear independently)
-
-* In real life, many times the errors appear in groups
-* A **packet of errors** (*an error burst*) is a sequence of two or more
-**consecutive errors**
-    * examples: *fading* in wireless channels
-
-*  The **length**  of the packet = the number of consecutive errors
-
-### Condition on columns of [H] for packets of errors
-
-* Conditions for packets of **e** errors are less restrictive than for
-**e** independent errors
-
-* Error **detection** of $e$ independent errors:
-    * sum of **any** $e$ or fewer columns is **non-zero**
-* Error **detection** of a packet of $e$ errors
-    * sum of any **consecutive** $e$ or fewer columns is **non-zero**
-* Error **correction** of $e$ independent errors
-    * sum of **any** $e$ or fewer columns is **unique**
-* Error **correction** of a packet of $e$ errors
-    * sum of any **consecutive** $e$ or fewer columns is **unique**
-
-
-### Detection of packets of errors
-
-**Theorem**:
-
-Any (n,k) cyclic code is capable of detecting any error packet of length $n-k$ or less
-
-* A large fraction of longer bursts can also be detected (but not all)
-
-* No proof (too complicated)
-
-
-
-### Cyclic decoder implemented with LFSR
-
-![Cyclic decoder circuit](img/CyclicDecoderLFSR.png){width=80%}
-
-### Cyclic decoder implemented with LFSR
-
-* Consists of:
-    - main shift register MSR
-    - main switch SW
-    - 2 LFSRs (divider circuits), built based on $g(x)$
-    - 2 error locator blocks, one for each divider
-    - 2 validation gates V1, V2, for each divider
-    - output XOR gate for correcting errors
-
-### Cyclic decoder implemented with LFSR
-
-* Operation phases:
-
-1. Input phase: SW on position I, validation gate V1 blocked
-    - The received codeword $r(x)$ is received one by one, starting with largest power of $x^n$
-    - The received codeword enters the MSR and first LFSR (divider)
-    - The first divider computes $r(x) : g(x)$
-    - The validation gate V1 is blocked, no output
-
-* Input phase ends after $n$ moments, the switch SW goes into position II
-* If the received word has no errors, all LFSR  cells are 0 (no remainder),
-will remain 0, the error locator will always output 0,
-   * the MSR will output the received bits unchanged
-
-
-### Cyclic decoder implemented with LFSR
-
-2. Decoding phase: SW on position II, validation gate V1 open
-    - LFSR keeps running with no input for $n$ more moments
-    - the MSR provides the received bits at the output, one by one
-    - **exactly when the erroneous bit is at the main output of MSR, the error locator will output 1, and the output XOR gate will correct the bit (TO BE PROVEN)**
-    - during this time the next codeword is loaded into MSR and into second LFSR (input phase for second LFSR)
-
-* After $n$ moments, the received word is fully decoded and corrected
-* SW goes back into position I, the second LFSR starts decoding phase, while the first LFSR is loading the new receiver word, and so on
-
-* **To prove:** error locator outputs 1 exactly when the erroneous bit is at the main output
-
-
-### Cyclic decoder implemented with LFSR
-
-**Theorem:** if the $k$-th bit $r_{n-k}$ from $r(x)$ has an error, the error locator will output 1 exactly after $k-1$ moments
-
-* That's exactly when the erroneous $k$-th bit will be output from MSR => will be changed back to the good value
-
-* **Proof:**
-    1. assume error on position $r_{n-k}$
-    2. the state of the LFSR at end of phase I = syndrome = column $(n-k)$ from $[H]$
-    $$S(n) = [H]\mathbf{r}^T = [H] \mathbf{e}^T = T^{n-k}U$$
-    3. after another $k-1$ moments, the state will be
-    $$T^{k-1}T^{n-k}U = T^{n-1}U$$
-    4. since $T^n = I_n$ --> $T^{n-1} = T^{-1}$
-    5. $T^{-1}U$ is the state preceding state U, which is state
-    $$\begin{bmatrix} 1 \\ 0 \\ ... \\ 0 \end{bmatrix}$$
-
-
-### Cyclic decoder implemented with LFSR
-
-* Step 5 above can be shown in two ways:
-    - reasoning on the circuit
-    - using the definition of $T^{-1}$
-
-$$T =
-\begin{bmatrix}
-g_1 & g_2 & ...g_{m-1} & 1 \\
-1 & 0 & ... & 0 & 0 \\
-0 & 1 & ... & 0 & 0\\
-\cdot & \cdot & \cdot & ... & \cdot \\
-0 & 0 & ... & 1 & 0 \\
-\end{bmatrix}$$
-
-* The error locator is designed to detect this state $T^{-1}U$,
-i.e. it is designed as shown on blackboard
-
-* Therefore, the error locator will correct an error
-* This works only for 1 error, due to proof (1 column from [H])
-
-
-### Summary of cyclic codes
-
-* Generated using a generator polynomial $g(x)$
-* Non-systematic:
-$$c(x) = i(x) \cdot g(x)$$
-* Systematic:
-$$c(x) = b(x) \oplus X^{n-k}i(x)$$
-    *  $b(x)$ is the remainder of dividing $X^{n-k} i(x)$ to $g(x)$
-
-* A codeword is always a multiple of $g(x)$
-* Error detection: divide by $g(x)$, look at remainder
-* Schematics:
-    * Cyclic encoder
-    * Cyclic decoder with LFSR
-    * Thresholding cyclic decoder
-    * Encoder/decoder for packets of up to 2 errors
+Side note: we haven't really explained *why* the output $c(x)$ is a codeword,
+we just showed that it is so, but this is enough.
